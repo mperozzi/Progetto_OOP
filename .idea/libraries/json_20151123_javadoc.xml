@@ -1,0 +1,54 @@
+<component name="libraryTable">
+  <library name="json-20151123-javadoc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib2/json-20090211.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20150729.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20151123.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20070829.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20140107.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160807.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160212.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20141113.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20131018.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160810.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20180813.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20180130.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20171018.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20170516.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/org.json-chargebee-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib2/json-20151123-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20131018-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20140107-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160212-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20150729-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20080701-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20141113-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160807-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160810-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20170516-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/org.json-chargebee-1.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20180813-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20180130-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20171018-javadoc.jar!/" />
+      <root url="http://repo1.maven.org/maven2/org/json/json/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib2/json-20131018-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20141113-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20070829-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20140107-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160212-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20150729-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20151123-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160807-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20160810-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20170516-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20180813-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20180130-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/json-20171018-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/org.json-chargebee-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

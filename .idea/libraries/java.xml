@@ -1,0 +1,28 @@
+<component name="libraryTable">
+  <library name="java">
+    <CLASSES />
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/gson/docs/javadocs" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/lib2/commons-io-2.6-src/src/main/java" />
+      <root url="file://$PROJECT_DIR$/lib2/commons-io-2.6-src/src/test/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/codegen/src/main/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/codegen/src/test/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/examples/android-proguard-example/src" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/extras/src/main/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/extras/src/test/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/gson/src/main/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/gson/src/main/java-templates" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/gson/src/test/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/metrics/src/main/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/proto/src/main/java" />
+      <root url="file://$PROJECT_DIR$/lib2/gson-master/proto/src/test/java" />
+      <root url="file://$PROJECT_DIR$/lib2/json-io-master/src/main/java" />
+      <root url="file://$PROJECT_DIR$/lib2/json-io-master/src/test/groovy" />
+      <root url="file://$PROJECT_DIR$/lib2/json-io-master/src/test/java" />
+      <root url="file://$PROJECT_DIR$/lib2/json-simple-master/src/main/java" />
+      <root url="file://$PROJECT_DIR$/lib2/json-simple-master/src/test/java" />
+    </SOURCES>
+  </library>
+</component>
