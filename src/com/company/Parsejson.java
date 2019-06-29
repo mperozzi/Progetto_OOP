@@ -5,31 +5,29 @@ import org.json.simple.*;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 
-import javax.lang.model.type.NullType;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.lang.Object;
 import java.util.Scanner;
 
 //classe per il parse del JSON
 public class Parsejson {
 
-    public Parsejson () {
-    }
-
+    private PrintWriter pw;
     private String url;
     private boolean flag = false;
     private String FolderPath;
     private String urlD;
+
+    public Parsejson () {
+        pw = new PrintWriter(System.out, true);
+    }
 
     public void setUrl(String url) {
         this.url = url;
@@ -47,7 +45,7 @@ public class Parsejson {
             InputStream in = openConnection.getInputStream();
 
             String data = "";
-            String line = "";
+            String line;
 
             try {
                 InputStreamReader inR = new InputStreamReader(in);
@@ -55,7 +53,7 @@ public class Parsejson {
 
                 while ((line = buf.readLine()) != null) {
                     data += line;
-                    System.out.println(line);
+                    pw.println(line);
                 }
             } finally {
                 in.close();
@@ -70,14 +68,12 @@ public class Parsejson {
                     JSONObject o1 = (JSONObject) o;
                     String format = (String) o1.get("format");
                     this.urlD = (String) o1.get("url");
-                    System.out.println(format + " | " + urlD);
+                    pw.println(format + " | " + urlD);
                     if (format.contains("CSV") || format.contains("csv")) {
                         Download_csv_FromURL(urlD);
-                        System.out.println("Print" + urlD);
                     }
                 }
             }
-            System.out.println("OK");
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -94,15 +90,12 @@ public class Parsejson {
                 FileOutputStream fileOS = new FileOutputStream(this.FolderPath);
                 FileChannel writeChannel = fileOS.getChannel();
                 writeChannel.transferFrom(readChannel, 0, Long.MAX_VALUE);
-                System.out.println("File creato");
+                pw.println("File creato");
+                pw.println();
 
                 if (writeChannel != null) {
                     this.flag = true;
                 } else this.flag = false;
-
-            } catch (FileAlreadyExistsException e) {
-                e.printStackTrace();
-                System.out.println("Il file esiste già! Indicare un altro nome");
 
             } catch (FileNotFoundException e) {
                 System.out.println(e);
