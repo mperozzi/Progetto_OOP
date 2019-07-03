@@ -69,7 +69,7 @@ public class Parsejson {
                     String format = (String) o1.get("format");
                     this.urlD = (String) o1.get("url");
                     pw.println(format + " | " + urlD);
-                    if (format.contains("CSV") || format.contains("csv")) {
+                    if (format.contains("CSV")) {
                         Download_csv_FromURL(urlD);
                     }
                 }
