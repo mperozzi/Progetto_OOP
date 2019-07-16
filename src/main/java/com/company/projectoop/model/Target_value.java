@@ -7,15 +7,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class Target_value {
 
-    private String target_value;
+    private float target_value;
 
     public Target_value() {}
 
-    public String getTarget_value() {
+    public float getTarget_value() {
         return target_value;
     }
 
-    public void setTarget_value(String target_value) {
+    public void setTarget_value(float target_value) {
         this.target_value = target_value;
     }
 

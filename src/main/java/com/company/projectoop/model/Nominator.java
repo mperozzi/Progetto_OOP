@@ -7,15 +7,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class Nominator {
 
-    private String nominator;
+    private float nominator;
 
     public Nominator() {}
 
-    public String getNominator() {
+    public float getNominator() {
         return nominator;
     }
 
-    public void setNominator(String nominator) {
+    public void setNominator(float nominator) {
         this.nominator = nominator;
     }
 

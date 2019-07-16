@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class Parsecsv_Impl implements Parsecsv {
 
-    private static String namefile = "C:/Users/Matteo/Desktop/prova.csv";
+    private static String namefile = "/Users/ettorezamponi/Desktop/fileprova.csv ";
 
     /**
      * ArrayList in cui vengono immagazzinati i dati completi letti dal CSV
@@ -133,14 +134,13 @@ public class Parsecsv_Impl implements Parsecsv {
                         case 2:
                             r.setCci(s[i]);
                             break;
-                        case 3: {
-                            String[] s1 = s[i].split("\"");
-                            if (Float.isNaN(Float.parseFloat(s1[1]))) break;
+                        case 3:
+                            String[] s3 = s[i].split("\"");
+                            if (Float.isNaN(Float.parseFloat(s3[1]))) break;
                             else {
-                                r.setVer(Float.parseFloat(s1[1]));
+                                r.setVer(Float.parseFloat(s3[1]));
                             }
                             break;
-                        }
                         case 4:
                             r.setTitle(s[i]);
                             break;
@@ -150,8 +150,101 @@ public class Parsecsv_Impl implements Parsecsv {
                         case 6:
                             r.setIndicator_type_code(s[i]);
                             break;
+                        case 7:
+                            r.setInd_code(s[i]);
+                            break;
+                        case 8:
+                            r.setInd_group_code(s[i]);
+                            break;
+                        case 9:
+                            r.setIndicator_short_name(s[i]);
+                            break;
+                        case 10:
+                            r.setIndicator_long_name(s[i]);
+                            break;
+                        case 11:
+                            String[] s11 = s[i].split("\"");
+                            if (Float.isNaN(Float.parseFloat(s11[1]))) break;
+                            else {
+                                r.setTo(Float.parseFloat(s11[1]));
+                            }
+                            break;
+                        case 12:
+                            r.setTo_short(s[i]);
+                            break;
+                        case 13:
+                            r.setPriority_code(s[i]);
+                            break;
+                        case 14:
+                            r.setInvestment_priority(s[i]);
+                            break;
+                        case 15:
+                            r.setMeasure_code(s[i]);
+                            break;
+                        case 16:
+                            r.setFocus_area_code(s[i]);
+                            break;
+                        case 17:
+                            String[] s17 = s[i].split("\"");
+                            if (Float.isNaN(Float.parseFloat(s17[1]))) break;
+                            else {
+                                r.setTarget_value(Float.parseFloat(s17[1]));
+                            }
+                            break;
+                        case 18:
+                            r.setMeasurement_unit(s[i]);
+                            break;
+                        case 19:
+                            String[] s19 = s[i].split("\"");
+                            if (Float.isNaN(Float.parseFloat(s19[1]))) break;
+                            else {
+                                r.setNominator(Float.parseFloat(s19[1]));
+                            }
+                            break;
+                        case 20:
+                            r.setDenominator(s[i]);
+                            break;
+                        case 21:
+                            r.setIs_division(s[i]);
+                            break;
+                        case 22:
+                            r.setYear(s[i]);
+                            break;
+                        case 23:
+                            r.setIr_ver(s[i]);
+                            break;
+                        case 24:
+                            r.setForecast_value(s[i]);
+                            break;
+                        case 25:
+                            r.setForecast_nominator(s[i]);
+                            break;
+                        case 26:
+                            r.setForecast_denominator(s[i]);
+                            break;
+                        case 27:
+                            r.setImplemented_value(s[i]);
+                            break;
+                        case 28:
+                            r.setImplemented_nominator(s[i]);
+                            break;
+                        case 29:
+                            r.setImplemented_denominator(s[i]);
+                            break;
+                        case 30:
+                            r.setVisualize_by_to(s[i]);
+                            break;
                         case 31:
                             r.setVisualize_by_ms(s[i]);
+                            break;
+                        case 32:
+                            r.setMs_op_coverage(s[i]);
+                            break;
+                        case 33:
+                            r.setFinance_coverage(s[i]);
+                            break;
+                        case 34:
+                            r.setInd_group_name(s[i]);
                             break;
                         default:
                             break;
@@ -166,6 +259,7 @@ public class Parsecsv_Impl implements Parsecsv {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Metodo che popola la lista meta che contiene i metadati.
@@ -392,7 +486,290 @@ public class Parsecsv_Impl implements Parsecsv {
 
         return (ArrayList<Riga_tabella>) list;
     }
+
+    /**
+     * Metodo che calcola la media dei valori
+     */
+    public static float avgValue(String value) throws Exception{
+        float sum = 0;
+        int n = 0;
+
+        switch (value) {
+            case "nominator": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getNominator() != 0) {
+                        sum += data.get(i).getNominator();
+                        n++;
+                    }
+                }
+            } break;
+
+            case "target_value": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getTarget_value() != 0) {
+                        sum += data.get(i).getTarget_value();
+                        n++;
+                    }
+                }
+            } break;
+
+            case "to": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getTo() != 0) {
+                        sum += data.get(i).getTo();
+                        n++;
+                    }
+                }
+            } break;
+
+            case "ver": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getVer() != 0) {
+                        sum += data.get(i).getVer();
+                        n++;
+                    }
+                }
+            } break;
+
+            default: throw new Exception();
+        }
+
+        float avg = sum/n;
+        return avg;
+    }
+
+    /**
+     * Metodo che calcola il minore valore
+     */
+    public static float minValue(String value) throws Exception{
+        float min = 0;
+
+        switch (value) {
+            case "nominator": {
+                min = data.get(0).getNominator();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getNominator() < min && data.get(i).getNominator() != 0)
+                        min = data.get(i).getNominator();
+                }
+            } break;
+
+            case "target_value": {
+                min = data.get(0).getTarget_value();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getTarget_value() < min && data.get(i).getTarget_value() != 0)
+                        min = data.get(i).getTarget_value();
+                }
+            } break;
+
+            case "to": {
+                min = data.get(0).getTo();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getTo() < min && data.get(i).getTo() != 0)
+                        min = data.get(i).getTo();
+                }
+            } break;
+
+            case "ver": {
+                min = data.get(0).getVer();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getVer() < min && data.get(i).getVer() != 0)
+                        min = data.get(i).getVer();
+                }
+            } break;
+
+            default: throw new Exception();
+        }
+
+        return min;
+    }
+
+
+    /**
+     * Metodo che calcola il massimo valore
+     */
+    public static float maxValue(String value) throws Exception{
+        float max = 0;
+
+        switch (value) {
+            case "nominator": {
+                max = data.get(0).getNominator();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getNominator() > max)
+                        max = data.get(i).getNominator();
+                }
+            } break;
+
+            case "target_value": {
+                max = data.get(0).getTarget_value();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getTarget_value() > max)
+                        max = data.get(i).getTarget_value();
+                }
+            } break;
+
+            case "to": {
+                max = data.get(0).getTo();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getTo() > max)
+                        max = data.get(i).getTo();
+                }
+            } break;
+
+            case "ver": {
+                max = data.get(0).getVer();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getVer() > max)
+                        max = data.get(i).getVer();
+                }
+            } break;
+
+            default: throw new Exception();
+        }
+
+        return max;
+    }
+
+    /**
+     * Metodo che calcola la somma dei valori
+     */
+    public static float sumValue(String value) throws Exception{
+        float sum = 0;
+
+        switch (value) {
+            case "nominator": {
+                for (int i = 0; i < data.size(); i++) {
+                    sum += data.get(i).getNominator();
+                }
+            } break;
+
+            case "target_value": {
+                for (int i = 0; i < data.size(); i++) {
+                    sum += data.get(i).getTarget_value();
+                }
+            } break;
+
+            case "to": {
+                for (int i = 0; i < data.size(); i++) {
+                    sum += data.get(i).getTo();
+                }
+            } break;
+
+            case "ver": {
+                for (int i = 0; i < data.size(); i++) {
+                    sum += data.get(i).getVer();
+                }
+            } break;
+
+            default: throw new Exception();
+        }
+
+        return sum;
+    }
+
+    /**
+     * Metodo che calcola la deviazione standard dei valori
+     */
+/*
+    public double devstdValue (String value) throws Exception{
+        double c = 0.0;
+        double n = 0;
+        double a = avgValue(value);
+
+        switch (value) {
+            case "nominator": {
+                for (data d: datas) {
+                    if(d.getNominator() == 0) {
+                        continue;
+                    } else {
+                        n += Math.pow((d.getNominator() - a), 2);
+                        c++;
+                    }
+                }
+            } break;
+
+            case "target_value": {
+                for (data d: datas) {
+                    if(d.getTarget_Value() == 0) {
+                        continue;
+                    } else {
+                        n += Math.pow((d.getTarget_Value() - a), 2);
+                        c++;
+                    }
+                }
+            } break;
+
+            case "to": {
+                for (data d: datas) {
+                    if(d.getTo() == 0) {
+                        continue;
+                    } else {
+                        n += Math.pow((d.getTo() - a), 2);
+                        c++;
+                    }
+                }
+            } break;
+
+            case "ver": {
+                for (data d: datas) {
+                    if(d.getVer() == 0) {
+                        continue;
+                    } else {
+                        n += Math.pow((d.getVer() - a), 2);
+                        c++;
+                    }
+                }
+            } break;
+
+            default: throw new Exception();
+        }
+
+        double devstdV = Math.sqrt(n/c);
+        return devstdV;
+    }
+*/
+
+    /**
+     * Metodo che calcola il numero di valori presenti in un determinato campo
+     */
+    public static int countValue(String value) throws Exception{
+        int count = 0;
+
+        switch (value) {
+            case "nominator": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getNominator() != 0)
+                        count++;
+                }
+            } break;
+
+            case "target_value": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getTarget_value() != 0)
+                        count++;
+                }
+            } break;
+
+            case "to": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getTo() != 0)
+                        count++;
+                }
+            } break;
+
+            case "ver": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getVer() != 0)
+                        count++;
+                }
+            } break;
+
+            default: throw new Exception();
+        }
+
+        return count;
+    }
 }
+
 
 
 

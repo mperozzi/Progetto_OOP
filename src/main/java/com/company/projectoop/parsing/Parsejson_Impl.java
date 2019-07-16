@@ -26,7 +26,7 @@ import java.lang.Object;
 public class Parsejson_Impl implements Parsejson{
 
     private static String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=european-structural-investment-funds-esif-2014-2020-achievements";
-    private static String FolderPath = "C:/Users/Matteo/Desktop/prova.csv";
+    private static String FolderPath = "/Users/ettorezamponi/Desktop/fileprova.csv ";
     private static String urlD;
 
     public static void Read_json_from_URL() {

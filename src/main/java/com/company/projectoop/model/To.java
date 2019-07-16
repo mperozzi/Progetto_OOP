@@ -6,16 +6,17 @@ import org.springframework.stereotype.Repository;
 @Component
 @Repository
 public class To {
-    private String to;
+
+    private float to;
 
     //costruttore della classe
     public To() {}
 
-    public String getTo() {
+    public float getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public void setTo(float to) {
         this.to = to;
     }
 
