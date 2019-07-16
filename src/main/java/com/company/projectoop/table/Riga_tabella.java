@@ -190,7 +190,7 @@ public class Riga_tabella {
     }
 
     public float getTo() {
-        return to;
+        return to.getTo();
     }
 
     public void setTo(float to) {
@@ -238,7 +238,7 @@ public class Riga_tabella {
     }
 
     public float getTarget_value() {
-        return target_value;
+        return target_value.getTarget_value();
     }
 
     public void setTarget_value(float target_value) {
@@ -254,7 +254,7 @@ public class Riga_tabella {
     }
 
     public float getNominator() {
-        return nominator;
+        return nominator.getNominator();
     }
 
     public void setNominator(float nominator) {

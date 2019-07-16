@@ -62,7 +62,7 @@ public class MainController {
             //calcoliamo la somma e la mettiamo nel JSON
             add.put("sum", Parsecsv_Impl.sumValue(value.toLowerCase()));
         } catch (Exception e) {
-            ...
+            //...
         }
         return add.toString();
     }
@@ -75,7 +75,7 @@ public class MainController {
             //calcoliamo la somma e la mettiamo nel JSON
             add.put("avg", Parsecsv_Impl.avgValue(value.toLowerCase()));
         } catch (Exception e) {
-            ...
+           // ...
         }
         return add.toString();
     }
@@ -88,7 +88,7 @@ public class MainController {
             //calcoliamo la somma e la mettiamo nel JSON
             add.put("min", Parsecsv_Impl.minValue(value.toLowerCase()));
         } catch (Exception e) {
-            ...
+            //...
         }
         return add.toString();
     }
@@ -101,7 +101,7 @@ public class MainController {
             //calcoliamo la somma e la mettiamo nel JSON
             add.put("max", Parsecsv_Impl.maxValue(value.toLowerCase()));
         } catch (Exception e) {
-            ...
+           // ...
         }
         return add.toString();
     }
@@ -114,7 +114,7 @@ public class MainController {
             //calcoliamo la somma e la mettiamo nel JSON
             add.put("count", Parsecsv_Impl.countValue(value.toLowerCase()));
         } catch (Exception e) {
-            ...
+           // ...
         }
         return add.toString();
     }
