@@ -125,11 +125,11 @@ public class Riga_tabella {
         this.cci.setCci(cci);
     }
 
-    public String getVer() {
+    public float getVer() {
         return ver.getVer();
     }
 
-    public void setVer(String ver) {
+    public void setVer(float ver) {
         this.ver.setVer(ver);
     }
 

@@ -3,6 +3,7 @@ package com.company.projectoop.parsing;
 import com.company.projectoop.table.Riga_metadata;
 import com.company.projectoop.table.Riga_tabella;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,5 +27,16 @@ public interface Parsecsv {
      */
     List<Riga_tabella> getData();
 
+    /**
+     * Metodo che implementa i filtri logici e restituisce la lista delle occorrenze filtrate
+     * @param fieldName1
+     * @param value1
+     * @param operator
+     * @param fieldName2
+     * @param value2
+     * @return
+     * @throws Exception
+     */
+    ArrayList<Riga_tabella> Logical_filter(String fieldName1, String value1, String operator, String fieldName2, String value2) throws Exception;
 
 }

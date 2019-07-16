@@ -23,7 +23,6 @@ public class ProjectoopApplication {
         Parsejson_Impl.Read_json_from_URL();
         Parsecsv_Impl.Popola_tabella();
 
-
     }
 
 }

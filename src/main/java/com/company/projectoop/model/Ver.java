@@ -13,16 +13,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class Ver {
 
-    private String ver;
+    private float ver;
 
     //costruttore della classe
     public Ver() {}
 
-    public String getVer() {
+    public float getVer() {
         return ver;
     }
 
-    public void setVer(String ver) {
+    public void setVer(float ver) {
         this.ver = ver;
     }
 }

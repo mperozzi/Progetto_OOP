@@ -1,6 +1,5 @@
 package com.company.projectoop.parsing;
 
-import com.company.projectoop.model.Ms;
 import com.company.projectoop.table.Riga_metadata;
 import com.company.projectoop.table.Riga_tabella;
 import org.springframework.stereotype.Component;
@@ -11,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,9 +133,14 @@ public class Parsecsv_Impl implements Parsecsv {
                         case 2:
                             r.setCci(s[i]);
                             break;
-                        case 3:
-                            r.setVer(s[i]);
+                        case 3: {
+                            String[] s1 = s[i].split("\"");
+                            if (Float.isNaN(Float.parseFloat(s1[1]))) break;
+                            else {
+                                r.setVer(Float.parseFloat(s1[1]));
+                            }
                             break;
+                        }
                         case 4:
                             r.setTitle(s[i]);
                             break;
@@ -175,6 +181,216 @@ public class Parsecsv_Impl implements Parsecsv {
             rm.setType("String");
             list.add(rm);
         }
+    }
+
+    /**
+     * Filtri Logici --> Filtri implementati: and, or, not
+     * @param fieldName1
+     * @param value1
+     * @param operator
+     * @param fieldName2
+     * @param value2
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ArrayList<Riga_tabella> Logical_filter(String fieldName1, String value1, String operator, String fieldName2, String value2) throws Exception {
+
+        //inizializzazione delle strutture dati d'appoggio utilizzate
+        List<Riga_tabella> list = new ArrayList<>();
+        List<String> ls = new ArrayList<>();
+        List<String> ls2 = new ArrayList<>();
+
+        switch (operator) {
+            case "and": {
+                try {
+                    //se i due campi secondari sono vuoti viene lanciata una eccezione
+                    if (fieldName2.isEmpty() || value2.isEmpty())
+                        throw new Exception();
+
+                    Method method1;
+                    Method method2;
+                    String s_filter1;
+                    String s_filter2;
+
+                    for (Riga_tabella riga : data) {
+
+                        //richiamo dei metodi richiesti dall'utente su cui applicare il filtro
+                        method1 = riga.getClass().getMethod("get" + fieldName1.substring(0, 1).toUpperCase() + fieldName1.substring(1), null);
+
+                        //assegnazione delle variabili per applicare il filtro in base al tipo di dato
+                        if (Float.class.isInstance(method1.invoke(riga))) {
+                            s_filter1 = Float.toString((float) method1.invoke(riga));
+                            ls.add(s_filter1);
+                        } else if (Integer.class.isInstance(method1.invoke(riga))) {
+                            s_filter1 = Integer.toString((int) method1.invoke(riga));
+                            ls.add(s_filter1);
+                        } else {
+                            s_filter1 = (String) method1.invoke(riga);
+                            ls.add(s_filter1);
+                        }
+
+                        method2 = riga.getClass().getMethod("get" + fieldName2.substring(0, 1).toUpperCase() + fieldName2.substring(1), null);
+                        if (Float.class.isInstance(method2.invoke(riga))) {
+                            s_filter2 = Float.toString((float) method2.invoke(riga));
+                            ls2.add(s_filter2);
+                        } else if (Integer.class.isInstance(method2.invoke(riga))) {
+                            s_filter2 = Integer.toString((int) method2.invoke(riga));
+                            ls2.add(s_filter2);
+                        } else {
+                            s_filter2 = (String) method2.invoke(riga);
+                            ls.add(s_filter2);
+                        }
+                    }
+
+                    //inserimento degli elementi della tabella che rispettano i criteri specificati dal filtro nella lista
+                    for (int j = 0; j < ls.size(); j++) {
+                        if (ls.get(j).equals(value1) && ls2.get(j).equals(value2)) {
+                            Riga_tabella riga;
+                            riga = data.get(j);
+                            list.add(riga);
+                        }
+                    }
+
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+
+            case "or": {
+                try {
+                    //se i due campi secondari sono vuoti viene lanciata una eccezione
+                    if (fieldName2.isEmpty() || value2.isEmpty())
+                        throw new Exception();
+
+                    Method method1;
+                    Method method2;
+                    String s_filter1;
+                    String s_filter2;
+
+                    for (Riga_tabella riga : data) {
+
+                        //richiamo dei metodi richiesti dall'utente su cui applicare il filtro
+                        method1 = riga.getClass().getMethod("get" + fieldName1.substring(0, 1).toUpperCase() + fieldName1.substring(1), null);
+
+                        //assegnazione delle variabili per applicare il filtro in base al tipo di dato
+                        if (Float.class.isInstance(method1.invoke(riga))) {
+                            s_filter1 = Float.toString((float) method1.invoke(riga));
+                            ls.add(s_filter1);
+                        } else if (Integer.class.isInstance(method1.invoke(riga))) {
+                            s_filter1 = Integer.toString((int) method1.invoke(riga));
+                            ls.add(s_filter1);
+                        } else {
+                            s_filter1 = (String) method1.invoke(riga);
+                            ls.add(s_filter1);
+                        }
+
+                        method2 = riga.getClass().getMethod("get" + fieldName2.substring(0, 1).toUpperCase() + fieldName2.substring(1), null);
+                        if (Float.class.isInstance(method2.invoke(riga))) {
+                            s_filter2 = Float.toString((float) method2.invoke(riga));
+                            ls2.add(s_filter2);
+                        } else if (Integer.class.isInstance(method2.invoke(riga))) {
+                            s_filter2 = Integer.toString((int) method2.invoke(riga));
+                            ls2.add(s_filter2);
+                        } else {
+                            s_filter2 = (String) method2.invoke(riga);
+                            ls.add(s_filter2);
+                        }
+                    }
+
+                    //inserimento degli elementi della tabella che rispettano i criteri specificati dal filtro nella lista
+                    for (int j = 0; j < ls.size(); j++) {
+                        if (ls.get(j).equals(value1) | ls2.get(j).equals(value2)) {
+                            Riga_tabella riga;
+                            riga = data.get(j);
+                            list.add(riga);
+                        }
+                    }
+
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            } break;
+
+            case "not": {
+                try {
+
+                    Method method1;
+                    String s_filter1;
+
+                    for (Riga_tabella riga : data) {
+
+                        //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                        method1 = riga.getClass().getMethod("get" + fieldName1.substring(0, 1).toUpperCase() + fieldName1.substring(1), null);
+
+                        //assegnazione della variabile per applicare il filtro in base al tipo di dato
+                        if (Float.class.isInstance(method1.invoke(riga))) {
+                            s_filter1 = Float.toString((float) method1.invoke(riga));
+                            ls.add(s_filter1);
+                        } else if (Integer.class.isInstance(method1.invoke(riga))) {
+                            s_filter1 = Integer.toString((int) method1.invoke(riga));
+                            ls.add(s_filter1);
+                        } else {
+                            s_filter1 = (String) method1.invoke(riga);
+                            ls.add(s_filter1);
+                        }
+                    }
+
+                    for (int j = 0; j < ls.size(); j++) {
+                        if (!ls.get(j).equals(value1)) {
+                            Riga_tabella riga;
+                            riga = data.get(j);
+                            list.add(riga);
+                        }
+                    }
+
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            } break;
+
+            default:
+                throw new Exception();
+        }
+
+        return (ArrayList<Riga_tabella>) list;
     }
 }
 

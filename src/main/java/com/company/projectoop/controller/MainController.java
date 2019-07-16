@@ -2,6 +2,7 @@ package com.company.projectoop.controller;
 
 import com.company.projectoop.parsing.Parsecsv_Impl;
 import com.company.projectoop.table.Riga_tabella;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +41,16 @@ public class MainController {
         return (ArrayList) p.getMetadata();
     }
 
+    @RequestMapping(value = "/logicalfilter", method = RequestMethod.GET)
+    public ArrayList<Riga_tabella> Lfilter(
+            @RequestParam("operator") String operator,
+            @RequestParam("field1") String field1,
+            @RequestParam("value1") String value1,
+            @RequestParam(name = "field2", defaultValue = "") String field2,
+            @RequestParam(name = "value2", defaultValue = "") String value2
+            ) throws Exception {
+
+        return p.Logical_filter(field1, value1, operator, field2, value2);
+    }
 
 }
