@@ -13,15 +13,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class Year {
 
-    private String year;
+    private int year;
 
     public Year() {}
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 }

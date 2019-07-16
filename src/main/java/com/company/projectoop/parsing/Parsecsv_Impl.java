@@ -31,7 +31,7 @@ import java.util.List;
 
 public class Parsecsv_Impl implements Parsecsv {
 
-    private static String namefile = "/Users/ettorezamponi/Desktop/fileprova.csv ";
+    private static String namefile = "fileprova.csv ";
 
     /**
      * ArrayList in cui vengono immagazzinati i dati completi letti dal CSV
@@ -208,7 +208,8 @@ public class Parsecsv_Impl implements Parsecsv {
                             r.setIs_division(s[i]);
                             break;
                         case 22:
-                            r.setYear(s[i]);
+                            String[] s22 = s[i].split("\"");
+                            r.setNominator(Float.parseFloat(s22[1]));
                             break;
                         case 23:
                             r.setIr_ver(s[i]);
@@ -483,12 +484,14 @@ public class Parsecsv_Impl implements Parsecsv {
             default:
                 throw new Exception();
         }
-
         return (ArrayList<Riga_tabella>) list;
     }
 
     /**
-     * Metodo che calcola la media dei valori
+     * Metodo che calcola la media dei valori all'interno di un campo value del dataset
+     * @param value
+     * @return
+     * @throws Exception
      */
     public static float avgValue(String value) throws Exception{
         float sum = 0;
@@ -539,7 +542,10 @@ public class Parsecsv_Impl implements Parsecsv {
     }
 
     /**
-     * Metodo che calcola il minore valore
+     * Metodo che restituisce il valore minimo tra tutti quelli relativi al campo value del dataset
+     * @param value
+     * @return
+     * @throws Exception
      */
     public static float minValue(String value) throws Exception{
         float min = 0;
@@ -585,7 +591,10 @@ public class Parsecsv_Impl implements Parsecsv {
 
 
     /**
-     * Metodo che calcola il massimo valore
+     * Metodo che restituisce il valore massimo tra tutti quelli relativi al campo value del dataset
+     * @param value
+     * @return
+     * @throws Exception
      */
     public static float maxValue(String value) throws Exception{
         float max = 0;
@@ -630,7 +639,10 @@ public class Parsecsv_Impl implements Parsecsv {
     }
 
     /**
-     * Metodo che calcola la somma dei valori
+     * Metodo che calcola la somma dei valori di un campo value all'interno del dataset
+     * @param value
+     * @return
+     * @throws Exception
      */
     public static float sumValue(String value) throws Exception{
         float sum = 0;
@@ -667,17 +679,19 @@ public class Parsecsv_Impl implements Parsecsv {
     }
 
     /**
-     * Metodo che calcola la deviazione standard dei valori
+     * Metodo che calcola la deviazione standard dei valori all'interno di un campo del dataset
+     * @param value
+     * @return
+     * @throws Exception
      */
-/*
-    public double devstdValue (String value) throws Exception{
+    public static double devstdValue (String value) throws Exception{
         double c = 0.0;
         double n = 0;
         double a = avgValue(value);
 
         switch (value) {
             case "nominator": {
-                for (data d: datas) {
+                for (Riga_tabella d: data) {
                     if(d.getNominator() == 0) {
                         continue;
                     } else {
@@ -688,18 +702,18 @@ public class Parsecsv_Impl implements Parsecsv {
             } break;
 
             case "target_value": {
-                for (data d: datas) {
-                    if(d.getTarget_Value() == 0) {
+                for (Riga_tabella d: data) {
+                    if(d.getTarget_value() == 0) {
                         continue;
                     } else {
-                        n += Math.pow((d.getTarget_Value() - a), 2);
+                        n += Math.pow((d.getTarget_value() - a), 2);
                         c++;
                     }
                 }
             } break;
 
             case "to": {
-                for (data d: datas) {
+                for (Riga_tabella d: data) {
                     if(d.getTo() == 0) {
                         continue;
                     } else {
@@ -710,7 +724,7 @@ public class Parsecsv_Impl implements Parsecsv {
             } break;
 
             case "ver": {
-                for (data d: datas) {
+                for (Riga_tabella d: data) {
                     if(d.getVer() == 0) {
                         continue;
                     } else {
@@ -726,10 +740,13 @@ public class Parsecsv_Impl implements Parsecsv {
         double devstdV = Math.sqrt(n/c);
         return devstdV;
     }
-*/
+
 
     /**
-     * Metodo che calcola il numero di valori presenti in un determinato campo
+     * Metodo che calcola il numero di valori presenti in un determinato campo value
+     * @param value
+     * @return
+     * @throws Exception
      */
     public static int countValue(String value) throws Exception{
         int count = 0;

@@ -133,56 +133,56 @@ public class Riga_tabella {
         this.ver.setVer(ver);
     }
 
-    public Title getTitle() {
-        return title;
+    public String getTitle() {
+        return title.getTitle();
     }
 
     public void setTitle(String title) {
         this.title.setTitle(title);
     }
 
-    public Fund getFund() {
-        return fund;
+    public String getFund() {
+        return fund.getFund();
     }
 
     public void setFund(String fund) {
         this.fund.setFund(fund);
     }
 
-    public Indicator_type_code getIndicator_type_code() {
-        return indicator_type_code;
+    public String getIndicator_type_code() {
+        return indicator_type_code.getIndicator_type_code();
     }
 
     public void setIndicator_type_code(String indicator_type_code) {
         this.indicator_type_code.setIndicator_type_code(indicator_type_code);
     }
 
-    public Ind_code getInd_code() {
-        return ind_code;
+    public String getInd_code() {
+        return ind_code.getInd_code();
     }
 
     public void setInd_code (String ind_code) {
         this.ind_code.setInd_code(ind_code);
     }
 
-    public Ind_group_code getInd_group_code() {
-        return ind_group_code;
+    public String getInd_group_code() {
+        return ind_group_code.getInd_group_code();
     }
 
     public void setInd_group_code(String ind_group_code) {
         this.ind_group_code.setInd_group_code(ind_group_code);
     }
 
-    public Indicator_short_name getIndicator_short_name() {
-        return indicator_short_name;
+    public String getIndicator_short_name() {
+        return indicator_short_name.getIndicator_short_name();
     }
 
     public void setIndicator_short_name(String indicator_short_name) {
         this.indicator_short_name.setIndicator_short_name(indicator_short_name);
     }
 
-    public Indicator_long_name getIndicator_long_name() {
-        return indicator_long_name;
+    public String getIndicator_long_name() {
+        return indicator_long_name.getIndicator_long_name();
     }
 
     public void setIndicator_long_name(String indicator_long_name) {
@@ -197,40 +197,40 @@ public class Riga_tabella {
         this.to.setTo(to);
     }
 
-    public To_short getTo_short() {
-        return to_short;
+    public String getTo_short() {
+        return to_short.getTo_short();
     }
 
     public void setTo_short(String to_short) {
         this.to_short.setTo_short(to_short);
     }
 
-    public Priority_code getPriority_code() {
-        return priority_code;
+    public String getPriority_code() {
+        return priority_code.getPriority_code();
     }
 
     public void setPriority_code(String priority_code) {
         this.priority_code.setPriority_code(priority_code);
     }
 
-    public Investment_priority getInvestment_priority() {
-        return investment_priority;
+    public String getInvestment_priority() {
+        return investment_priority.getInvestment_priority();
     }
 
     public void setInvestment_priority(String investment_priority) {
         this.investment_priority.setInvestment_priority(investment_priority);
     }
 
-    public Measure_code getMeasure_code() {
-        return measure_code;
+    public String getMeasure_code() {
+        return measure_code.getMeasure_code();
     }
 
     public void setMeasure_code(String measure_code) {
         this.measure_code.setMeasure_code(measure_code);
     }
 
-    public Focus_area_code getFocus_area_code() {
-        return focus_area_code;
+    public String getFocus_area_code() {
+        return focus_area_code.getFocus_area_code();
     }
 
     public void setFocus_area_code(String focus_area_code) {
@@ -245,8 +245,8 @@ public class Riga_tabella {
         this.target_value.setTarget_value(target_value);
     }
 
-    public Measurement_unit getMeasurement_unit() {
-        return measurement_unit;
+    public String getMeasurement_unit() {
+        return measurement_unit.getMeasurement_unit();
     }
 
     public void setMeasurement_unit(String measurement_unit) {
@@ -261,120 +261,120 @@ public class Riga_tabella {
         this.nominator.setNominator(nominator);
     }
 
-    public Denominator getDenominator() {
-        return denominator;
+    public String getDenominator() {
+        return denominator.getDenominator();
     }
 
     public void setDenominator(String denominator) {
         this.denominator.setDenominator(denominator);
     }
 
-    public Is_division getIs_division() {
-        return is_division;
+    public String getIs_division() {
+        return is_division.getIs_division();
     }
 
     public void setIs_division(String is_division) {
         this.is_division.setIs_division(is_division);
     }
 
-    public Year getYear() {
-        return year;
+    public int getYear() {
+        return year.getYear();
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year.setYear(year);
     }
 
-    public Ir_ver getIr_ver() {
-        return ir_ver;
+    public String getIr_ver() {
+        return ir_ver.getIr_ver();
     }
 
     public void setIr_ver(String ir_ver) {
         this.ir_ver.setIr_ver(ir_ver);
     }
 
-    public Forecast_value getForecast_value() {
-        return forecast_value;
+    public String getForecast_value() {
+        return forecast_value.getForecast_value();
     }
 
     public void setForecast_value(String forecast_value) {
         this.forecast_value.setForecast_value(forecast_value);
     }
 
-    public Forecast_nominator getForecast_nominator() {
-        return forecast_nominator;
+    public String getForecast_nominator() {
+        return forecast_nominator.getForecast_nominator();
     }
 
     public void setForecast_nominator(String forecast_nominator) {
         this.forecast_nominator.setForecast_nominator(forecast_nominator);
     }
 
-    public Forecast_denominator getForecast_denominator() {
-        return forecast_denominator;
+    public String getForecast_denominator() {
+        return forecast_denominator.getForecast_denominator();
     }
 
     public void setForecast_denominator(String forecast_denominator) {
         this.forecast_denominator.setForecast_denominator(forecast_denominator);
     }
 
-    public Implemented_value getImplemented_value() {
-        return implemented_value;
+    public String getImplemented_value() {
+        return implemented_value.getImplemented_value();
     }
 
     public void setImplemented_value(String implemented_value) {
         this.implemented_value.setImplemented_value(implemented_value);
     }
 
-    public Implemented_nominator getImplemented_nominator() {
-        return implemented_nominator;
+    public String getImplemented_nominator() {
+        return implemented_nominator.getImplemented_nominator();
     }
 
     public void setImplemented_nominator(String implemented_nominator) {
         this.implemented_nominator.setImplemented_nominator(implemented_nominator);
     }
 
-    public Implemented_denominator getImplemented_denominator() {
-        return implemented_denominator;
+    public String getImplemented_denominator() {
+        return implemented_denominator.getImplemented_denominator();
     }
 
     public void setImplemented_denominator(String implemented_denominator) {
         this.implemented_denominator.setImplemented_denominator(implemented_denominator);
     }
 
-    public Visualize_by_to getVisualize_by_to() {
-        return visualize_by_to;
+    public String getVisualize_by_to() {
+        return visualize_by_to.getVisualize_by_to();
     }
 
     public void setVisualize_by_to(String visualize_by_to) {
         this.visualize_by_to.setVisualize_by_to(visualize_by_to);
     }
 
-    public Visualize_by_ms getVisualize_by_ms() {
-        return visualize_by_ms;
+    public String getVisualize_by_ms() {
+        return visualize_by_ms.getVisualize_by_ms();
     }
 
     public void setVisualize_by_ms(String visualize_by_ms) {
         this.visualize_by_ms.setVisualize_by_ms(visualize_by_ms);
     }
 
-    public Ms_op_coverage getMs_op_coverage() {
-        return ms_op_coverage;
+    public String getMs_op_coverage() {
+        return ms_op_coverage.getMs_op_coverage();
     }
 
     public void setMs_op_coverage(String ms_op_coverage) {
         this.ms_op_coverage.setMs_op_coverage(ms_op_coverage);
     }
 
-    public Finance_coverage getFinance_coverage() {
-        return finance_coverage;
+    public String getFinance_coverage() {
+        return finance_coverage.getFinance_coverage();
     }
 
     public void setFinance_coverage(String finance_coverage) {
         this.finance_coverage.setFinance_coverage(finance_coverage);
     }
 
-    public Ind_group_name getInd_group_name() {
-        return ind_group_name;
+    public String getInd_group_name() {
+        return ind_group_name.getInd_group_name();
     }
 
     public void setInd_group_name(String ind_group_name) {
