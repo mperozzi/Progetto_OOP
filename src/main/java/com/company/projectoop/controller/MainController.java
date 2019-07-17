@@ -33,8 +33,8 @@ public class MainController {
                     "/logicalfilter/{operator}/<parametri e valori> --> Per applicare filtri logici" +"\n" +
                     "/conditionalfilter/{operator}/<parametri e valori> --> Per applicare i filtri condizionali" + "\n" +
                     "/stats/{field} --> Per ottenere le statistiche complete di un determinato campo" + "\n" +
-                    "//stats/{statistica desiderata}/{field} ---> Per ottenere la singola statistica di un determinato campo",
-                    HttpStatus.OK);
+                    "/stats/{statistica desiderata}/{field} ---> Per ottenere la singola statistica di un determinato campo" + "\n" +
+                    "/get/{field} --> Per ottenere i valori di un determinato campo della tabella", HttpStatus.OK);
     }
 
     /**
@@ -188,4 +188,14 @@ public class MainController {
                                            @RequestParam(name = "value2", defaultValue = "0") String value2  ) throws Exception {
         return p.Conditional_filter(operator, field, value, value2);
     }
+
+    /**
+     * Ottenere i valori di un determinato campo del dataset
+     * @return --> lista dei dati del campo
+     */
+    @GetMapping(value = "/get/{field}")
+    public ArrayList<Object> getfield(@PathVariable String field) throws Exception {
+        return p.Returnfield(field);
+    }
+
 }

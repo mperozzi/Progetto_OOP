@@ -48,6 +48,7 @@ public class Parsecsv_Impl implements Parsecsv {
 
     /**
      * getter della lista: metadata.
+     *
      * @return
      */
     @Override
@@ -58,6 +59,7 @@ public class Parsecsv_Impl implements Parsecsv {
 
     /**
      * getter della lista: data
+     *
      * @return
      */
     @Override
@@ -71,6 +73,7 @@ public class Parsecsv_Impl implements Parsecsv {
      * dei metodi Parse_file() e Popola_metadata() effettua il parsing del file CSV (precedemente scaricato tramite
      * l'utilizzo dei metodi della classe Parsejson_Impl).
      * I dati vengono immagazzinati nelle due liste di riferimento.
+     *
      * @throws IOException
      * @throws FileNotFoundException
      */
@@ -89,16 +92,14 @@ public class Parsecsv_Impl implements Parsecsv {
                 line = reader.readLine();
                 Parse_file(line, data);
                 if (line == null) break;
-            } while(reader.ready());
+            } while (reader.ready());
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
 
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
-
-        finally {
+        } finally {
             //chiusura del flusso di lettura del file
             try {
                 if (reader != null) reader.close();
@@ -116,6 +117,7 @@ public class Parsecsv_Impl implements Parsecsv {
      * in questo caso, il separatore di campo, che è (,).
      * Le sottostringhe vengono immagazzinate in un array e poi assegnata al relativo
      * campo della tabella.
+     *
      * @param line
      * @param list
      * @throws NullPointerException
@@ -179,10 +181,11 @@ public class Parsecsv_Impl implements Parsecsv {
                              * solamente se la stringa rappresenta un numero
                              * */
                             String[] s11 = s[i].split("\"");
-                            if (s11.length >= 2) {
+
+                            if (s11.length >= 2 && !s11[1].isEmpty()) {
                                 if (Float.isNaN(Float.parseFloat(s11[1]))) r.setTo(0);
                                 else r.setTo((int) Float.parseFloat(s11[1]));
-                            }
+                            } else break;
                             break;
                         case 12:
                             r.setTo_short(s[i]);
@@ -201,9 +204,8 @@ public class Parsecsv_Impl implements Parsecsv {
                             break;
                         case 17:
                             String[] s17 = s[i].split("\"");
-                            if (s17.length <1) r.setTarget_value(0);
-                            else if (s17.length >= 2) {
-                                if (Float.isNaN(Float.parseFloat(s17[1]))) r.setTarget_value(0);
+                            if (s17.length >= 2 && !s17[1].isEmpty()) {
+                                if (Float.isNaN((int) Float.parseFloat(s17[1]))) r.setTarget_value(0);
                                 else r.setTarget_value((int) Float.parseFloat(s17[1]));
                             }
                             break;
@@ -212,7 +214,7 @@ public class Parsecsv_Impl implements Parsecsv {
                             break;
                         case 19:
                             String[] s19 = s[i].split("\"");
-                            if (s19.length >= 2) {
+                            if (s19.length >= 2 && !s19[1].isEmpty()) {
                                 if (Float.isNaN(Float.parseFloat(s19[1]))) r.setNominator(0);
                                 else r.setNominator((int) Float.parseFloat(s19[1]));
                             }
@@ -225,14 +227,14 @@ public class Parsecsv_Impl implements Parsecsv {
                             break;
                         case 22:
                             String[] s22 = s[i].split("\"");
-                            if (s22.length >= 2) {
+                            if (s22.length >= 2 && !s22[1].isEmpty()) {
                                 if (Float.isNaN(Float.parseFloat(s22[1]))) r.setYear(0);
                                 else r.setYear((int) Float.parseFloat(s22[1]));
                             }
                             break;
                         case 23:
                             String[] s23 = s[i].split("\"");
-                            if (s23.length >= 2) {
+                            if (s23.length >= 2 && !s23[1].isEmpty()) {
                                 if (Float.isNaN(Float.parseFloat(s23[1]))) r.setIr_ver(0);
                                 else r.setIr_ver(Float.parseFloat(s23[1]));
                             }
@@ -278,9 +280,7 @@ public class Parsecsv_Impl implements Parsecsv {
 
             //aggiungo la riga alla lista
             list.add(r);
-        }
-
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -289,6 +289,7 @@ public class Parsecsv_Impl implements Parsecsv {
     /**
      * Metodo che popola la lista meta che contiene i metadati.
      * Inserisce il campo della tabella e il tipo di dato.
+     *
      * @param line
      * @param list
      */
@@ -331,6 +332,7 @@ public class Parsecsv_Impl implements Parsecsv {
 
     /**
      * Filtri Logici --> Filtri implementati: $and, $or, $not
+     *
      * @param fieldName1
      * @param value1
      * @param l_operator
@@ -343,7 +345,8 @@ public class Parsecsv_Impl implements Parsecsv {
     public ArrayList<Riga_tabella> Logical_filter(String l_operator, String fieldName1, String value1, String fieldName2, String value2) throws Exception {
 
         //verifica del corretto inserimento dei parametri primari
-        if (l_operator.isEmpty() || fieldName1.isEmpty() || value1.isEmpty()) throw new Exception("Errore di inserimento parametri");
+        if (l_operator.isEmpty() || fieldName1.isEmpty() || value1.isEmpty())
+            throw new Exception("Errore di inserimento parametri");
 
         //inizializzazione delle strutture dati d'appoggio
         List<Riga_tabella> list = new ArrayList<>();
@@ -416,7 +419,8 @@ public class Parsecsv_Impl implements Parsecsv {
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 }
-            } break;
+            }
+            break;
 
             case "$or": {
                 try {
@@ -483,7 +487,8 @@ public class Parsecsv_Impl implements Parsecsv {
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 }
-            } break;
+            }
+            break;
 
             case "$not": {
                 try {
@@ -533,7 +538,8 @@ public class Parsecsv_Impl implements Parsecsv {
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 }
-            } break;
+            }
+            break;
 
             default:
                 throw new Exception();
@@ -544,11 +550,12 @@ public class Parsecsv_Impl implements Parsecsv {
 
     /**
      * Metodo che calcola la media dei valori all'interno di un campo value del dataset
+     *
      * @param value
      * @return
      * @throws Exception
      */
-    public static float avgValue(String value) throws Exception{
+    public static float avgValue(String value) throws Exception {
         float sum = 0;
         int n = 0;
 
@@ -561,7 +568,8 @@ public class Parsecsv_Impl implements Parsecsv {
                         n++;
                     }
                 }
-            } break;
+            }
+            break;
 
             case "target_value": {
                 for (int i = 0; i < data.size(); i++) {
@@ -570,7 +578,8 @@ public class Parsecsv_Impl implements Parsecsv {
                         n++;
                     }
                 }
-            } break;
+            }
+            break;
 
             case "to": {
                 for (int i = 0; i < data.size(); i++) {
@@ -579,7 +588,8 @@ public class Parsecsv_Impl implements Parsecsv {
                         n++;
                     }
                 }
-            } break;
+            }
+            break;
 
             case "ver": {
                 for (int i = 0; i < data.size(); i++) {
@@ -588,7 +598,8 @@ public class Parsecsv_Impl implements Parsecsv {
                         n++;
                     }
                 }
-            } break;
+            }
+            break;
 
             case "ir_ver": {
                 for (int i = 0; i < data.size(); i++) {
@@ -597,24 +608,27 @@ public class Parsecsv_Impl implements Parsecsv {
                         n++;
                     }
                 }
-            } break;
+            }
+            break;
 
             //se il campo scelto non è di tipo numerico si lancia l'eccezione
-            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
+            default:
+                throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
-        float avg = sum/n;
+        float avg = sum / n;
         return avg;
     }
 
 
     /**
      * Metodo che restituisce il valore minimo tra tutti quelli relativi al campo value del dataset
+     *
      * @param value
      * @return
      * @throws Exception
      */
-    public static float minValue(String value) throws Exception{
+    public static float minValue(String value) throws Exception {
         float min = 0;
 
         //in base al tipo di campo scelto, si cerca il valore minimo tra valori presenti nella tabella richiamandoli con il getter
@@ -625,7 +639,8 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getNominator() < min && data.get(i).getNominator() != 0)
                         min = data.get(i).getNominator();
                 }
-            } break;
+            }
+            break;
 
             case "target_value": {
                 min = data.get(0).getTarget_value();
@@ -633,7 +648,8 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getTarget_value() < min && data.get(i).getTarget_value() != 0)
                         min = data.get(i).getTarget_value();
                 }
-            } break;
+            }
+            break;
 
             case "to": {
                 min = data.get(0).getTo();
@@ -641,7 +657,8 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getTo() < min && data.get(i).getTo() != 0)
                         min = data.get(i).getTo();
                 }
-            } break;
+            }
+            break;
 
             case "ver": {
                 min = data.get(0).getVer();
@@ -649,7 +666,8 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getVer() < min && data.get(i).getVer() != 0)
                         min = data.get(i).getVer();
                 }
-            } break;
+            }
+            break;
 
             case "ir_ver": {
                 min = data.get(0).getIr_ver();
@@ -657,10 +675,12 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getIr_ver() < min && data.get(i).getIr_ver() != 0)
                         min = data.get(i).getIr_ver();
                 }
-            } break;
+            }
+            break;
 
             //se il campo scelto non è di tipo numerico si lancia l'eccezione
-            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
+            default:
+                throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         return min;
@@ -669,11 +689,12 @@ public class Parsecsv_Impl implements Parsecsv {
 
     /**
      * Metodo che restituisce il valore massimo tra tutti quelli relativi al campo value del dataset
+     *
      * @param value
      * @return
      * @throws Exception
      */
-    public static float maxValue(String value) throws Exception{
+    public static float maxValue(String value) throws Exception {
         float max = 0;
 
         //in base al tipo di campo scelto, si cerca il valore massimo tra valori presenti nella tabella richiamandoli con il getter
@@ -684,7 +705,8 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getNominator() > max)
                         max = data.get(i).getNominator();
                 }
-            } break;
+            }
+            break;
 
             case "target_value": {
                 max = data.get(0).getTarget_value();
@@ -692,7 +714,8 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getTarget_value() > max)
                         max = data.get(i).getTarget_value();
                 }
-            } break;
+            }
+            break;
 
             case "to": {
                 max = data.get(0).getTo();
@@ -700,7 +723,8 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getTo() > max)
                         max = data.get(i).getTo();
                 }
-            } break;
+            }
+            break;
 
             case "ver": {
                 max = data.get(0).getVer();
@@ -708,7 +732,8 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getVer() > max)
                         max = data.get(i).getVer();
                 }
-            } break;
+            }
+            break;
 
             case "ir_ver": {
                 max = data.get(0).getIr_ver();
@@ -716,10 +741,12 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getIr_ver() > max)
                         max = data.get(i).getIr_ver();
                 }
-            } break;
+            }
+            break;
 
             //se il campo scelto non è di tipo numerico si lancia l'eccezione
-            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
+            default:
+                throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         return max;
@@ -728,11 +755,12 @@ public class Parsecsv_Impl implements Parsecsv {
 
     /**
      * Metodo che calcola la somma dei valori di un campo value all'interno del dataset
+     *
      * @param value
      * @return
      * @throws Exception
      */
-    public static float sumValue(String value) throws Exception{
+    public static float sumValue(String value) throws Exception {
         float sum = 0;
 
         //in base al tipo di campo scelto, si calcola la somma dei valori presenti nella tabella richiamandoli con il getter
@@ -741,34 +769,40 @@ public class Parsecsv_Impl implements Parsecsv {
                 for (int i = 0; i < data.size(); i++) {
                     sum += data.get(i).getNominator();
                 }
-            } break;
+            }
+            break;
 
             case "target_value": {
                 for (int i = 0; i < data.size(); i++) {
                     sum += data.get(i).getTarget_value();
                 }
-            } break;
+            }
+            break;
 
             case "to": {
                 for (int i = 0; i < data.size(); i++) {
                     sum += data.get(i).getTo();
                 }
-            } break;
+            }
+            break;
 
             case "ver": {
                 for (int i = 0; i < data.size(); i++) {
                     sum += data.get(i).getVer();
                 }
-            } break;
+            }
+            break;
 
             case "ir_ver": {
                 for (int i = 0; i < data.size(); i++) {
                     sum += data.get(i).getIr_ver();
                 }
-            } break;
+            }
+            break;
 
             //se il campo scelto non è di tipo numerico si lancia l'eccezione
-            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
+            default:
+                throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         return sum;
@@ -777,11 +811,12 @@ public class Parsecsv_Impl implements Parsecsv {
 
     /**
      * Metodo che calcola la deviazione standard dei valori all'interno di un campo del dataset
+     *
      * @param value
      * @return
      * @throws Exception
      */
-    public static double devstdValue (String value) throws Exception{
+    public static double devstdValue(String value) throws Exception {
         double c = 0.0;
         double n = 0;
         double a = avgValue(value);
@@ -789,76 +824,83 @@ public class Parsecsv_Impl implements Parsecsv {
         //in base al tipo di campo scelto, si calcola la deviazione standard dei valori presenti nella tabella richiamandoli con il getter
         switch (value) {
             case "nominator": {
-                for (Riga_tabella d: data) {
-                    if(d.getNominator() == 0) {
+                for (Riga_tabella d : data) {
+                    if (d.getNominator() == 0) {
                         continue;
                     } else {
                         n += Math.pow((d.getNominator() - a), 2);
                         c++;
                     }
                 }
-            } break;
+            }
+            break;
 
             case "target_value": {
-                for (Riga_tabella d: data) {
-                    if(d.getTarget_value() == 0) {
+                for (Riga_tabella d : data) {
+                    if (d.getTarget_value() == 0) {
                         continue;
                     } else {
                         n += Math.pow((d.getTarget_value() - a), 2);
                         c++;
                     }
                 }
-            } break;
+            }
+            break;
 
             case "to": {
-                for (Riga_tabella d: data) {
-                    if(d.getTo() == 0) {
+                for (Riga_tabella d : data) {
+                    if (d.getTo() == 0) {
                         continue;
                     } else {
                         n += Math.pow((d.getTo() - a), 2);
                         c++;
                     }
                 }
-            } break;
+            }
+            break;
 
             case "ver": {
-                for (Riga_tabella d: data) {
-                    if(d.getVer() == 0) {
+                for (Riga_tabella d : data) {
+                    if (d.getVer() == 0) {
                         continue;
                     } else {
                         n += Math.pow((d.getVer() - a), 2);
                         c++;
                     }
                 }
-            } break;
+            }
+            break;
 
             case "ir_ver": {
-                for (Riga_tabella d: data) {
-                    if(d.getIr_ver() == 0) {
+                for (Riga_tabella d : data) {
+                    if (d.getIr_ver() == 0) {
                         continue;
                     } else {
                         n += Math.pow((d.getIr_ver() - a), 2);
                         c++;
                     }
                 }
-            } break;
+            }
+            break;
 
             //se il campo scelto non è di tipo numerico si lancia l'eccezione
-            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
+            default:
+                throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
-        double devstdV = Math.sqrt(n/c);
+        double devstdV = Math.sqrt(n / c);
         return devstdV;
     }
 
 
     /**
      * Metodo che conta il numero di valori presenti in un determinato campo value
+     *
      * @param value
      * @return
      * @throws Exception
      */
-    public static int countValue(String value) throws Exception{
+    public static int countValue(String value) throws Exception {
         int count = 0;
 
         //in base al tipo di campo scelto, si conta il numero dei valori non nulli presenti nella tabella richiamandoli con il getter
@@ -868,38 +910,44 @@ public class Parsecsv_Impl implements Parsecsv {
                     if (data.get(i).getNominator() != 0)
                         count++;
                 }
-            } break;
+            }
+            break;
 
             case "target_value": {
                 for (int i = 0; i < data.size(); i++) {
                     if (data.get(i).getTarget_value() != 0)
                         count++;
                 }
-            } break;
+            }
+            break;
 
             case "to": {
                 for (int i = 0; i < data.size(); i++) {
                     if (data.get(i).getTo() != 0)
                         count++;
                 }
-            } break;
+            }
+            break;
 
             case "ver": {
                 for (int i = 0; i < data.size(); i++) {
                     if (data.get(i).getVer() != 0)
                         count++;
                 }
-            } break;
+            }
+            break;
 
             case "ir_ver": {
                 for (int i = 0; i < data.size(); i++) {
                     if (data.get(i).getIr_ver() != 0)
                         count++;
                 }
-            } break;
+            }
+            break;
 
             //se il campo scelto non è di tipo numerico si lancia l'eccezione
-            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
+            default:
+                throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         return count;
@@ -909,6 +957,7 @@ public class Parsecsv_Impl implements Parsecsv {
     /**
      * Metodo che effettua il conteggio di quante occorrenze ci sono di un valore
      * all'interno di un determinato campo del dataset
+     *
      * @param fieldName
      * @param value
      * @return
@@ -965,8 +1014,10 @@ public class Parsecsv_Impl implements Parsecsv {
         return counter;
     }
 
+
     /**
      * Filtri Condizionali --> Filtri implementati: $gt (maggiore), $gte (maggiore e uguale), $lt(minore), $lte (minore e uguale), $bt (compreso tra)
+     *
      * @param c_operator
      * @param fieldName
      * @param value
@@ -974,12 +1025,13 @@ public class Parsecsv_Impl implements Parsecsv {
      * @return
      * @throws Exception
      */
-    public ArrayList<Riga_tabella> Conditional_filter(String c_operator, String fieldName, String value, String value2) throws Exception{
+    public ArrayList<Riga_tabella> Conditional_filter(String c_operator, String fieldName, String value, String value2) throws Exception {
 
         List<Riga_tabella> list = new ArrayList<>();
 
         //verifica del corretto inserimento dei parametri
-        if (c_operator.isEmpty() | fieldName.isEmpty() | value.isEmpty() | value2.isEmpty()) throw new Exception("Errore di inserimento parametri");
+        if (c_operator.isEmpty() | fieldName.isEmpty() | value.isEmpty() | value2.isEmpty())
+            throw new Exception("Errore di inserimento parametri");
 
         else {
 
@@ -1017,10 +1069,10 @@ public class Parsecsv_Impl implements Parsecsv {
                                     if (ivalue > valuemod) {
                                         list.add(riga);
                                     }
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
-                        }
-                        else if (value.equals("0") && !value2.equals("0")) {
+                        } else if (value.equals("0") && !value2.equals("0")) {
                             Method method;
                             float fvalue = 0;
                             int ivalue = 0;
@@ -1048,26 +1100,28 @@ public class Parsecsv_Impl implements Parsecsv {
                                     if (ivalue > valuemod) {
                                         list.add(riga);
                                     }
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
 
                         }
-                        } catch(NoSuchMethodException e){
-                            throw new Exception("Inserire un campo corretto del dataset");
+                    } catch (NoSuchMethodException e) {
+                        throw new Exception("Inserire un campo corretto del dataset");
 
-                        } catch(SecurityException e){
-                            e.printStackTrace();
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
 
-                        } catch(IllegalAccessException e){
-                            e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
 
-                        } catch(IllegalArgumentException e){
-                            e.printStackTrace();
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
 
-                        } catch(InvocationTargetException e){
-                            e.printStackTrace();
-                        }
-                    } break;
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
 
                 case "$gte": {
                     try {
@@ -1102,10 +1156,10 @@ public class Parsecsv_Impl implements Parsecsv {
                                     if (ivalue >= valuemod) {
                                         list.add(riga);
                                     }
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
-                        }
-                        else if (value.equals("0") && !value2.equals("0")) {
+                        } else if (value.equals("0") && !value2.equals("0")) {
                             Method method;
                             float fvalue = 0;
                             int ivalue = 0;
@@ -1133,26 +1187,28 @@ public class Parsecsv_Impl implements Parsecsv {
                                     if (ivalue >= valuemod) {
                                         list.add(riga);
                                     }
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
 
                         }
-                    } catch(NoSuchMethodException e){
+                    } catch (NoSuchMethodException e) {
                         throw new Exception("Inserire un campo corretto del dataset");
 
-                    } catch(SecurityException e){
+                    } catch (SecurityException e) {
                         e.printStackTrace();
 
-                    } catch(IllegalAccessException e){
+                    } catch (IllegalAccessException e) {
                         e.printStackTrace();
 
-                    } catch(IllegalArgumentException e){
+                    } catch (IllegalArgumentException e) {
                         e.printStackTrace();
 
-                    } catch(InvocationTargetException e){
+                    } catch (InvocationTargetException e) {
                         e.printStackTrace();
                     }
-                } break;
+                }
+                break;
 
                 case "$lt": {
                     try {
@@ -1187,10 +1243,10 @@ public class Parsecsv_Impl implements Parsecsv {
                                     if (ivalue < valuemod) {
                                         list.add(riga);
                                     }
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
-                        }
-                        else if (value.equals("0") && !value2.equals("0")) {
+                        } else if (value.equals("0") && !value2.equals("0")) {
 
                             Method method;
                             float fvalue = 0;
@@ -1219,26 +1275,28 @@ public class Parsecsv_Impl implements Parsecsv {
                                     if (ivalue < valuemod) {
                                         list.add(riga);
                                     }
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
 
                         }
-                    } catch(NoSuchMethodException e){
+                    } catch (NoSuchMethodException e) {
                         throw new Exception("Inserire un campo corretto del dataset");
 
-                    } catch(SecurityException e){
+                    } catch (SecurityException e) {
                         e.printStackTrace();
 
-                    } catch(IllegalAccessException e){
+                    } catch (IllegalAccessException e) {
                         e.printStackTrace();
 
-                    } catch(IllegalArgumentException e){
+                    } catch (IllegalArgumentException e) {
                         e.printStackTrace();
 
-                    } catch(InvocationTargetException e){
+                    } catch (InvocationTargetException e) {
                         e.printStackTrace();
                     }
-                } break;
+                }
+                break;
 
                 case "$lte": {
                     try {
@@ -1273,10 +1331,10 @@ public class Parsecsv_Impl implements Parsecsv {
                                     if (ivalue <= valuemod) {
                                         list.add(riga);
                                     }
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
-                        }
-                        else if (value.equals("0") && !value2.equals("0")) {
+                        } else if (value.equals("0") && !value2.equals("0")) {
                             Method method;
                             float fvalue = 0;
                             int ivalue = 0;
@@ -1304,25 +1362,27 @@ public class Parsecsv_Impl implements Parsecsv {
                                     if (ivalue <= valuemod) {
                                         list.add(riga);
                                     }
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
                         }
-                    } catch(NoSuchMethodException e){
+                    } catch (NoSuchMethodException e) {
                         throw new Exception("Inserire un campo corretto del dataset");
 
-                    } catch(SecurityException e){
+                    } catch (SecurityException e) {
                         e.printStackTrace();
 
-                    } catch(IllegalAccessException e){
+                    } catch (IllegalAccessException e) {
                         e.printStackTrace();
 
-                    } catch(IllegalArgumentException e){
+                    } catch (IllegalArgumentException e) {
                         e.printStackTrace();
 
-                    } catch(InvocationTargetException e){
+                    } catch (InvocationTargetException e) {
                         e.printStackTrace();
                     }
-                } break;
+                }
+                break;
 
                 case "$bt": {
                     try {
@@ -1366,25 +1426,27 @@ public class Parsecsv_Impl implements Parsecsv {
                                         list.add(riga);
                                     }
 
-                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                                } else if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
                             }
                         }
-                    } catch(NoSuchMethodException e){
+                    } catch (NoSuchMethodException e) {
                         throw new Exception("Inserire un campo corretto del dataset");
 
-                    } catch(SecurityException e){
+                    } catch (SecurityException e) {
                         e.printStackTrace();
 
-                    } catch(IllegalAccessException e){
+                    } catch (IllegalAccessException e) {
                         e.printStackTrace();
 
-                    } catch(IllegalArgumentException e){
+                    } catch (IllegalArgumentException e) {
                         e.printStackTrace();
 
-                    } catch(InvocationTargetException e){
+                    } catch (InvocationTargetException e) {
                         e.printStackTrace();
                     }
-                } break;
+                }
+                break;
 
                 default:
                     break;
@@ -1394,9 +1456,37 @@ public class Parsecsv_Impl implements Parsecsv {
         return (ArrayList) list;
 
     }
+
+    /**
+     * Metodo che restituisce i  valori di un determinato campo della dataset
+     * @param field
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Object> Returnfield(String field) throws Exception {
+
+        ArrayList<Object> list = new ArrayList<>();
+
+        try {
+            for (Riga_tabella riga : data) {
+                Method method = riga.getClass().getMethod("get" + field.substring(0, 1).toUpperCase() + field.substring(1), null);
+                String s = method.invoke(riga).toString();
+                list.add(s);
+            }
+
+        } catch (NoSuchMethodException e) {
+            throw  new Exception("Inserire un campo corretto del dataset");
+
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }
-
-
 
 
 
