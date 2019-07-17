@@ -7,5 +7,5 @@ package com.company.projectoop.parsing;
  */
 
 public interface Parsejson {
-
+    //there's nothing to use
 }

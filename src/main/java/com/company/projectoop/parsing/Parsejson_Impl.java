@@ -18,17 +18,27 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.FileAlreadyExistsException;
 import java.lang.Object;
 
+/**
+ * Classe che implementa i metodi descritti nell'intefaccia Parsejson.
+ * Viene scaricato il JSON dall'URL e se ne ricava il link per scaricare il file CSV e si effettua il download.
+ * @author Matteo Perozzi
+ * @author Ettore Zamponi
+ */
+
 @Component
 @Repository
 @Service("Parsejson_Impl")
 
-//classe per il parse del JSON
 public class Parsejson_Impl implements Parsejson{
 
     private static String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=european-structural-investment-funds-esif-2014-2020-achievements";
-    private static String FolderPath = "fileprova.csv ";
+    private static String FolderPath = "dataset.csv ";
     private static String urlD;
 
+    /**
+     * Metodo che effettua il parsing del JSON e ne ricava il link per il download del CSV che viene poi effettuato mediante
+     * il metodo Download_csv_From_URL
+     */
     public static void Read_json_from_URL() {
 
         try {
@@ -74,6 +84,10 @@ public class Parsejson_Impl implements Parsejson{
         }
     }
 
+    /**
+     * Metodo che effettua il download di un file prendendo in input il link di download
+     * @param URLText
+     */
     private static void Download_csv_FromURL(String URLText) {
         try {
             ReadableByteChannel readChannel = Channels.newChannel(new URL(URLText).openStream());

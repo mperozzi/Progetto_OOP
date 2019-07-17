@@ -189,11 +189,11 @@ public class Riga_tabella {
         this.indicator_long_name.setIndicator_long_name(indicator_long_name);
     }
 
-    public float getTo() {
+    public int getTo() {
         return to.getTo();
     }
 
-    public void setTo(float to) {
+    public void setTo(int to) {
         this.to.setTo(to);
     }
 
@@ -237,11 +237,11 @@ public class Riga_tabella {
         this.focus_area_code.setFocus_area_code(focus_area_code);
     }
 
-    public float getTarget_value() {
+    public int getTarget_value() {
         return target_value.getTarget_value();
     }
 
-    public void setTarget_value(float target_value) {
+    public void setTarget_value(int target_value) {
         this.target_value.setTarget_value(target_value);
     }
 
@@ -253,11 +253,11 @@ public class Riga_tabella {
         this.measurement_unit.setMeasurement_unit(measurement_unit);
     }
 
-    public float getNominator() {
+    public int getNominator() {
         return nominator.getNominator();
     }
 
-    public void setNominator(float nominator) {
+    public void setNominator(int nominator) {
         this.nominator.setNominator(nominator);
     }
 
@@ -285,11 +285,11 @@ public class Riga_tabella {
         this.year.setYear(year);
     }
 
-    public String getIr_ver() {
+    public float getIr_ver() {
         return ir_ver.getIr_ver();
     }
 
-    public void setIr_ver(String ir_ver) {
+    public void setIr_ver(float ir_ver) {
         this.ir_ver.setIr_ver(ir_ver);
     }
 

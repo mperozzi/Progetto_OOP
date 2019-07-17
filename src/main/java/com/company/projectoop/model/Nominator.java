@@ -3,19 +3,25 @@ package com.company.projectoop.model;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Classe che identifica un campo della tabella
+ * @author Matteo Perozzi
+ * @author Ettore Zamponi
+ */
+
 @Component
 @Repository
 public class Nominator {
 
-    private float nominator;
+    private int nominator;
 
     public Nominator() {}
 
-    public float getNominator() {
+    public int getNominator() {
         return nominator;
     }
 
-    public void setNominator(float nominator) {
+    public void setNominator(int nominator) {
         this.nominator = nominator;
     }
 

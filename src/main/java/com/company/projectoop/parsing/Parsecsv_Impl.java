@@ -18,9 +18,9 @@ import java.util.List;
 
 /**
  * Classe che implementa i metodi descritti nell'intefaccia Parsecsv.
- * Viene scaricato il JSON dall'URL, se ne ricava il link per scaricare il file CSV
- * e poi viene effettuato il parsing del CSV.
- * I dati vengono immagazzinati in una lista.
+ * Viene effettuato il parsing del CSV e i dati vengono immagazzinati in una lista.
+ * Sono presenti i metodi per la restituzione all'utente dei dati e metadati.
+ * Sono presenti i metodi che implementano i filtri.
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -31,17 +31,20 @@ import java.util.List;
 
 public class Parsecsv_Impl implements Parsecsv {
 
-    private static String namefile = "fileprova.csv ";
+    private static String namefile = "dataset.csv ";
+
 
     /**
      * ArrayList in cui vengono immagazzinati i dati completi letti dal CSV
      */
     public static List<Riga_tabella> data = new ArrayList<>();
 
+
     /**
      * ArrayList in cui vengono immagazzinati i metadati.
      */
     public static List<Riga_metadata> metadata = new ArrayList<>();
+
 
     /**
      * getter della lista: metadata.
@@ -52,6 +55,7 @@ public class Parsecsv_Impl implements Parsecsv {
         return metadata;
     }
 
+
     /**
      * getter della lista: data
      * @return
@@ -60,6 +64,7 @@ public class Parsecsv_Impl implements Parsecsv {
     public List<Riga_tabella> getData() {
         return data;
     }
+
 
     /**
      * Metodo che legge il file mediante BufferedReader riga per riga e tramite l'ausilio
@@ -105,6 +110,7 @@ public class Parsecsv_Impl implements Parsecsv {
         data.remove(data.size() - 1);
     }
 
+
     /**
      * Metodo privato che separa una stringa sulla base di un carattere specifico,
      * in questo caso, il separatore di campo, che è (,).
@@ -121,6 +127,7 @@ public class Parsecsv_Impl implements Parsecsv {
 
             //Split della stringa in base al separatore di campo
             String[] s = line.split(",");
+
             for (int i = 0; i < s.length; i++) {
                 if (s[i] == null) break;
                 else {
@@ -135,10 +142,14 @@ public class Parsecsv_Impl implements Parsecsv {
                             r.setCci(s[i]);
                             break;
                         case 3:
+                            /**
+                             * conversione valore da string a float e assegnazione all'interno del campo della riga
+                             * solamente se la stringa rappresenta un numero
+                             * */
                             String[] s3 = s[i].split("\"");
-                            if (Float.isNaN(Float.parseFloat(s3[1]))) break;
-                            else {
-                                r.setVer(Float.parseFloat(s3[1]));
+                            if (s3.length >= 2) {
+                                if (Float.isNaN(Float.parseFloat(s3[1]))) r.setVer(0);
+                                else r.setVer(Float.parseFloat(s3[1]));
                             }
                             break;
                         case 4:
@@ -163,10 +174,14 @@ public class Parsecsv_Impl implements Parsecsv {
                             r.setIndicator_long_name(s[i]);
                             break;
                         case 11:
+                            /**
+                             * conversione valore da string a int e assegnazione all'interno del campo della riga
+                             * solamente se la stringa rappresenta un numero
+                             * */
                             String[] s11 = s[i].split("\"");
-                            if (Float.isNaN(Float.parseFloat(s11[1]))) break;
-                            else {
-                                r.setTo(Float.parseFloat(s11[1]));
+                            if (s11.length >= 2) {
+                                if (Float.isNaN(Float.parseFloat(s11[1]))) r.setTo(0);
+                                else r.setTo((int) Float.parseFloat(s11[1]));
                             }
                             break;
                         case 12:
@@ -186,9 +201,10 @@ public class Parsecsv_Impl implements Parsecsv {
                             break;
                         case 17:
                             String[] s17 = s[i].split("\"");
-                            if (Float.isNaN(Float.parseFloat(s17[1]))) break;
-                            else {
-                                r.setTarget_value(Float.parseFloat(s17[1]));
+                            if (s17.length <1) r.setTarget_value(0);
+                            else if (s17.length >= 2) {
+                                if (Float.isNaN(Float.parseFloat(s17[1]))) r.setTarget_value(0);
+                                else r.setTarget_value((int) Float.parseFloat(s17[1]));
                             }
                             break;
                         case 18:
@@ -196,9 +212,9 @@ public class Parsecsv_Impl implements Parsecsv {
                             break;
                         case 19:
                             String[] s19 = s[i].split("\"");
-                            if (Float.isNaN(Float.parseFloat(s19[1]))) break;
-                            else {
-                                r.setNominator(Float.parseFloat(s19[1]));
+                            if (s19.length >= 2) {
+                                if (Float.isNaN(Float.parseFloat(s19[1]))) r.setNominator(0);
+                                else r.setNominator((int) Float.parseFloat(s19[1]));
                             }
                             break;
                         case 20:
@@ -209,10 +225,17 @@ public class Parsecsv_Impl implements Parsecsv {
                             break;
                         case 22:
                             String[] s22 = s[i].split("\"");
-                            r.setNominator(Float.parseFloat(s22[1]));
+                            if (s22.length >= 2) {
+                                if (Float.isNaN(Float.parseFloat(s22[1]))) r.setYear(0);
+                                else r.setYear((int) Float.parseFloat(s22[1]));
+                            }
                             break;
                         case 23:
-                            r.setIr_ver(s[i]);
+                            String[] s23 = s[i].split("\"");
+                            if (s23.length >= 2) {
+                                if (Float.isNaN(Float.parseFloat(s23[1]))) r.setIr_ver(0);
+                                else r.setIr_ver(Float.parseFloat(s23[1]));
+                            }
                             break;
                         case 24:
                             r.setForecast_value(s[i]);
@@ -253,6 +276,7 @@ public class Parsecsv_Impl implements Parsecsv {
                 }
             }
 
+            //aggiungo la riga alla lista
             list.add(r);
         }
 
@@ -269,37 +293,67 @@ public class Parsecsv_Impl implements Parsecsv {
      * @param list
      */
     private static void Popola_metadata(String line, List<Riga_metadata> list) {
+
+        //separazione in base al separatore di campo della stringa che contiene l'intero insieme dei metadati
         String[] s = line.split(",");
+
+        //assegnazione dei valori nei campi corrispondenti della struttura dei metadati
         for (int i = 0; i < s.length; i++) {
             Riga_metadata rm = new Riga_metadata();
             rm.setAlias(s[i]);
-            rm.setType("String");
+            switch (i) {
+                case 3:
+                    rm.setType("int");
+                    break;
+                case 11:
+                    rm.setType("int");
+                    break;
+                case 17:
+                    rm.setType("float");
+                    break;
+                case 19:
+                    rm.setType("int");
+                    break;
+                case 22:
+                    rm.setType("int");
+                    break;
+                case 23:
+                    rm.setType("float");
+                    break;
+                default:
+                    rm.setType("String");
+                    break;
+            }
             list.add(rm);
         }
     }
 
+
     /**
-     * Filtri Logici --> Filtri implementati: and, or, not
+     * Filtri Logici --> Filtri implementati: $and, $or, $not
      * @param fieldName1
      * @param value1
-     * @param operator
+     * @param l_operator
      * @param fieldName2
      * @param value2
      * @return
      * @throws Exception
      */
     @Override
-    public ArrayList<Riga_tabella> Logical_filter(String fieldName1, String value1, String operator, String fieldName2, String value2) throws Exception {
+    public ArrayList<Riga_tabella> Logical_filter(String l_operator, String fieldName1, String value1, String fieldName2, String value2) throws Exception {
 
-        //inizializzazione delle strutture dati d'appoggio utilizzate
+        //verifica del corretto inserimento dei parametri primari
+        if (l_operator.isEmpty() || fieldName1.isEmpty() || value1.isEmpty()) throw new Exception("Errore di inserimento parametri");
+
+        //inizializzazione delle strutture dati d'appoggio
         List<Riga_tabella> list = new ArrayList<>();
         List<String> ls = new ArrayList<>();
         List<String> ls2 = new ArrayList<>();
 
-        switch (operator) {
-            case "and": {
+        switch (l_operator) {
+            case "$and": {
                 try {
-                    //se i due campi secondari sono vuoti viene lanciata una eccezione
+                    //verifica del corretto inserimento dei parametri secondari
                     if (fieldName2.isEmpty() || value2.isEmpty())
                         throw new Exception();
 
@@ -348,7 +402,7 @@ public class Parsecsv_Impl implements Parsecsv {
                     }
 
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                    throw new Exception("Inserire un campo corretto del dataset");
 
                 } catch (SecurityException e) {
                     e.printStackTrace();
@@ -362,12 +416,11 @@ public class Parsecsv_Impl implements Parsecsv {
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 }
-            }
-            break;
+            } break;
 
-            case "or": {
+            case "$or": {
                 try {
-                    //se i due campi secondari sono vuoti viene lanciata una eccezione
+                    //verifica del corretto inserimento dei parametri secondari
                     if (fieldName2.isEmpty() || value2.isEmpty())
                         throw new Exception();
 
@@ -416,7 +469,7 @@ public class Parsecsv_Impl implements Parsecsv {
                     }
 
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                    throw new Exception("Inserire un campo corretto del dataset");
 
                 } catch (SecurityException e) {
                     e.printStackTrace();
@@ -432,7 +485,7 @@ public class Parsecsv_Impl implements Parsecsv {
                 }
             } break;
 
-            case "not": {
+            case "$not": {
                 try {
 
                     Method method1;
@@ -456,6 +509,7 @@ public class Parsecsv_Impl implements Parsecsv {
                         }
                     }
 
+                    //inserimento nella lista degli elementi che rispettano il criterio stabilito dal filtro
                     for (int j = 0; j < ls.size(); j++) {
                         if (!ls.get(j).equals(value1)) {
                             Riga_tabella riga;
@@ -468,7 +522,7 @@ public class Parsecsv_Impl implements Parsecsv {
                     e.printStackTrace();
 
                 } catch (SecurityException e) {
-                    e.printStackTrace();
+                    throw new Exception("Inserire un campo corretto del dataset");
 
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -487,6 +541,7 @@ public class Parsecsv_Impl implements Parsecsv {
         return (ArrayList<Riga_tabella>) list;
     }
 
+
     /**
      * Metodo che calcola la media dei valori all'interno di un campo value del dataset
      * @param value
@@ -497,6 +552,7 @@ public class Parsecsv_Impl implements Parsecsv {
         float sum = 0;
         int n = 0;
 
+        //in base al tipo di campo scelto, si calcola la media dei valori presenti nella tabella richiamandoli con il getter
         switch (value) {
             case "nominator": {
                 for (int i = 0; i < data.size(); i++) {
@@ -534,12 +590,23 @@ public class Parsecsv_Impl implements Parsecsv {
                 }
             } break;
 
-            default: throw new Exception();
+            case "ir_ver": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getIr_ver() != 0) {
+                        sum += data.get(i).getIr_ver();
+                        n++;
+                    }
+                }
+            } break;
+
+            //se il campo scelto non è di tipo numerico si lancia l'eccezione
+            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         float avg = sum/n;
         return avg;
     }
+
 
     /**
      * Metodo che restituisce il valore minimo tra tutti quelli relativi al campo value del dataset
@@ -550,6 +617,7 @@ public class Parsecsv_Impl implements Parsecsv {
     public static float minValue(String value) throws Exception{
         float min = 0;
 
+        //in base al tipo di campo scelto, si cerca il valore minimo tra valori presenti nella tabella richiamandoli con il getter
         switch (value) {
             case "nominator": {
                 min = data.get(0).getNominator();
@@ -583,7 +651,16 @@ public class Parsecsv_Impl implements Parsecsv {
                 }
             } break;
 
-            default: throw new Exception();
+            case "ir_ver": {
+                min = data.get(0).getIr_ver();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getIr_ver() < min && data.get(i).getIr_ver() != 0)
+                        min = data.get(i).getIr_ver();
+                }
+            } break;
+
+            //se il campo scelto non è di tipo numerico si lancia l'eccezione
+            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         return min;
@@ -599,6 +676,7 @@ public class Parsecsv_Impl implements Parsecsv {
     public static float maxValue(String value) throws Exception{
         float max = 0;
 
+        //in base al tipo di campo scelto, si cerca il valore massimo tra valori presenti nella tabella richiamandoli con il getter
         switch (value) {
             case "nominator": {
                 max = data.get(0).getNominator();
@@ -632,11 +710,21 @@ public class Parsecsv_Impl implements Parsecsv {
                 }
             } break;
 
-            default: throw new Exception();
+            case "ir_ver": {
+                max = data.get(0).getIr_ver();
+                for (int i = 1; i < data.size(); i++) {
+                    if (data.get(i).getIr_ver() > max)
+                        max = data.get(i).getIr_ver();
+                }
+            } break;
+
+            //se il campo scelto non è di tipo numerico si lancia l'eccezione
+            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         return max;
     }
+
 
     /**
      * Metodo che calcola la somma dei valori di un campo value all'interno del dataset
@@ -647,6 +735,7 @@ public class Parsecsv_Impl implements Parsecsv {
     public static float sumValue(String value) throws Exception{
         float sum = 0;
 
+        //in base al tipo di campo scelto, si calcola la somma dei valori presenti nella tabella richiamandoli con il getter
         switch (value) {
             case "nominator": {
                 for (int i = 0; i < data.size(); i++) {
@@ -672,11 +761,19 @@ public class Parsecsv_Impl implements Parsecsv {
                 }
             } break;
 
-            default: throw new Exception();
+            case "ir_ver": {
+                for (int i = 0; i < data.size(); i++) {
+                    sum += data.get(i).getIr_ver();
+                }
+            } break;
+
+            //se il campo scelto non è di tipo numerico si lancia l'eccezione
+            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         return sum;
     }
+
 
     /**
      * Metodo che calcola la deviazione standard dei valori all'interno di un campo del dataset
@@ -689,6 +786,7 @@ public class Parsecsv_Impl implements Parsecsv {
         double n = 0;
         double a = avgValue(value);
 
+        //in base al tipo di campo scelto, si calcola la deviazione standard dei valori presenti nella tabella richiamandoli con il getter
         switch (value) {
             case "nominator": {
                 for (Riga_tabella d: data) {
@@ -734,7 +832,19 @@ public class Parsecsv_Impl implements Parsecsv {
                 }
             } break;
 
-            default: throw new Exception();
+            case "ir_ver": {
+                for (Riga_tabella d: data) {
+                    if(d.getIr_ver() == 0) {
+                        continue;
+                    } else {
+                        n += Math.pow((d.getIr_ver() - a), 2);
+                        c++;
+                    }
+                }
+            } break;
+
+            //se il campo scelto non è di tipo numerico si lancia l'eccezione
+            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         double devstdV = Math.sqrt(n/c);
@@ -743,7 +853,7 @@ public class Parsecsv_Impl implements Parsecsv {
 
 
     /**
-     * Metodo che calcola il numero di valori presenti in un determinato campo value
+     * Metodo che conta il numero di valori presenti in un determinato campo value
      * @param value
      * @return
      * @throws Exception
@@ -751,6 +861,7 @@ public class Parsecsv_Impl implements Parsecsv {
     public static int countValue(String value) throws Exception{
         int count = 0;
 
+        //in base al tipo di campo scelto, si conta il numero dei valori non nulli presenti nella tabella richiamandoli con il getter
         switch (value) {
             case "nominator": {
                 for (int i = 0; i < data.size(); i++) {
@@ -780,12 +891,511 @@ public class Parsecsv_Impl implements Parsecsv {
                 }
             } break;
 
-            default: throw new Exception();
+            case "ir_ver": {
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).getIr_ver() != 0)
+                        count++;
+                }
+            } break;
+
+            //se il campo scelto non è di tipo numerico si lancia l'eccezione
+            default: throw new Exception("Inserire un campo che prevede valori numerici o il nime corretto del campo");
         }
 
         return count;
     }
+
+
+    /**
+     * Metodo che effettua il conteggio di quante occorrenze ci sono di un valore
+     * all'interno di un determinato campo del dataset
+     * @param fieldName
+     * @param value
+     * @return
+     */
+    public static int countOcc(String fieldName, String value) throws Exception {
+        if (fieldName.isEmpty() || value.isEmpty()) throw new Exception("Inserire un campo e/o un valore");
+
+        Method method1;
+        String s_filter1;
+        int counter = 0;
+        try {
+
+            for (Riga_tabella riga : data) {
+
+                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                method1 = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+                if (Float.class.isInstance(method1.invoke(riga))) {
+                    s_filter1 = Float.toString((float) method1.invoke(riga));
+                    if (s_filter1.equals(value)) {
+                        counter++;
+                    } else break;
+
+                } else if (Integer.class.isInstance(method1.invoke(riga))) {
+                    s_filter1 = Integer.toString((int) method1.invoke(riga));
+                    if (s_filter1.equals(value)) {
+                        counter++;
+                    } else break;
+
+                } else {
+                    s_filter1 = (String) method1.invoke(riga);
+                    if (s_filter1.equals(value)) {
+                        counter++;
+                    } else break;
+                }
+            }
+        } catch (NoSuchMethodException e) {
+            throw new Exception("Inserire un campo corretto del dataset");
+
+        } catch (SecurityException e) {
+            e.printStackTrace();
+
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return counter;
+    }
+
+    /**
+     * Filtri Condizionali --> Filtri implementati: $gt (maggiore), $gte (maggiore e uguale), $lt(minore), $lte (minore e uguale), $bt (compreso tra)
+     * @param c_operator
+     * @param fieldName
+     * @param value
+     * @param value2
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Riga_tabella> Conditional_filter(String c_operator, String fieldName, String value, String value2) throws Exception{
+
+        List<Riga_tabella> list = new ArrayList<>();
+
+        //verifica del corretto inserimento dei parametri
+        if (c_operator.isEmpty() | fieldName.isEmpty() | value.isEmpty() | value2.isEmpty()) throw new Exception("Errore di inserimento parametri");
+
+        else {
+
+            switch (c_operator) {
+                case "$gt": {
+                    try {
+
+                        if ((!fieldName.equals("") && !value.equals("0") && value2.equals("0")) | (!fieldName.equals("") && !value.equals("0") && !value2.equals("0"))) {
+
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value);
+                                    fvalue = ((float) method.invoke(riga));
+
+                                    if (fvalue > valuemod) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    int valuemod = Integer.parseInt(value);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (ivalue > valuemod) {
+                                        list.add(riga);
+                                    }
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+                        }
+                        else if (value.equals("0") && !value2.equals("0")) {
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value2);
+                                    fvalue = ((float) method.invoke(riga));
+
+                                    if (fvalue > valuemod) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+                                    int valuemod = Integer.parseInt(value2);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (ivalue > valuemod) {
+                                        list.add(riga);
+                                    }
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+
+                        }
+                        } catch(NoSuchMethodException e){
+                            throw new Exception("Inserire un campo corretto del dataset");
+
+                        } catch(SecurityException e){
+                            e.printStackTrace();
+
+                        } catch(IllegalAccessException e){
+                            e.printStackTrace();
+
+                        } catch(IllegalArgumentException e){
+                            e.printStackTrace();
+
+                        } catch(InvocationTargetException e){
+                            e.printStackTrace();
+                        }
+                    } break;
+
+                case "$gte": {
+                    try {
+
+                        if ((!fieldName.equals("") && !value.equals("0") && value2.equals("0")) | (!fieldName.equals("") && !value.equals("0") && !value2.equals("0"))) {
+
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value);
+                                    fvalue = ((float) method.invoke(riga));
+
+                                    if (fvalue >= valuemod) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    int valuemod = Integer.parseInt(value);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (ivalue >= valuemod) {
+                                        list.add(riga);
+                                    }
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+                        }
+                        else if (value.equals("0") && !value2.equals("0")) {
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value2);
+                                    fvalue = ((float) method.invoke(riga));
+
+                                    if (fvalue >= valuemod) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+                                    int valuemod = Integer.parseInt(value2);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (ivalue >= valuemod) {
+                                        list.add(riga);
+                                    }
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+
+                        }
+                    } catch(NoSuchMethodException e){
+                        throw new Exception("Inserire un campo corretto del dataset");
+
+                    } catch(SecurityException e){
+                        e.printStackTrace();
+
+                    } catch(IllegalAccessException e){
+                        e.printStackTrace();
+
+                    } catch(IllegalArgumentException e){
+                        e.printStackTrace();
+
+                    } catch(InvocationTargetException e){
+                        e.printStackTrace();
+                    }
+                } break;
+
+                case "$lt": {
+                    try {
+
+                        if ((!fieldName.equals("") && !value.equals("0") && value2.equals("0")) | (!fieldName.equals("") && !value.equals("0") && !value2.equals("0"))) {
+
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value);
+                                    fvalue = ((float) method.invoke(riga));
+
+                                    if (fvalue < valuemod) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    int valuemod = Integer.parseInt(value);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (ivalue < valuemod) {
+                                        list.add(riga);
+                                    }
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+                        }
+                        else if (value.equals("0") && !value2.equals("0")) {
+
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value2);
+                                    fvalue = ((float) method.invoke(riga));
+
+                                    if (fvalue < valuemod) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+                                    int valuemod = Integer.parseInt(value2);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (ivalue < valuemod) {
+                                        list.add(riga);
+                                    }
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+
+                        }
+                    } catch(NoSuchMethodException e){
+                        throw new Exception("Inserire un campo corretto del dataset");
+
+                    } catch(SecurityException e){
+                        e.printStackTrace();
+
+                    } catch(IllegalAccessException e){
+                        e.printStackTrace();
+
+                    } catch(IllegalArgumentException e){
+                        e.printStackTrace();
+
+                    } catch(InvocationTargetException e){
+                        e.printStackTrace();
+                    }
+                } break;
+
+                case "$lte": {
+                    try {
+
+                        if ((!fieldName.equals("") && !value.equals("0") && value2.equals("0")) | (!fieldName.equals("") && !value.equals("0") && !value2.equals("0"))) {
+
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value);
+                                    fvalue = ((float) method.invoke(riga));
+
+                                    if (fvalue <= valuemod) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    int valuemod = Integer.parseInt(value);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (ivalue <= valuemod) {
+                                        list.add(riga);
+                                    }
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+                        }
+                        else if (value.equals("0") && !value2.equals("0")) {
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value2);
+                                    fvalue = ((float) method.invoke(riga));
+
+                                    if (fvalue <= valuemod) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+                                    int valuemod = Integer.parseInt(value2);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (ivalue <= valuemod) {
+                                        list.add(riga);
+                                    }
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+                        }
+                    } catch(NoSuchMethodException e){
+                        throw new Exception("Inserire un campo corretto del dataset");
+
+                    } catch(SecurityException e){
+                        e.printStackTrace();
+
+                    } catch(IllegalAccessException e){
+                        e.printStackTrace();
+
+                    } catch(IllegalArgumentException e){
+                        e.printStackTrace();
+
+                    } catch(InvocationTargetException e){
+                        e.printStackTrace();
+                    }
+                } break;
+
+                case "$bt": {
+                    try {
+
+                        if ((!fieldName.equals("") && !value.equals("0") && value2.equals("0")) | (!fieldName.equals("") && !value.equals("0") && !value2.equals("0"))) {
+
+                            Method method;
+                            float fvalue = 0;
+                            int ivalue = 0;
+
+                            for (Riga_tabella riga : data) {
+
+                                //richiamo del metodo richiesto dall'utente su cui applicare il filtro
+                                method = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
+
+                                //assegnazione della variabile per applicare il filtro in base al tipo di dato
+
+                                if (Float.class.isInstance(method.invoke(riga))) {
+                                    float valuemod = Float.parseFloat(value);
+                                    fvalue = ((float) method.invoke(riga));
+                                    float valuemod2 = Float.parseFloat(value2);
+                                    if (valuemod > valuemod2) {
+                                        if ((ivalue < valuemod) && (ivalue > valuemod2)) {
+                                            list.add(riga);
+                                        }
+                                    } else if ((ivalue > valuemod) && (ivalue < valuemod2)) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (Integer.class.isInstance(method.invoke(riga))) {
+                                    ivalue = ((int) method.invoke(riga));
+                                    int valuemod = Integer.parseInt(value);
+                                    int valuemod2 = Integer.parseInt(value2);
+                                    ivalue = ((int) method.invoke(riga));
+
+                                    if (valuemod > valuemod2) {
+                                        if ((ivalue < valuemod) && (ivalue > valuemod2)) {
+                                            list.add(riga);
+                                        }
+                                    } else if ((ivalue > valuemod) && (ivalue < valuemod2)) {
+                                        list.add(riga);
+                                    }
+
+                                } else if (String.class.isInstance(method.invoke(riga))) throw new Exception("Inserire un campo che contenga valori numerici");
+                            }
+                        }
+                    } catch(NoSuchMethodException e){
+                        throw new Exception("Inserire un campo corretto del dataset");
+
+                    } catch(SecurityException e){
+                        e.printStackTrace();
+
+                    } catch(IllegalAccessException e){
+                        e.printStackTrace();
+
+                    } catch(IllegalArgumentException e){
+                        e.printStackTrace();
+
+                    } catch(InvocationTargetException e){
+                        e.printStackTrace();
+                    }
+                } break;
+
+                default:
+                    break;
+            }
+        }
+
+        return (ArrayList) list;
+
+    }
 }
+
 
 
 

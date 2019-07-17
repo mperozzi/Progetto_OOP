@@ -20,6 +20,7 @@ public class ProjectoopApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProjectoopApplication.class, args);
 
+        //operazioni di lettura del JSON e download del CSV da effettuare all'avvio
         Parsejson_Impl.Read_json_from_URL();
         Parsecsv_Impl.Popola_tabella();
 
