@@ -359,7 +359,7 @@ public class Parsecsv_Impl implements Parsecsv {
                 try {
                     //verifica del corretto inserimento dei parametri secondari
                     if (fieldName2.isEmpty() || value2.isEmpty())
-                        throw new Exception();
+                        throw new Exception("Immettere correttamente tutti i campi");
 
                     Method method1;
                     Method method2;
@@ -370,30 +370,13 @@ public class Parsecsv_Impl implements Parsecsv {
 
                         //richiamo dei metodi richiesti dall'utente su cui applicare il filtro
                         method1 = riga.getClass().getMethod("get" + fieldName1.substring(0, 1).toUpperCase() + fieldName1.substring(1), null);
-
-                        //assegnazione delle variabili per applicare il filtro in base al tipo di dato
-                        if (Float.class.isInstance(method1.invoke(riga))) {
-                            s_filter1 = Float.toString((float) method1.invoke(riga));
-                            ls.add(s_filter1);
-                        } else if (Integer.class.isInstance(method1.invoke(riga))) {
-                            s_filter1 = Integer.toString((int) method1.invoke(riga));
-                            ls.add(s_filter1);
-                        } else {
-                            s_filter1 = (String) method1.invoke(riga);
-                            ls.add(s_filter1);
-                        }
+                        s_filter1 = method1.invoke(riga).toString();
 
                         method2 = riga.getClass().getMethod("get" + fieldName2.substring(0, 1).toUpperCase() + fieldName2.substring(1), null);
-                        if (Float.class.isInstance(method2.invoke(riga))) {
-                            s_filter2 = Float.toString((float) method2.invoke(riga));
-                            ls2.add(s_filter2);
-                        } else if (Integer.class.isInstance(method2.invoke(riga))) {
-                            s_filter2 = Integer.toString((int) method2.invoke(riga));
-                            ls2.add(s_filter2);
-                        } else {
-                            s_filter2 = (String) method2.invoke(riga);
-                            ls.add(s_filter2);
-                        }
+                        s_filter2 = method2.invoke(riga).toString();
+
+                        if (s_filter1.equals(value1) && s_filter2.equals(value2))
+                            list.add(riga);
                     }
 
                     //inserimento degli elementi della tabella che rispettano i criteri specificati dal filtro nella lista
@@ -404,7 +387,7 @@ public class Parsecsv_Impl implements Parsecsv {
                             list.add(riga);
                         }
                     }
-
+                //eccezione se non trova i campi corrispondenti nel dataset
                 } catch (NoSuchMethodException e) {
                     throw new Exception("Inserire un campo corretto del dataset");
 
@@ -438,30 +421,13 @@ public class Parsecsv_Impl implements Parsecsv {
 
                         //richiamo dei metodi richiesti dall'utente su cui applicare il filtro
                         method1 = riga.getClass().getMethod("get" + fieldName1.substring(0, 1).toUpperCase() + fieldName1.substring(1), null);
-
-                        //assegnazione delle variabili per applicare il filtro in base al tipo di dato
-                        if (Float.class.isInstance(method1.invoke(riga))) {
-                            s_filter1 = Float.toString((float) method1.invoke(riga));
-                            ls.add(s_filter1);
-                        } else if (Integer.class.isInstance(method1.invoke(riga))) {
-                            s_filter1 = Integer.toString((int) method1.invoke(riga));
-                            ls.add(s_filter1);
-                        } else {
-                            s_filter1 = (String) method1.invoke(riga);
-                            ls.add(s_filter1);
-                        }
+                        s_filter1 = method1.invoke(riga).toString();
 
                         method2 = riga.getClass().getMethod("get" + fieldName2.substring(0, 1).toUpperCase() + fieldName2.substring(1), null);
-                        if (Float.class.isInstance(method2.invoke(riga))) {
-                            s_filter2 = Float.toString((float) method2.invoke(riga));
-                            ls2.add(s_filter2);
-                        } else if (Integer.class.isInstance(method2.invoke(riga))) {
-                            s_filter2 = Integer.toString((int) method2.invoke(riga));
-                            ls2.add(s_filter2);
-                        } else {
-                            s_filter2 = (String) method2.invoke(riga);
-                            ls.add(s_filter2);
-                        }
+                        s_filter2 = method2.invoke(riga).toString();
+
+                        if (s_filter1.equals(value1) || s_filter2.equals(value2))
+                            list.add(riga);
                     }
 
                     //inserimento degli elementi della tabella che rispettano i criteri specificati dal filtro nella lista
