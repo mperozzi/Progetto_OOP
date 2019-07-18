@@ -26,10 +26,8 @@ import static org.junit.Assert.fail
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestTransient
-{
-    static class Transient1
-    {
+class TestTransient {
+    static class Transient1 {
         String fname
         String lname
         transient String fullname
@@ -47,8 +45,7 @@ class TestTransient
     }
 
     @Test
-    void testTraceTransientWhenListedInFieldSpecifiers()
-    {
+    void testTraceTransientWhenListedInFieldSpecifiers() {
         Transient1 person = new Transient1()
         person.fname = "John"
         person.lname = "DeRegnaucourt"
@@ -59,25 +56,22 @@ class TestTransient
         assert json.contains('lname')
         assert !json.contains('fullname')
 
-        json = TestUtil.getJsonString(person, [(JsonWriter.FIELD_SPECIFIERS):[(Transient1.class):['fname', 'lname', 'fullname']]])
+        json = TestUtil.getJsonString(person, [(JsonWriter.FIELD_SPECIFIERS): [(Transient1.class): ['fname', 'lname', 'fullname']]])
         assert json.contains('fname')
         assert json.contains('lname')
         assert json.contains('fullname')
 
-        try
-        {
-            TestUtil.getJsonString(person, [(JsonWriter.FIELD_SPECIFIERS):[(Transient1.class):['fname', 'lname', 'map']]])
+        try {
+            TestUtil.getJsonString(person, [(JsonWriter.FIELD_SPECIFIERS): [(Transient1.class): ['fname', 'lname', 'map']]])
             fail()
         }
-        catch (UnsupportedOperationException e)
-        {
+        catch (UnsupportedOperationException e) {
             // blows up because we told it to include the 'map' field, which means it will get trace even though it is a transient field.
         }
     }
 
     @Test
-    void testSkipsTransient()
-    {
+    void testSkipsTransient() {
         Transient1 person = new Transient1()
         person.fname = "John"
         person.lname = "DeRegnaucourt"
@@ -97,22 +91,20 @@ class TestTransient
         person.lname = "DeRegnaucourt"
         person.buildFull()
 
-        String json = JsonWriter.objectToJson(person, [FIELD_SPECIFIERS:[(Transient1.class) : ['fname', 'lname','fullname']]])
+        String json = JsonWriter.objectToJson(person, [FIELD_SPECIFIERS: [(Transient1.class): ['fname', 'lname', 'fullname']]])
         assert json.contains("fullname")
 
         person = (Transient1) TestUtil.readJsonObject(json)
         assertTrue(person.fullname == 'John DeRegnaucourt')
     }
 
-    static class Transient2
-    {
+    static class Transient2 {
         transient TestObject backup;
         TestObject main;
     }
 
     @Test
-    void testTransient2()
-    {
+    void testTransient2() {
         Transient2 trans = new Transient2()
         trans.backup = new TestObject("Roswell")
         trans.main = trans.backup;

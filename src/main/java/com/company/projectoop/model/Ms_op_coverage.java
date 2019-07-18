@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Ms_op_coverage {
 
     private String ms_op_coverage;
 
-    public Ms_op_coverage() {}
+    public Ms_op_coverage() {
+    }
 
     public String getMs_op_coverage() {
         return ms_op_coverage;

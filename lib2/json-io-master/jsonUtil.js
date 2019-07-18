@@ -18,8 +18,7 @@
  * limitations under the License.
  */
 
-function resolveRefs(jObj)
-{
+function resolveRefs(jObj) {
     if (!jObj)
         return;
 
@@ -34,56 +33,45 @@ function resolveRefs(jObj)
     idsToObjs = null;
 }
 
-function walk(jObj, idsToObjs)
-{
+function walk(jObj, idsToObjs) {
     if (!jObj)
         return;
 
     var keys = Object.keys(jObj); // will return an array of own properties
 
-    for (var i = 0, len = keys.length; i < len; i++)
-    {
+    for (var i = 0, len = keys.length; i < len; i++) {
         var field = keys[i];
         var value = jObj[field];
 
         if (!value)
             continue;
 
-        if (field === "@id")
-        {
+        if (field === "@id") {
             idsToObjs[value] = jObj;
-        }
-        else if (typeof(value) === "object")
-        {
+        } else if (typeof (value) === "object") {
             walk(value, idsToObjs);
         }
     }
 }
 
-function substitute(parent, fieldName, jObj, idsToObjs)
-{
+function substitute(parent, fieldName, jObj, idsToObjs) {
     if (!jObj)
         return;
 
     var keys = Object.keys(jObj); // will return an array of own properties
 
-    for (var i = 0, len = keys.length; i < len; i++)
-    {
+    for (var i = 0, len = keys.length; i < len; i++) {
         var field = keys[i];
         var value = jObj[field];
 
         if (!value)
             continue;
 
-        if (field === "@ref")
-        {
-            if (parent && fieldName)
-            {
+        if (field === "@ref") {
+            if (parent && fieldName) {
                 parent[fieldName] = idsToObjs[jObj["@ref"]];
             }
-        }
-        else if (typeof(value) === "object")
-        {
+        } else if (typeof (value) === "object") {
             substitute(jObj, field, value, idsToObjs);
         }
     }

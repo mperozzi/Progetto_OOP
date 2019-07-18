@@ -24,10 +24,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestLong
-{
-    private static class ManyLongs implements Serializable
-    {
+class TestLong {
+    private static class ManyLongs implements Serializable {
         private final Long _arrayElement
         private final Long[] _typeArray
         private final Object[] _objArray
@@ -38,8 +36,7 @@ class TestLong
         private final Long _max
         private final Long _null
 
-        private ManyLongs()
-        {
+        private ManyLongs() {
             _arrayElement = new Long(-1)
             _polyRefTarget = new Long(710)
             _polyRef = _polyRefTarget;
@@ -54,15 +51,13 @@ class TestLong
         }
     }
 
-    private static class PhysicalAttributes
-    {
+    private static class PhysicalAttributes {
         Long age
         Object weight
     }
 
     @Test
-    void testLong()
-    {
+    void testLong() {
         ManyLongs test = new ManyLongs()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine("json = " + json)
@@ -102,10 +97,9 @@ class TestLong
     }
 
     @Test
-    void testLongAsString()
-    {
+    void testLongAsString() {
         long x = 19
-        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS):true])
+        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS): true])
         assert json.contains('"19"')
 
         Object y = JsonReader.jsonToJava(json)
@@ -114,10 +108,9 @@ class TestLong
     }
 
     @Test
-    void testLongArrayAsString()
-    {
+    void testLongArrayAsString() {
         long[] x = [1L, 2L, 3L]
-        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS):true])
+        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS): true])
         assert json.contains('"1"')
         assert json.contains('"2"')
         assert json.contains('"3"')
@@ -130,10 +123,9 @@ class TestLong
     }
 
     @Test
-    void testObjectArrayOfLongsAsString()
-    {
+    void testObjectArrayOfLongsAsString() {
         Object[] x = [1L, 2L, 3L]
-        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS):true])
+        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS): true])
         assert json.contains('"1"')
         assert json.contains('"2"')
         assert json.contains('"3"')
@@ -146,13 +138,12 @@ class TestLong
     }
 
     @Test
-    void testLongCollectionAsString()
-    {
+    void testLongCollectionAsString() {
         Collection x = new ArrayList()
         x.add(1L)
         x.add(2L)
         x.add(3L)
-        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS):true])
+        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS): true])
 
         assert json.contains('"1"')
         assert json.contains('"2"')
@@ -166,13 +157,12 @@ class TestLong
     }
 
     @Test
-    void testLongObjectFieldAsString()
-    {
+    void testLongObjectFieldAsString() {
         PhysicalAttributes x = new PhysicalAttributes()
         x.age = 49L
         x.weight = 205L
 
-        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS):true])
+        String json = JsonWriter.objectToJson(x, [(JsonWriter.WRITE_LONGS_AS_STRINGS): true])
 
         assert json.contains('"49"')
         assert json.contains('"205"')

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Title {
 
     private String title;
 
-    public Title() {}
+    public Title() {
+    }
 
     public String getTitle() {
         return title;

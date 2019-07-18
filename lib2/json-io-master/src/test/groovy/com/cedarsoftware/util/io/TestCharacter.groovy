@@ -23,10 +23,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestCharacter
-{
-    private static class ManyCharacters implements Serializable
-    {
+class TestCharacter {
+    private static class ManyCharacters implements Serializable {
         private final Character _arrayElement
         private final Character[] _typeArray
         private final Object[] _objArray
@@ -37,14 +35,13 @@ class TestCharacter
         private final Character _max
         private final Character _null
 
-        private ManyCharacters()
-        {
+        private ManyCharacters() {
             _arrayElement = new Character((char) 1)
-            _polyRefTarget = new Character((char)71)
+            _polyRefTarget = new Character((char) 71)
             _polyRef = _polyRefTarget
             _polyNotRef = new Character((char) 71)
-            Character local = new Character((char)75)
-            _null  = null
+            Character local = new Character((char) 75)
+            _null = null
             _typeArray = [_arrayElement, 'a' as char, local, _null, null] as Character[]
             _objArray = [_arrayElement, 'b' as char, local, _null, null] as Object[]
             _min = Character.MIN_VALUE
@@ -53,8 +50,7 @@ class TestCharacter
     }
 
     @Test
-    void testCharacter()
-    {
+    void testCharacter() {
         ManyCharacters test = new ManyCharacters()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine("json = " + json)
@@ -92,8 +88,7 @@ class TestCharacter
     }
 
     @Test
-    void testFunnyChars()
-    {
+    void testFunnyChars() {
         String json = '{"@type":"[C","@items":["a\\t\\u0004"]}'
         char[] chars = (char[]) TestUtil.readJsonObject(json)
         assertEquals(chars.length, 3)

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -16,7 +17,8 @@ public class Ver {
     private float ver;
 
     //costruttore della classe
-    public Ver() {}
+    public Ver() {
+    }
 
     public float getVer() {
         return ver;

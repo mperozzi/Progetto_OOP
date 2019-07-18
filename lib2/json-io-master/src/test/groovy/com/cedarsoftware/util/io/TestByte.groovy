@@ -22,10 +22,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestByte
-{
-    private static class ManyBytes implements Serializable
-    {
+class TestByte {
+    private static class ManyBytes implements Serializable {
         private final Byte _arrayElement
         private final Byte[] _typeArray
         private final Object[] _objArray
@@ -36,24 +34,22 @@ class TestByte
         private final Byte _max
         private final Byte _null
 
-        private ManyBytes()
-        {
+        private ManyBytes() {
             _arrayElement = new Byte((byte) -1)
-            _polyRefTarget = new Byte((byte)71)
+            _polyRefTarget = new Byte((byte) 71)
             _polyRef = _polyRefTarget;
             _polyNotRef = new Byte((byte) 71)
-            Byte local = new Byte((byte)75)
-            _null  = null
-            _typeArray = [_arrayElement, (byte) 44, local, _null, null, new Byte((byte)44)] as Byte[]
-            _objArray = [_arrayElement, (byte) 69, local, _null, null, new Byte((byte)69)] as Object[]
+            Byte local = new Byte((byte) 75)
+            _null = null
+            _typeArray = [_arrayElement, (byte) 44, local, _null, null, new Byte((byte) 44)] as Byte[]
+            _objArray = [_arrayElement, (byte) 69, local, _null, null, new Byte((byte) 69)] as Object[]
             _min = Byte.MIN_VALUE
             _max = Byte.MAX_VALUE
         }
     }
 
     @Test
-    void testByte()
-    {
+    void testByte() {
         ManyBytes test = new ManyBytes()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine("json = " + json)

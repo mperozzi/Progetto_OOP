@@ -39,10 +39,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
-	    <scope>test</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -56,8 +56,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                  <source>1.2</source>
-                  <target>1.2</target>
+                    <source>1.2</source>
+                    <target>1.2</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -65,46 +65,46 @@
                 <artifactId>maven-source-plugin</artifactId>
                 <version>2.1.2</version>
                 <executions>
-                  <execution>
-                    <id>attach-sources</id>
-                    <phase>verify</phase>
-                    <goals>
-                      <goal>jar-no-fork</goal>
-                    </goals>
-                  </execution>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-    
+
     <profiles>
-      <profile>
-        <id>release-sign-artifacts</id>
-        <activation>
-          <property>
-            <name>performRelease</name>
-            <value>true</value>
-          </property>
-        </activation>
-        <build>
-          <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                  <execution>
-                    <id>sign-artifacts</id>
-                    <phase>verify</phase>
-                    <goals>
-                      <goal>sign</goal>
-                    </goals>
-                  </execution>
-                </executions>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
 </project>

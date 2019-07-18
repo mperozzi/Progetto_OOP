@@ -22,10 +22,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestClass
-{
-    static class ManyClasses implements Serializable
-    {
+class TestClass {
+    static class ManyClasses implements Serializable {
         private List _classes_a;
 
         private final Class _booleanClass;
@@ -46,8 +44,7 @@ class TestClass
         private final Object[] _charClassArrayO;
         private final Object[] _CharacterClassArrayO;
 
-        private ManyClasses()
-        {
+        private ManyClasses() {
             _classes_a = new ArrayList()
             _classes_a.add(char.class)
             _booleanClass = boolean.class
@@ -71,8 +68,7 @@ class TestClass
     }
 
     @Test
-    void testClassAtRoot()
-    {
+    void testClassAtRoot() {
         Class c = Double.class;
         String json = TestUtil.getJsonString(c)
         TestUtil.printLine("json=" + json)
@@ -81,8 +77,7 @@ class TestClass
     }
 
     @Test
-    void testClass()
-    {
+    void testClass() {
         ManyClasses test = new ManyClasses()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine("json = " + json)

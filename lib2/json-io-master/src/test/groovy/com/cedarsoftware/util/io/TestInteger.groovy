@@ -23,10 +23,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestInteger
-{
-    private static class ManyIntegers implements Serializable
-    {
+class TestInteger {
+    private static class ManyIntegers implements Serializable {
         private final Integer _arrayElement
         private final Integer[] _typeArray
         private final Object[] _objArray
@@ -37,14 +35,13 @@ class TestInteger
         private final Integer _max
         private final Integer _null
 
-        private ManyIntegers()
-        {
+        private ManyIntegers() {
             _arrayElement = -1
             _polyRefTarget = new Integer(710)
             _polyRef = _polyRefTarget;
             _polyNotRef = new Integer(710)
             Integer local = new Integer(75)
-            _null  = null
+            _null = null
             _typeArray = [_arrayElement, 44, local, _null, null, new Integer(44), 0, new Integer(0)] as Integer[]
             _objArray = [_arrayElement, 69, local, _null, null, new Integer(69), 0, new Integer(0)] as Object[]
             _min = Integer.MIN_VALUE;
@@ -53,8 +50,7 @@ class TestInteger
     }
 
     @Test
-    void testInteger()
-    {
+    void testInteger() {
         ManyIntegers test = new ManyIntegers()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine("json = " + json)

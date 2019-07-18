@@ -22,20 +22,16 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestBoolean
-{
-    static class MyBooleanTesting
-    {
+class TestBoolean {
+    static class MyBooleanTesting {
         private boolean myBoolean = false;
     }
 
-    static class MyBoolean2Testing
-    {
+    static class MyBoolean2Testing {
         private Boolean myBoolean = false;
     }
 
-    private static class ManyBooleans implements Serializable
-    {
+    private static class ManyBooleans implements Serializable {
         private final Boolean _arrayElement
         private final Boolean[] _typeArray
         private final Object[] _objArray
@@ -44,8 +40,7 @@ class TestBoolean
         private final Object _polyNotRef
         private final Boolean _null
 
-        private ManyBooleans()
-        {
+        private ManyBooleans() {
             _arrayElement = new Boolean(true)
             _polyRefTarget = new Boolean(true)
             _polyRef = _polyRefTarget
@@ -58,8 +53,7 @@ class TestBoolean
     }
 
     @Test
-    void testBoolean()
-    {
+    void testBoolean() {
         ManyBooleans test = new ManyBooleans()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine("json = " + json)
@@ -97,8 +91,7 @@ class TestBoolean
     }
 
     @Test
-    void testBooleanCompatibility()
-    {
+    void testBooleanCompatibility() {
         MyBooleanTesting testObject = new MyBooleanTesting()
         MyBoolean2Testing testObject2 = new MyBoolean2Testing()
         String json0 = TestUtil.getJsonString(testObject)

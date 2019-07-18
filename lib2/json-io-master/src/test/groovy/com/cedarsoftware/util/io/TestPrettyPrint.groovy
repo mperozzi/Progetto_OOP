@@ -24,18 +24,15 @@ import static org.junit.Assert.assertNotEquals
  *         limitations under the License.
  */
 @CompileStatic
-class TestPrettyPrint
-{
-    static class Nice
-    {
+class TestPrettyPrint {
+    static class Nice {
         private String name
         private Collection items
         private Map dictionary
     }
 
     @Test
-    void testPrettyPrint()
-    {
+    void testPrettyPrint() {
         Nice nice = new Nice()
         nice.name = "Louie"
         nice.items = new ArrayList()
@@ -73,16 +70,16 @@ class TestPrettyPrint
     }
   }
 }'''
-        String json = JsonWriter.objectToJson(nice, [(JsonWriter.PRETTY_PRINT):true] as Map)
-        json = json.replaceAll("[\\r]","");
+        String json = JsonWriter.objectToJson(nice, [(JsonWriter.PRETTY_PRINT): true] as Map)
+        json = json.replaceAll("[\\r]", "");
         assertEquals(target, json)
 
         String json1 = JsonWriter.objectToJson(nice)
-        json1 = json1.replaceAll("[\\r]","");
+        json1 = json1.replaceAll("[\\r]", "");
         assertNotEquals(json, json1)
 
         String json2 = JsonWriter.formatJson(json1)
-        json2 = json2.replaceAll("[\\r]","");
+        json2 = json2.replaceAll("[\\r]", "");
         assertEquals(json2, json)
     }
 }

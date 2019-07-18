@@ -21,24 +21,20 @@ import static org.junit.Assert.assertFalse
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestNoId
-{
-    static class NoId
-    {
+class TestNoId {
+    static class NoId {
         protected Class<?> cls = LinkedList.class;
     }
 
     @Test
-    void testShouldNotNeedId()
-    {
+    void testShouldNotNeedId() {
         NoId noId = new NoId()
         String json = JsonWriter.objectToJson(noId)
         assertFalse(json.contains("@id"))
     }
 
     @Test
-    void testNoIdNeeded()
-    {
+    void testNoIdNeeded() {
         TestObject alpha = new TestObject('alpha')
         TestObject beta = new TestObject('beta')
         alpha._other = beta

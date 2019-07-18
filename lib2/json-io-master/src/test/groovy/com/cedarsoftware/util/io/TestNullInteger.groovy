@@ -21,21 +21,17 @@ import org.junit.Test
  *         limitations under the License.
  */
 @CompileStatic
-class TestNullIntegerConstructor
-{
-    class NullInteger
-    {
+class TestNullIntegerConstructor {
+    class NullInteger {
         Integer i
 
-        NullInteger(Integer i)
-        {
+        NullInteger(Integer i) {
             this.i = i
         }
     }
 
     @Test
-    void testNullIntegerConstructorValue()
-    {
+    void testNullIntegerConstructorValue() {
         NullInteger i = new NullInteger(null)
 
         String json = JsonWriter.objectToJson(i, [(JsonWriter.SKIP_NULL_FIELDS): true] as Map)

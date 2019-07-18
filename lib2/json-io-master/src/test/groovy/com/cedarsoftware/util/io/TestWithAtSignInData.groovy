@@ -21,26 +21,22 @@ import static org.junit.Assert.fail
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestWithAtSignInData
-{
+class TestWithAtSignInData {
     @Test
-    public void testFormatThatUsesAtSign()
-    {
+    public void testFormatThatUsesAtSign() {
         String json = '{"PrincipalName":{"@type":"fir:IndividualNameType","NamePrefix":{"NamePrefixText":"Ms"},"FirstName":"Marge","LastName":"Simpson","FullName":"Marge Simpson"},"JobTitle":[{"JobTitleText":{"$":"President"}}],"CurrentManagementResponsibility":[{"ManagementResponsibilityText":{"@ManagementResponsibilityCode":"A1A6","$":"President"}}],"PrincipalIdentificationNumberDetail":[{"@DNBCodeValue":24226,"@TypeText":"Professional Contact Identifier","PrincipalIdentificationNumber":"178125299"}]}'
 
-        try
-        {
+        try {
             Map map = (Map) JsonReader.jsonToJava(json)
             assert (map.CurrentManagementResponsibility instanceof Object[])
             assert map.PrincipalName.NamePrefix.NamePrefixText == 'Ms'
             assert map.PrincipalIdentificationNumberDetail[0]['@DNBCodeValue'] == 24226
         }
-        catch (JsonIoException ignore)
-        {
+        catch (JsonIoException ignore) {
             fail('should not fail with an unknown @type')
         }
 
-        Map map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         assert (map.CurrentManagementResponsibility instanceof Object[])
         assert map.PrincipalName.NamePrefix.NamePrefixText == 'Ms'
         assert map.PrincipalIdentificationNumberDetail[0]['@DNBCodeValue'] == 24226

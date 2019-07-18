@@ -25,10 +25,8 @@ import static org.junit.Assert.fail
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestPrimitives
-{
-    class AllPrimitives
-    {
+class TestPrimitives {
+    class AllPrimitives {
         boolean b;
         Boolean bb;
         byte by;
@@ -47,8 +45,7 @@ class TestPrimitives
         Short ss;
     }
 
-    class TestStringField
-    {
+    class TestStringField {
         String intField;
         String booleanField;
         String doubleField;
@@ -57,8 +54,7 @@ class TestPrimitives
     }
 
     @Test
-    void testPrimitivesSetWithStrings()
-    {
+    void testPrimitivesSetWithStrings() {
         String json = '{"@type":"' + AllPrimitives.class.getName() + '","b":"true","bb":"true","by":"9","bby":"9","c":"B","cc":"B","d":"9.0","dd":"9.0","f":"9.0","ff":"9.0","i":"9","ii":"9","l":"9","ll":"9","s":"9","ss":"9"}'
         AllPrimitives ap = (AllPrimitives) TestUtil.readJsonObject(json)
         assertTrue(ap.b)
@@ -80,8 +76,7 @@ class TestPrimitives
     }
 
     @Test
-    void testAbilityToNullPrimitivesWithEmptyString()
-    {
+    void testAbilityToNullPrimitivesWithEmptyString() {
         String json = '{"@type":"' + AllPrimitives.class.getName() + '","b":"","bb":"","by":"","bby":"","c":"","cc":"","d":"","dd":"","f":"","ff":"","i":"","ii":"","l":"","ll":"","s":"","ss":""}'
         AllPrimitives ap = (AllPrimitives) TestUtil.readJsonObject(json)
         assertFalse(ap.b)
@@ -103,8 +98,7 @@ class TestPrimitives
     }
 
     @Test
-    void testEmptyPrimitives()
-    {
+    void testEmptyPrimitives() {
         String json = '{"@type":"byte"}'
         Byte b = (Byte) JsonReader.jsonToJava(json)
         assertTrue(b.getClass().equals(Byte.class))
@@ -146,21 +140,18 @@ class TestPrimitives
 
         json = '{"@type":"string"}'
         String str = null;
-        try
-        {
+        try {
             str = (String) JsonReader.jsonToJava(json)
             fail()
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             assertTrue(e.message.toLowerCase().contains("'value'"))
         }
         assertTrue(str == null)
     }
 
     @Test
-    void testAssignPrimitiveToString()
-    {
+    void testAssignPrimitiveToString() {
         String json = '{"@type":"' + TestStringField.class.getName() + '","intField":16,"booleanField":true,"doubleField":345.12321,"nullField":null,"values":[10,true,3.14159,null]}'
         TestStringField tsf = (TestStringField) TestUtil.readJsonObject(json)
         assertEquals("16", tsf.intField)

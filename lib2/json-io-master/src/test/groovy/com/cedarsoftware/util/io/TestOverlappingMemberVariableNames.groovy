@@ -21,61 +21,51 @@ import static org.junit.Assert.assertEquals
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestOverlappingMemberVariableNames
-{
-    static class Outer
-    {
+class TestOverlappingMemberVariableNames {
+    static class Outer {
         String name
-        public class Inner
-        {
+        public class Inner {
             String name
         }
         Inner foo
 
-        public static Inner createInner(Outer outer)
-        {
+        public static Inner createInner(Outer outer) {
             return new Inner(outer)
         }
     }
 
-    public static class Parent
-    {
+    public static class Parent {
         private String name
 
-        public String getParentName()
-        {
+        public String getParentName() {
             return name
         }
 
-        public void setParentName(String name)
-        {
+        public void setParentName(String name) {
             this.name = name;
         }
     }
 
-    public static class Child extends Parent
-    {
+    public static class Child extends Parent {
         private String name
 
-        public String getChildName()
-        {
+        public String getChildName() {
             return name
         }
 
-        public void setChildName(String name)
-        {
+        public void setChildName(String name) {
             this.name = name
         }
     }
 
     @Test
-    void testNestedWithSameMemberName()
-    {
+    void testNestedWithSameMemberName() {
         Outer outer = new Outer()
         outer.name = "Joe Outer"
 
 //        Outer.Inner inner = outer.new Inner()   // Java-style instantiation
-        outer.foo = outer.createInner(outer)           // Trickier with Groovy because of difficulty using nested inner class.
+        outer.foo = outer.createInner(outer)
+        // Trickier with Groovy because of difficulty using nested inner class.
         outer.foo.name = "Jane Inner"
 
         String json = TestUtil.getJsonString(outer)
@@ -87,8 +77,7 @@ class TestOverlappingMemberVariableNames
     }
 
     @Test
-    void testSameMemberName()
-    {
+    void testSameMemberName() {
         Child child = new Child()
         child.childName = 'child'
         child.parentName = 'parent'
@@ -100,7 +89,7 @@ class TestOverlappingMemberVariableNames
         assertEquals(child.parentName, roundTrip.parentName)
         assertEquals(child.childName, roundTrip.childName)
 
-        JsonObject jObj = (JsonObject)JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        JsonObject jObj = (JsonObject) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         String json1 = TestUtil.getJsonString(jObj)
         TestUtil.printLine(json1)
         assertEquals(json, json1)

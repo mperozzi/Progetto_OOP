@@ -27,10 +27,8 @@ import static org.junit.Assert.fail
  *         limitations under the License.
  */
 @CompileStatic
-class TestBigInteger
-{
-    class TestBigIntegerField
-    {
+class TestBigInteger {
+    class TestBigIntegerField {
         BigInteger fromString
         BigInteger fromLong
         BigInteger fromBoolean
@@ -43,8 +41,7 @@ class TestBigInteger
     }
 
     @Test
-    void testAssignBigInteger()
-    {
+    void testAssignBigInteger() {
         String json = '{"@type":"' + TestBigIntegerField.class.name + '","fromString":"314159","fromLong":314159,"fromBoolean":true,"fromStringObj":{"@type":"java.math.BigInteger","value":"314159"},"fromLongObj":{"@type":"java.math.BigInteger","value":314159},"fromBooleanObj":{"@type":"java.math.BigInteger","value":false},"fromBigDecObj":{"@type":"java.math.BigInteger","value":{"@type":"java.math.BigDecimal","value":9}},"fromBigIntObj":{"@type":"java.math.BigInteger","value":{"@type":"java.math.BigInteger","value":99}},"values":["314159",314159,true,{"@type":"java.math.BigInteger","value":"314159"},{"@type":"java.math.BigInteger","value":314159},{"@type":"java.math.BigInteger","value":true},{"@type":"java.math.BigInteger","value":{"@type":"java.math.BigInteger","value":999}}]}'
         TestBigIntegerField tbi = (TestBigIntegerField) TestUtil.readJsonObject(json)
         assertEquals(new BigInteger("314159"), tbi.fromString)
@@ -64,7 +61,7 @@ class TestBigInteger
         assertEquals(new BigInteger("1"), tbi.values[5])
         assertEquals(new BigInteger("999"), tbi.values[6])
 
-        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         json = TestUtil.getJsonString(map)
         tbi = (TestBigIntegerField) TestUtil.readJsonObject(json)
         assertEquals(new BigInteger("314159"), tbi.fromString)
@@ -90,16 +87,14 @@ class TestBigInteger
     }
 
     @Test
-    void testAssignBigIntegerStringToMaps()
-    {
+    void testAssignBigIntegerStringToMaps() {
         String json = '{"@type":"' + TestBigIntegerField.class.name + '","fromString":""}'
-        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         assertNull(map.fromString)      // allowing "" to null out non-primitive fields in map-of-map mode
     }
 
     @Test
-    void testBigInteger()
-    {
+    void testBigInteger() {
         String s = "123456789012345678901234567890"
         BigInteger bigInt = new BigInteger(s)
         String json = TestUtil.getJsonString(bigInt)
@@ -109,8 +104,7 @@ class TestBigInteger
     }
 
     @Test
-    void testBigIntegerInArray()
-    {
+    void testBigIntegerInArray() {
         String s = "123456789012345678901234567890"
         BigInteger bigInt = new BigInteger(s)
         Object[] bigInts = [bigInt, bigInt] as Object[]
@@ -129,8 +123,7 @@ class TestBigInteger
     }
 
     @Test
-    void testBigIntegerInCollection()
-    {
+    void testBigIntegerInCollection() {
         String s = "123456789012345678901234567890"
         BigInteger bigInt = new BigInteger(s)
         List list = new ArrayList()
@@ -162,8 +155,7 @@ class TestBigInteger
 //    }
 
     @Test
-    void testHugeBigInteger()
-    {
+    void testHugeBigInteger() {
         String json = '{"@type":"java.math.BigInteger","value":"' +
                 '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890' +
                 '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"}'
@@ -173,42 +165,37 @@ class TestBigInteger
     }
 
     @Test
-    void testBigNumberParsers()
-    {
+    void testBigNumberParsers() {
         assertNull(Readers.bigIntegerFrom(null))
         assertNull(Readers.bigDecimalFrom(null))
 
-        try
-        {
+        try {
             Readers.bigIntegerFrom("Glock")
             fail()
         }
-        catch(Exception ignored)
-        { }
+        catch (Exception ignored) {
+        }
 
-        try
-        {
+        try {
             Readers.bigDecimalFrom("Glock")
             fail()
         }
-        catch(Exception ignored)
-        { }
+        catch (Exception ignored) {
+        }
 
-        try
-        {
+        try {
             Readers.bigIntegerFrom(new Date())
             fail()
         }
-        catch(Exception ignored)
-        { }
+        catch (Exception ignored) {
+        }
 
-        try
-        {
+        try {
             Readers.bigDecimalFrom(new Date())
             fail()
         }
-        catch(Exception ignored)
-        { }
+        catch (Exception ignored) {
+        }
 
         BigInteger bi = Readers.bigIntegerFrom(3.14)
         assertEquals(3, bi.intValue())

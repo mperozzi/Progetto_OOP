@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Denominator {
 
     private String denominator;
 
-    public Denominator() {}
+    public Denominator() {
+    }
 
     public String getDenominator() {
         return denominator;

@@ -23,10 +23,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestShort
-{
-    private static class ManyShorts implements Serializable
-    {
+class TestShort {
+    private static class ManyShorts implements Serializable {
         private final Short _arrayElement
         private final Short[] _typeArray
         private final Object[] _objArray
@@ -37,24 +35,22 @@ class TestShort
         private final Short _max
         private final Short _null
 
-        private ManyShorts()
-        {
+        private ManyShorts() {
             _arrayElement = new Short((short) -1)
-            _polyRefTarget = new Short((short)710)
+            _polyRefTarget = new Short((short) 710)
             _polyRef = _polyRefTarget
             _polyNotRef = new Short((short) 710)
-            Short local = new Short((short)75)
-            _null  = null
-            _typeArray = [_arrayElement, (short) 44, local, _null, null, new Short((short)44)] as Short[]
-            _objArray = [_arrayElement, (short) 69, local, _null, null, new Short((short)69)] as Object[]
+            Short local = new Short((short) 75)
+            _null = null
+            _typeArray = [_arrayElement, (short) 44, local, _null, null, new Short((short) 44)] as Short[]
+            _objArray = [_arrayElement, (short) 69, local, _null, null, new Short((short) 69)] as Object[]
             _min = Short.MIN_VALUE;
             _max = Short.MAX_VALUE;
         }
     }
 
     @Test
-    void testShort()
-    {
+    void testShort() {
         ManyShorts test = new ManyShorts()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine("json = " + json)

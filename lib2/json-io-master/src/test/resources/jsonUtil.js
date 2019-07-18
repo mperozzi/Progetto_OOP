@@ -45,8 +45,7 @@
  *    // to the object identified by the {"@ref":n} number.
  * }
  */
-var resolveRefs = function(jObj)
-{
+var resolveRefs = function (jObj) {
     if (!jObj)
         return;
 
@@ -60,63 +59,49 @@ var resolveRefs = function(jObj)
     idsToObjs = null;
 };
 
-function walk(jObj, idsToObjs)
-{
+function walk(jObj, idsToObjs) {
     if (!jObj)
         return;
 
     var keys = Object.keys(jObj); // will return an array of own properties
 
-    for (var i = 0, len = keys.length; i < len; i++)
-    {
+    for (var i = 0, len = keys.length; i < len; i++) {
         var field = keys[i];
         var value = jObj[field];
 
         if (!value)
             continue;
 
-        if ("@id" === field || '$id' === field)
-        {
+        if ("@id" === field || '$id' === field) {
             idsToObjs[value] = jObj;
-        }
-        else if ("object" === typeof(value))
-        {
+        } else if ("object" === typeof (value)) {
             walk(value, idsToObjs);
         }
     }
 }
 
-function substitute(parent, fieldName, jObj, idsToObjs)
-{
+function substitute(parent, fieldName, jObj, idsToObjs) {
     if (!jObj)
         return;
 
     var keys = Object.keys(jObj); // will return an array of own properties
 
-    for (var i = 0, len = keys.length; i < len; i++)
-    {
+    for (var i = 0, len = keys.length; i < len; i++) {
         var field = keys[i];
         var value = jObj[field];
 
         if (!value)
             continue;
 
-        if ("@ref" === field)
-        {
-            if (parent && fieldName)
-            {
+        if ("@ref" === field) {
+            if (parent && fieldName) {
                 parent[fieldName] = idsToObjs[jObj["@ref"]];
             }
-        }
-        else if ("$ref" === field)
-        {
-            if (parent && fieldName)
-            {
+        } else if ("$ref" === field) {
+            if (parent && fieldName) {
                 parent[fieldName] = idsToObjs[jObj["$ref"]];
             }
-        }
-        else if ("object" === typeof(value))
-        {
+        } else if ("object" === typeof (value)) {
             substitute(jObj, field, value, idsToObjs);
         }
     }
@@ -128,16 +113,13 @@ function substitute(parent, fieldName, jObj, idsToObjs)
  * @param target String in the form of 'controller.method'
  * @param args Array of arguments to be passed to the method.
  */
-function stream(target, args)
-{
+function stream(target, args) {
     return buildJsonCmdUrl(target) + '?json=' + buildJsonArgs(args);
 }
 
-function buildJsonCmdUrl(target)
-{
+function buildJsonCmdUrl(target) {
     var pieces = target.split('.');
-    if (pieces == null || pieces.length != 2)
-    {
+    if (pieces == null || pieces.length != 2) {
         throw "Error: Use 'Controller.method'";
     }
     var controller = pieces[0];
@@ -145,28 +127,23 @@ function buildJsonCmdUrl(target)
 
     var regexp = /\/([^\/]+)\//g;
     var match = regexp.exec(location.pathname);
-    if (match == null || match.length != 2)
-    {
+    if (match == null || match.length != 2) {
         return location.protocol + '//' + location.hostname + ":" + location.port + "/cmd/" + controller + "/" + method;
     }
     var ctx = match[1];
     return location.protocol + '//' + location.hostname + ":" + location.port + "/" + ctx + "/cmd/" + controller + "/" + method;
 }
 
-function buildJsonArgs(args)
-{
-    if (!args)
-    {
+function buildJsonArgs(args) {
+    if (!args) {
         args = [];  // empty args
     }
 
     return encodeURI(JSON.stringify(args));
 }
 
-function assert(truth)
-{
-    if (!truth)
-    {
+function assert(truth) {
+    if (!truth) {
         throw 'assertion failed';
     }
 }

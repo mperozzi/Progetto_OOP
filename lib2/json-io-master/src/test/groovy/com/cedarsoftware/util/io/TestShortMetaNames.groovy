@@ -20,21 +20,19 @@ import org.junit.Test
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestShortMetaNames
-{
+class TestShortMetaNames {
     @Test
-    void testShortMetaNames()
-    {
+    void testShortMetaNames() {
         TestObject a = new TestObject("A")
         TestObject b = new TestObject("B")
         a._other = b
         b._other = a
-        Map map = [(a):(b)]
+        Map map = [(a): (b)]
         List list = [map]
 
         Map args = [
-                (JsonWriter.SHORT_META_KEYS):true,
-                (JsonWriter.TYPE_NAME_MAP):['java.util.ArrayList':'al', 'java.util.LinkedHashMap':'lmap', (TestObject.class.getName()):'to']
+                (JsonWriter.SHORT_META_KEYS): true,
+                (JsonWriter.TYPE_NAME_MAP)  : ['java.util.ArrayList': 'al', 'java.util.LinkedHashMap': 'lmap', (TestObject.class.getName()): 'to']
         ]
         String json = JsonWriter.objectToJson(list, args)
         List clone = (List) JsonReader.jsonToJava(json, args)

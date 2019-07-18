@@ -9,115 +9,86 @@ import java.io.Reader;
  * PushbackReader.  This is due to this class not using synchronization
  * as it is not needed.
  */
-public class FastPushbackBufferedReader extends BufferedReader implements FastPushbackReader
-{
+public class FastPushbackBufferedReader extends BufferedReader implements FastPushbackReader {
     private final int[] buf = new int[256];
     private int idx = 0;
     private int unread = Integer.MAX_VALUE;
     protected int line = 1;
     protected int col = 0;
 
-    public FastPushbackBufferedReader(Reader reader)
-    {
+    public FastPushbackBufferedReader(Reader reader) {
         super(reader);
     }
 
-    public String getLastSnippet()
-    {
+    public String getLastSnippet() {
         StringBuilder s = new StringBuilder();
-        for (int i=idx; i < buf.length; i++)
-        {
-            if (appendChar(s, i))
-            {
+        for (int i = idx; i < buf.length; i++) {
+            if (appendChar(s, i)) {
                 break;
             }
         }
-        for (int i=0; i < idx; i++)
-        {
-            if (appendChar(s, i))
-            {
+        for (int i = 0; i < idx; i++) {
+            if (appendChar(s, i)) {
                 break;
             }
         }
         return s.toString();
     }
 
-    private boolean appendChar(StringBuilder s, int i)
-    {
-        try
-        {
+    private boolean appendChar(StringBuilder s, int i) {
+        try {
             final int snip = buf[i];
-            if (snip == 0)
-            {
+            if (snip == 0) {
                 return true;
             }
             s.appendCodePoint(snip);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return true;
         }
         return false;
     }
 
-    public int read() throws IOException
-    {
+    public int read() throws IOException {
         int ch;
-        if (unread == 0x7fffffff)
-        {
+        if (unread == 0x7fffffff) {
             ch = super.read();
-        }
-        else
-        {
+        } else {
             ch = unread;
             unread = 0x7fffffff;
         }
 
-        if ((buf[idx++] = ch) == 0x0a)
-        {
+        if ((buf[idx++] = ch) == 0x0a) {
             line++;
             col = 0;
-        }
-        else
-        {
+        } else {
             col++;
         }
 
-        if (idx >= buf.length)
-        {
+        if (idx >= buf.length) {
             idx = 0;
         }
         return ch;
     }
 
-    public void unread(int c) throws IOException
-    {
-        if ((unread = c) == 0x0a)
-        {
+    public void unread(int c) throws IOException {
+        if ((unread = c) == 0x0a) {
             line--;
-        }
-        else
-        {
+        } else {
             col--;
         }
 
-        if (idx < 1)
-        {
+        if (idx < 1) {
             idx = buf.length - 1;
-        }
-        else
-        {
+        } else {
             idx--;
         }
     }
 
-    public int getCol()
-    {
+    public int getCol() {
         return col;
     }
 
-    public int getLine()
-    {
+    public int getLine() {
         return line;
     }
 }

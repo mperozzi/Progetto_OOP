@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Target_value {
 
     private int target_value;
 
-    public Target_value() {}
+    public Target_value() {
+    }
 
     public int getTarget_value() {
         return target_value;

@@ -19,46 +19,37 @@ package com.cedarsoftware.util.io
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestObject implements Comparable, Serializable
-{
+class TestObject implements Comparable, Serializable {
     protected String _name
     protected TestObject _other
 
-    public TestObject(String name)
-    {
+    public TestObject(String name) {
         _name = name
     }
 
-    public int compareTo(Object that)
-    {
-        if (!(that instanceof TestObject))
-        {
+    public int compareTo(Object that) {
+        if (!(that instanceof TestObject)) {
             return 1
         }
         return _name.compareTo(((TestObject) that)._name)
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
         return _name == null ? 0 : _name.hashCode()
     }
 
-    public boolean equals(Object that)
-    {
-        if (that == null)
-        {
+    public boolean equals(Object that) {
+        if (that == null) {
             return false;
         }
         return that instanceof TestObject && _name.equals(((TestObject) that)._name)
     }
 
-    public String toString()
-    {
+    public String toString() {
         return "name=" + _name
     }
 
-    public String getName()
-    {
+    public String getName() {
         return _name
     }
 }

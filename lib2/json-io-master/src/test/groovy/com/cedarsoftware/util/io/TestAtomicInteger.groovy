@@ -29,10 +29,8 @@ import static org.junit.Assert.fail
  *         limitations under the License.
  */
 @CompileStatic
-class TestAtomicInteger
-{
-    static class TestAtomicIntegerField
-    {
+class TestAtomicInteger {
+    static class TestAtomicIntegerField {
         AtomicInteger value
         AtomicInteger nullValue
         AtomicInteger strValue
@@ -42,8 +40,7 @@ class TestAtomicInteger
     }
 
     @Test
-    void testAssignAtomicInteger()
-    {
+    void testAssignAtomicInteger() {
         String json = '''{"@type":"com.cedarsoftware.util.io.TestAtomicInteger$TestAtomicIntegerField","value":16,"nullValue":null,"strValue":"50","emptyStrValue":"", "objValue":{"value":-9},"values":[-5,null,5, "45"]}'''
         TestAtomicIntegerField atom2 = (TestAtomicIntegerField) JsonReader.jsonToJava(json)
 
@@ -63,26 +60,23 @@ class TestAtomicInteger
 
 
         json = '''{"@type":"com.cedarsoftware.util.io.TestAtomicInteger$TestAtomicIntegerField","value":16.5}'''
-        try
-        {
+        try {
             JsonReader.jsonToJava(json)
             fail()
         }
-        catch (JsonIoException ignored)
-        { }
+        catch (JsonIoException ignored) {
+        }
     }
 
     @Test
-    void testAssignAtomicIntegerStringToMaps()
-    {
+    void testAssignAtomicIntegerStringToMaps() {
         String json = '{"@type":"' + TestAtomicIntegerField.class.name + '","strValue":""}'
-        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         assertNull(map.fromString)      // allowing "" to null out non-primitive fields in map-of-map mode
     }
 
     @Test
-    void testAtomicIntegerInCollection()
-    {
+    void testAtomicIntegerInCollection() {
         AtomicInteger atomicInt = new AtomicInteger(12345)
         List list = new ArrayList()
         list.add(atomicInt)

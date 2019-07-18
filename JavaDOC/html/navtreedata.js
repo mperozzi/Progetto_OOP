@@ -22,32 +22,32 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 for the JavaScript code in this file
 */
 var NAVTREE =
-[
-  [ "Progetto OOP", "index.html", [
-    [ "Packages", "namespaces.html", [
-      [ "Packages", "namespaces.html", "namespaces_dup" ]
-    ] ],
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Variables", "functions_vars.html", null ]
-      ] ]
-    ] ],
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
-    ] ]
-  ] ]
-];
+    [
+        ["Progetto OOP", "index.html", [
+            ["Packages", "namespaces.html", [
+                ["Packages", "namespaces.html", "namespaces_dup"]
+            ]],
+            ["Classes", "annotated.html", [
+                ["Class List", "annotated.html", "annotated_dup"],
+                ["Class Index", "classes.html", null],
+                ["Class Hierarchy", "hierarchy.html", "hierarchy"],
+                ["Class Members", "functions.html", [
+                    ["All", "functions.html", "functions_dup"],
+                    ["Functions", "functions_func.html", "functions_func"],
+                    ["Variables", "functions_vars.html", null]
+                ]]
+            ]],
+            ["Files", "files.html", [
+                ["File List", "files.html", "files_dup"]
+            ]]
+        ]]
+    ];
 
 var NAVTREEINDEX =
-[
-"_cci_8java.html",
-"classcom_1_1company_1_1projectoop_1_1table_1_1_riga__metadata.html#af2998fd66b00d96ea44e40aca2003cd8"
-];
+    [
+        "_cci_8java.html",
+        "classcom_1_1company_1_1projectoop_1_1table_1_1_riga__metadata.html#af2998fd66b00d96ea44e40aca2003cd8"
+    ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
 var SYNCOFFMSG = 'click to enable panel synchronisation';

@@ -1,15 +1,14 @@
 package com.cedarsoftware.util.io
 
-class CustomDataClass
-{
+class CustomDataClass {
 
-	private String test;
+    private String test;
 
-	public void setTest(String test) {
-		this.test = test;
-	}
+    public void setTest(String test) {
+        this.test = test;
+    }
 
-	public String getTest() {
-		return test;
-	}
+    public String getTest() {
+        return test;
+    }
 }

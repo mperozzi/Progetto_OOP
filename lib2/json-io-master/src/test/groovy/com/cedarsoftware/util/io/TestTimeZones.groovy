@@ -21,16 +21,13 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestTimeZones
-{
-    public static class TestTimeZone implements Serializable
-    {
+class TestTimeZones {
+    public static class TestTimeZone implements Serializable {
         private TimeZone _zone
     }
 
     @Test
-    void testTimeZoneAsField()
-    {
+    void testTimeZoneAsField() {
         TimeZone zone = TimeZone.default
         TestTimeZone tz = new TestTimeZone()
         tz._zone = zone
@@ -42,8 +39,7 @@ class TestTimeZones
     }
 
     @Test
-    void testTimeZone()
-    {
+    void testTimeZone() {
         TimeZone est = TimeZone.getTimeZone("EST")
         String json = TestUtil.getJsonString(est)
         TestUtil.printLine("json=" + json)
@@ -56,25 +52,24 @@ class TestTimeZones
         tz = (TimeZone) TestUtil.readJsonObject(json)
         assertTrue(tz.equals(pst))
 
-        try
-        {
+        try {
             String noZone = '{"@type":"sun.util.calendar.ZoneInfo"}'
             TestUtil.readJsonObject(noZone)
             assertTrue("Should not reach this point.", false)
         }
-        catch(Exception e) {}
+        catch (Exception e) {
+        }
     }
 
     @Test
-    void testTimeZoneInArray()
-    {
+    void testTimeZoneInArray() {
         TimeZone pst = TimeZone.getTimeZone("PST")
         String json = TestUtil.getJsonString([pst] as Object[])
         TestUtil.printLine("json=" + json)
 
         Object[] oArray = (Object[]) TestUtil.readJsonObject(json)
         assertTrue(oArray.length == 1)
-        TimeZone tz = (TimeZone)oArray[0]
+        TimeZone tz = (TimeZone) oArray[0]
         assertTrue(tz.equals(pst))
 
         json = TestUtil.getJsonString([pst] as TimeZone[])
@@ -82,13 +77,12 @@ class TestTimeZones
 
         Object[] tzArray = (Object[]) TestUtil.readJsonObject(json)
         assertTrue(tzArray.length == 1)
-        tz = (TimeZone)tzArray[0]
+        tz = (TimeZone) tzArray[0]
         assertTrue(tz.equals(pst))
     }
 
     @Test
-    void testTimeZoneInCollection()
-    {
+    void testTimeZoneInCollection() {
         TimeZone pst = TimeZone.getTimeZone("PST")
         List col = new ArrayList()
         col.add(pst)
@@ -102,8 +96,7 @@ class TestTimeZones
     }
 
     @Test
-    void testTimeZoneInMapValue()
-    {
+    void testTimeZoneInMapValue() {
         TimeZone pst = TimeZone.getTimeZone("PST")
         Map map = new HashMap()
         map.put("p", pst)
@@ -115,8 +108,7 @@ class TestTimeZones
     }
 
     @Test
-    void testTimeZoneInMapKey()
-    {
+    void testTimeZoneInMapKey() {
         TimeZone pst = TimeZone.getTimeZone("PST")
         Map map = new HashMap()
         map.put(pst, "p")
@@ -129,28 +121,26 @@ class TestTimeZones
     }
 
     @Test
-    void testTimeZoneInMapofMaps()
-    {
+    void testTimeZoneInMapofMaps() {
         TimeZone pst = TimeZone.getTimeZone("PST")
         String json = TestUtil.getJsonString([pst] as Object[])
         TestUtil.printLine("json=" + json)
 
-        Object[] items = (Object[]) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Object[] items = (Object[]) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         Map item = (Map) items[0]
         assertTrue(item.containsKey("zone"))
         assertTrue("PST".equals(item.zone))
     }
 
     @Test
-    void testTimeZoneRef()
-    {
+    void testTimeZoneRef() {
         TimeZone pst = TimeZone.getTimeZone("PST")
         String json = TestUtil.getJsonString([pst, pst] as Object[])
         TestUtil.printLine("json=" + json)
 
         Object[] oArray = (Object[]) TestUtil.readJsonObject(json)
         assertTrue(oArray.length == 2)
-        TimeZone tz = (TimeZone)oArray[0]
+        TimeZone tz = (TimeZone) oArray[0]
         assertTrue(tz.equals(pst))
         assertTrue(oArray[0] == oArray[1])
     }

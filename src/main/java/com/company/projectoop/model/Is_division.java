@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Is_division {
 
     private String is_division;
 
-    public Is_division() {}
+    public Is_division() {
+    }
 
     public String getIs_division() {
         return is_division;

@@ -23,10 +23,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestRefs
-{
-    private static class TestReferences implements Serializable
-    {
+class TestRefs {
+    private static class TestReferences implements Serializable {
         // Field ordering below is vital (b, a, c).  We treat JSON keys in alphabetical
         // order, whereas Java Field walking is in declaration order.
         private TestObject _b
@@ -47,8 +45,7 @@ class TestRefs
 
         private char _big;
 
-        private void init()
-        {
+        private void init() {
             _big = '\ufbfc'
             _b = new TestObject('B')
             _a = [_b] as TestObject[]
@@ -68,41 +65,34 @@ class TestRefs
         }
     }
 
-    static class Column
-    {
+    static class Column {
         final Object value
 
-        Column(Object v)
-        {
+        Column(Object v) {
             value = v
         }
     }
 
-    static class Axis
-    {
+    static class Axis {
         final String name
         final Column column
 
-        Axis(String n, Column c)
-        {
+        Axis(String n, Column c) {
             name = n
             column = c
         }
     }
 
-    static class Delta
-    {
+    static class Delta {
         final Object newValue
 
-        Delta(Object n)
-        {
+        Delta(Object n) {
             newValue = n
         }
     }
 
     @Test
-    void testReferences()
-    {
+    void testReferences() {
         TestReferences obj = new TestReferences()
         obj.init()
         String jsonOut = TestUtil.getJsonString(obj)
@@ -150,17 +140,15 @@ class TestRefs
     }
 
     @Test
-    void testRefResolution()
-    {
+    void testRefResolution() {
         TestObject a = new TestObject('a')
         TestObject b = new TestObject('b')
         a._other = b
         b._other = a
         String json = JsonWriter.objectToJson(a)
 
-        TestObject aa = TestUtil.readJsonObject(json,[(JsonReader.CUSTOM_READER_MAP):[(TestObject.class):new JsonReader.JsonClassReaderEx() {
-            Object read(Object jOb, Deque<JsonObject<String, Object>> stack, Map<String, Object> args)
-            {
+        TestObject aa = TestUtil.readJsonObject(json, [(JsonReader.CUSTOM_READER_MAP): [(TestObject.class): new JsonReader.JsonClassReaderEx() {
+            Object read(Object jOb, Deque<JsonObject<String, Object>> stack, Map<String, Object> args) {
                 JsonObject jObj = (JsonObject) jOb
                 TestObject x = new TestObject(jObj.name)
                 JsonObject b1 = jObj._other
@@ -171,12 +159,12 @@ class TestRefs
                 assert aRef != aTarget
                 assert aTarget._name == 'a'
                 return x
-            }}]])
+            }
+        }]])
     }
 
     @Test
-    void testTypedAndUntypedReference()
-    {
+    void testTypedAndUntypedReference() {
         Column column = new Column('foo')
         Axis axis = new Axis('state', column)
         Delta delta1 = new Delta(column)

@@ -21,14 +21,11 @@ import org.junit.Test
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestUnmodifiableCollection
-{
-    static class UnmodifiableMapHolder
-    {
+class TestUnmodifiableCollection {
+    static class UnmodifiableMapHolder {
         Map map;
 
-        UnmodifiableMapHolder()
-        {
+        UnmodifiableMapHolder() {
             Map directions = new LinkedHashMap()
             directions.put("North", 0)
             directions.put("South", 1)
@@ -39,8 +36,7 @@ class TestUnmodifiableCollection
     }
 
     @Test
-    void testUnmodifiableCollection()
-    {
+    void testUnmodifiableCollection() {
         Collection col = new ArrayList()
         col.add('foo')
         col.add('bar')
@@ -73,8 +69,7 @@ class TestUnmodifiableCollection
     }
 
     @Test
-    void testUnmodifiableSet()
-    {
+    void testUnmodifiableSet() {
         Collection col = new LinkedHashSet()
         col.add('foo')
         col.add('bar')
@@ -122,8 +117,7 @@ class TestUnmodifiableCollection
     }
 
     @Test
-    void testUnmodifiableMap()
-    {
+    void testUnmodifiableMap() {
         Map map = new LinkedHashMap()
         map.foo = 'foot'
         map.bar = 'bart'
@@ -156,8 +150,7 @@ class TestUnmodifiableCollection
     }
 
     @Test
-    void testUnmodifiableMapHolder()
-    {
+    void testUnmodifiableMapHolder() {
         UnmodifiableMapHolder holder = new UnmodifiableMapHolder()
         String json = JsonWriter.objectToJson(holder)
         UnmodifiableMapHolder holder1 = (UnmodifiableMapHolder) TestUtil.readJsonObject(json)

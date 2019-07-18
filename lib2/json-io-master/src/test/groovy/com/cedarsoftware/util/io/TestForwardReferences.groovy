@@ -22,11 +22,9 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestForwardReferences
-{
+class TestForwardReferences {
     @Test
-    void testForwardRefs()
-    {
+    void testForwardRefs() {
         TestObject one = new TestObject("One")
         TestObject two = new TestObject("Two")
         one._other = two
@@ -41,29 +39,29 @@ class TestForwardReferences
 
         String json = '[{"@ref":2},{"@id":2,"@type":"int","value":5}]'
         Object[] ints = (Object[]) TestUtil.readJsonObject(json)
-        assertEquals((Integer)ints[0], 5)
+        assertEquals((Integer) ints[0], 5)
         assertEquals((Integer) ints[1], 5)
 
         json = '{"@type":"java.util.ArrayList","@items":[{"@ref":2},{"@id":2,"@type":"int","value":5}]}'
         List list = (List) JsonReader.jsonToJava(json)
-        assertEquals((Integer)list.get(0), 5)
-        assertEquals((Integer)list.get(1), 5)
+        assertEquals((Integer) list.get(0), 5)
+        assertEquals((Integer) list.get(1), 5)
 
         json = '{"@type":"java.util.TreeSet","@items":[{"@type":"int","value":9},{"@ref":16},{"@type":"int","value":4},{"@id":16,"@type":"int","value":5}]}'
         Set set = (Set) TestUtil.readJsonObject(json)
         assertEquals(set.size(), 3)
         Iterator i = set.iterator()
-        assertEquals((Integer)i.next(), 4)
-        assertEquals((Integer)i.next(), 5)
-        assertEquals((Integer)i.next(), 9)
+        assertEquals((Integer) i.next(), 4)
+        assertEquals((Integer) i.next(), 5)
+        assertEquals((Integer) i.next(), 9)
 
         json = '{"@type":"java.util.HashMap","@keys":[1,2,3,4],"@items":[{"@type":"int","value":9},{"@ref":16},{"@type":"int","value":4},{"@id":16,"@type":"int","value":5}]}'
         Map map = (Map) TestUtil.readJsonObject(json)
         assertEquals(map.size(), 4)
-        assertEquals((Integer)map.get(1L), 9)
-        assertEquals((Integer)map.get(2L), 5)
-        assertEquals((Integer)map.get(3L), 4)
-        assertEquals((Integer)map.get(4L), 5)
+        assertEquals((Integer) map.get(1L), 9)
+        assertEquals((Integer) map.get(2L), 5)
+        assertEquals((Integer) map.get(3L), 4)
+        assertEquals((Integer) map.get(4L), 5)
     }
 
 }

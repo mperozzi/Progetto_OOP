@@ -24,40 +24,35 @@ import static org.junit.Assert.assertTrue
  *         limitations under the License.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class TestInnerClass
-{
-    static public class A
-    {
+class TestInnerClass {
+    static public class A {
         public String a;
 
-        class B
-        {
+        class B {
 
             public String b;
 
-            public B()
-            {
+            public B() {
                 // No args constructor for B
             }
         }
 
-        static B createB(A aa)
-        {
+        static B createB(A aa) {
             new B(aa)
         }
     }
 
     @Test
-    void testChangedClass()
-    {
+    void testChangedClass() {
         Dog dog = new Dog()
         dog.x = 10
 //        Dog.Leg leg = dog.new Dog.Leg()       // original Java
-        Dog.Leg leg = Dog.createLeg(dog)        // Groovy requires static method on outer class to create non-static inner instance
+        Dog.Leg leg = Dog.createLeg(dog)
+        // Groovy requires static method on outer class to create non-static inner instance
         leg.y = 20
         String json0 = TestUtil.getJsonString(dog)
         TestUtil.printLine("json0=" + json0)
-        JsonObject job = (JsonObject) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        JsonObject job = (JsonObject) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         job.put("phantom", new TestObject("Eddie"))
         String json1 = TestUtil.getJsonString(job)
         TestUtil.printLine("json1=" + json1)
@@ -67,8 +62,7 @@ class TestInnerClass
     }
 
     @Test
-    void testInner()
-    {
+    void testInner() {
         A a = new A()
         a.a = "aaa"
 
@@ -78,7 +72,8 @@ class TestInnerClass
         assertTrue(o1.a.equals("aaa"))
 
 //        TestJsonReaderWriter.A.B b = a.new B()        // Original Java
-        TestInnerClass.A.B b = A.createB(a)         // Groovy requires static method on outer class to create non-static inner instance
+        TestInnerClass.A.B b = A.createB(a)
+        // Groovy requires static method on outer class to create non-static inner instance
         b.b = "bbb"
         json = TestUtil.getJsonString(b)
         TestUtil.printLine("json = " + json)
@@ -87,8 +82,7 @@ class TestInnerClass
     }
 
     @Test
-    void testInnerInstance()
-    {
+    void testInnerInstance() {
         Dog dog = new Dog()
         dog.x = 10;
 //        Dog.Leg leg = dog.new Dog.Leg()

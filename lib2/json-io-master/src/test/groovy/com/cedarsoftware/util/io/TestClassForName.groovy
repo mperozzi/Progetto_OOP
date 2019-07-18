@@ -23,84 +23,72 @@ import static org.junit.Assert.fail
  *         limitations under the License.
  */
 @CompileStatic
-class TestClassForName
-{
+class TestClassForName {
     @Test
-    void testClassForName()
-    {
+    void testClassForName() {
         Class testObjectClass = MetaUtils.classForName('com.cedarsoftware.util.io.TestObject', TestClassForName.class.getClassLoader())
         assert testObjectClass instanceof Class
         assert 'com.cedarsoftware.util.io.TestObject' == testObjectClass.name
     }
 
     @Test
-    void testClassForNameWithClassloader()
-    {
+    void testClassForNameWithClassloader() {
         Class testObjectClass = MetaUtils.classForName('ReallyLong', new AlternateNameClassLoader('ReallyLong', Long.class))
         assert testObjectClass instanceof Class
         assert 'java.lang.Long' == testObjectClass.name
     }
 
     @Test
-    void testClassForNameNullClassErrorHandling()
-    {
-        try
-        {
+    void testClassForNameNullClassErrorHandling() {
+        try {
             MetaUtils.classForName(null, TestClassForName.class.getClassLoader())
             fail()
         }
-        catch (JsonIoException ignored)
-        { }
+        catch (JsonIoException ignored) {
+        }
 
         assert Map.class.isAssignableFrom(MetaUtils.classForName('Smith&Wesson', TestClassForName.class.getClassLoader()))
     }
 
     @Test
-    void testClassForNameFailOnClassLoaderErrorTrue()
-    {
+    void testClassForNameFailOnClassLoaderErrorTrue() {
         try {
             MetaUtils.classForName('foo.bar.baz.Qux', TestClassForName.class.getClassLoader(), true)
             fail()
         }
-        catch (JsonIoException ignored)
-        { }
+        catch (JsonIoException ignored) {
+        }
     }
 
     @Test
-    void testClassForNameFailOnClassLoaderErrorFalse()
-    {
+    void testClassForNameFailOnClassLoaderErrorFalse() {
         Class testObjectClass = MetaUtils.classForName('foo.bar.baz.Qux', TestClassForName.class.getClassLoader(), false)
         assert testObjectClass instanceof Class
         assert 'java.util.LinkedHashMap' == testObjectClass.name
     }
 
-    private class AlternateNameClassLoader extends ClassLoader
-    {
+    private class AlternateNameClassLoader extends ClassLoader {
         private final String alternateName;
         private final Class<?> clazz;
 
-        AlternateNameClassLoader(String alternateName, Class<?> clazz)
-        {
+        AlternateNameClassLoader(String alternateName, Class<?> clazz) {
             super(AlternateNameClassLoader.class.getClassLoader());
             this.alternateName = alternateName;
             this.clazz = clazz;
         }
 
-        Class<?> loadClass(String className) throws ClassNotFoundException
-        {
+        Class<?> loadClass(String className) throws ClassNotFoundException {
             return findClass(className);
         }
 
-        protected Class<?> findClass(String className) throws ClassNotFoundException
-        {
-            try
-            {
+        protected Class<?> findClass(String className) throws ClassNotFoundException {
+            try {
                 return findSystemClass(className);
             }
-            catch (Exception ignored) { }
+            catch (Exception ignored) {
+            }
 
-            if (alternateName.equals(className))
-            {
+            if (alternateName.equals(className)) {
                 return Long.class;
             }
 

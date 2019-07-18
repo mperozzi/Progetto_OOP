@@ -22,27 +22,22 @@ import static org.junit.Assert.assertNotNull
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestInternalAPIs
-{
-    static class DerivedWriter extends JsonWriter
-    {
-        public DerivedWriter(OutputStream out)
-        {
+class TestInternalAPIs {
+    static class DerivedWriter extends JsonWriter {
+        public DerivedWriter(OutputStream out) {
             super(out)
         }
     }
 
     @Test
-    void testDistanceToInterface()
-    {
+    void testDistanceToInterface() {
         assertEquals(1, MetaUtils.getDistanceToInterface(Serializable.class, LinkedList.class))
         assertEquals(3, MetaUtils.getDistanceToInterface(Iterable.class, LinkedList.class))
         assertEquals(2, MetaUtils.getDistanceToInterface(Serializable.class, BigInteger.class))
     }
 
     @Test
-    void testCleanString()
-    {
+    void testCleanString() {
         String s = MetaUtils.removeLeadingAndTrailingQuotes('"Foo"')
         assert "Foo" == s
         s = MetaUtils.removeLeadingAndTrailingQuotes("Foo")
@@ -56,8 +51,7 @@ class TestInternalAPIs
     }
 
     @Test
-    void testProtectedAPIs()
-    {
+    void testProtectedAPIs() {
         ByteArrayOutputStream bao = new ByteArrayOutputStream()
         DerivedWriter writer = new DerivedWriter(bao)
         Map ref = writer.objectsReferenced

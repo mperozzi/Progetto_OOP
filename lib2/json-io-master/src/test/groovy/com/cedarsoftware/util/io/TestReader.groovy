@@ -21,11 +21,9 @@ import org.junit.Test
  *         limitations under the License.
  */
 @CompileStatic
-class TestReader
-{
+class TestReader {
     @Test
-    void testNewInstance()
-    {
+    void testNewInstance() {
         Date d = JsonReader.newInstance(Date.class, new JsonObject()) as Date
         Integer a = JsonReader.newInstance(Integer.class, new JsonObject()) as Integer
         String x = JsonReader.newInstance(String.class, new JsonObject())

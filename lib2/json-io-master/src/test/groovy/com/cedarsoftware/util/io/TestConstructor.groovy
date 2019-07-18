@@ -23,28 +23,23 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestConstructor
-{
-    static class Canine
-    {
+class TestConstructor {
+    static class Canine {
         String name;
-        Canine(Object nm)
-        {
+
+        Canine(Object nm) {
             name = nm.toString()     // intentionally causes NPE when reflective constructor tries 'null' as arg
         }
     }
 
-    static class NoNullConstructor
-    {
+    static class NoNullConstructor {
         List list;
         Map map;
         String string;
         Date date;
 
-        private NoNullConstructor(List list, Map map, String string, Date date)
-        {
-            if (list == null || map == null || string == null || date == null)
-            {
+        private NoNullConstructor(List list, Map map, String string, Date date) {
+            if (list == null || map == null || string == null || date == null) {
                 throw new JsonIoException("Constructor arguments cannot be null")
             }
             this.list = list;
@@ -54,17 +49,15 @@ class TestConstructor
         }
     }
 
-    static class Web
-    {
+    static class Web {
         URL url;
-        Web(URL u)
-        {
+
+        Web(URL u) {
             url = u;
         }
     }
 
-    private static class TestJsonNoDefaultOrPublicConstructor
-    {
+    private static class TestJsonNoDefaultOrPublicConstructor {
         private final String _str
         private final Date _date
         private final byte _byte
@@ -89,8 +82,7 @@ class TestConstructor
 
         private TestJsonNoDefaultOrPublicConstructor(String string, Date date, byte b, Byte B, short s, Short S, int i, Integer I,
                                                      long l, Long L, float f, Float F, double d, Double D, boolean bool, Boolean Bool,
-                                                     char c, Character C, String[] strings, int[] ints, BigDecimal bigD)
-        {
+                                                     char c, Character C, String[] strings, int[] ints, BigDecimal bigD) {
             _str = string;
             _date = date;
             _byte = b;
@@ -114,75 +106,62 @@ class TestConstructor
             _bigD = bigD;
         }
 
-        public String getString()
-        {
+        public String getString() {
             return _str;
         }
 
-        public Date getDate()
-        {
+        public Date getDate() {
             return _date;
         }
 
-        public byte getByte()
-        {
+        public byte getByte() {
             return _byte;
         }
 
-        public short getShort()
-        {
+        public short getShort() {
             return _short;
         }
 
-        public int getInt()
-        {
+        public int getInt() {
             return _int;
         }
 
-        public long getLong()
-        {
+        public long getLong() {
             return _long;
         }
 
-        public float getFloat()
-        {
+        public float getFloat() {
             return _float;
         }
 
-        public double getDouble()
-        {
+        public double getDouble() {
             return _double;
         }
 
-        public boolean getBoolean()
-        {
+        public boolean getBoolean() {
             return _boolean;
         }
 
-        public char getChar()
-        {
+        public char getChar() {
             return _char;
         }
 
-        public String[] getStrings()
-        {
+        public String[] getStrings() {
             return _strings;
         }
 
-        public int[] getInts()
-        {
+        public int[] getInts() {
             return _ints;
         }
     }
 
     @Test
-    void testNoDefaultConstructor()
-    {
+    void testNoDefaultConstructor() {
         Calendar c = Calendar.instance
         c.set(2010, 5, 5, 5, 5, 5)
         String[] strings = ["C", "C++", "Java"] as String[]
         int[] ints = [1, 2, 4, 8, 16, 32, 64, 128] as int[]
-        Object foo = new TestJsonNoDefaultOrPublicConstructor("Hello, World.", c.getTime(), (byte) 1, new Byte((byte)11), (short) 2, new Short((short)22), 3, new Integer(33), 4L, new Long(44L), 5.0f, new Float(55.0f), 6.0d, new Double(66.0d), true, Boolean.TRUE,'J' as char, new Character('K' as char), strings, ints, new BigDecimal(1.1))
+        Object foo = new TestJsonNoDefaultOrPublicConstructor("Hello, World.", c.getTime(), (byte) 1, new Byte((byte) 11), (short) 2, new Short((short) 22), 3, new Integer(33), 4L, new Long(44L), 5.0f, new Float(55.0f), 6.0d, new Double(66.0d), true, Boolean.TRUE, 'J' as char, new Character('K' as char), strings, ints, new BigDecimal(1.1))
         String jsonOut = TestUtil.getJsonString(foo)
         TestUtil.printLine(jsonOut)
 
@@ -206,15 +185,14 @@ class TestConstructor
     }
 
     @Test
-    void testReconstitutePrimitives()
-    {
-        Object foo = new TestJsonNoDefaultOrPublicConstructor("Hello, World.", new Date(), (byte) 1, new Byte((byte)11), (short) 2, new Short((short)22), 3, new Integer(33), 4L, new Long(44L), 5.0f, new Float(55.0f), 6.0d, new Double(66.0d), true, Boolean.TRUE,'J' as char, new Character('K' as char), ["john","adams"] as String[], [2,6] as int[], new BigDecimal("2.71828"))
+    void testReconstitutePrimitives() {
+        Object foo = new TestJsonNoDefaultOrPublicConstructor("Hello, World.", new Date(), (byte) 1, new Byte((byte) 11), (short) 2, new Short((short) 22), 3, new Integer(33), 4L, new Long(44L), 5.0f, new Float(55.0f), 6.0d, new Double(66.0d), true, Boolean.TRUE, 'J' as char, new Character('K' as char), ["john", "adams"] as String[], [2, 6] as int[], new BigDecimal("2.71828"))
         String json0 = TestUtil.getJsonString(foo)
         TestUtil.printLine("json0=" + json0)
 
-        Map map = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
-        assertEquals((byte)1, map.get("_byte") )
-        assertEquals((short)2, map.get("_short"))
+        Map map = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
+        assertEquals((byte) 1, map.get("_byte"))
+        assertEquals((short) 2, map.get("_short"))
         assertEquals(3, map.get("_int"))
         assertEquals(4L, map.get("_long"))
         assertEquals(5.0f, map.get("_float"), 0.00001f)
@@ -222,8 +200,8 @@ class TestConstructor
         assertEquals(true, map.get("_boolean"))
         assertEquals('J' as char, map.get("_char"))
 
-        assertEquals((byte)11, map.get("_Byte"))
-        assertEquals((short)22, map.get("_Short"))
+        assertEquals((byte) 11, map.get("_Byte"))
+        assertEquals((short) 22, map.get("_Short"))
         assertEquals(33, map.get("_Integer"))
         assertEquals(44L, map.get("_Long"))
         assertEquals(55.0f, map.get("_Float"), 0.0001f)
@@ -239,21 +217,20 @@ class TestConstructor
     }
 
     @Test
-    void testReconstituteNullablePrimitives()
-    {
-        Object foo = new TestJsonNoDefaultOrPublicConstructor("Hello, World.", new Date(), (byte) 1, null, (short) 2, null, 3, null, 4L, null, 5.0f, null, 6.0d, null, true, null,'J' as char, null, ["john","adams"] as String[], [2,6] as int[], null)
+    void testReconstituteNullablePrimitives() {
+        Object foo = new TestJsonNoDefaultOrPublicConstructor("Hello, World.", new Date(), (byte) 1, null, (short) 2, null, 3, null, 4L, null, 5.0f, null, 6.0d, null, true, null, 'J' as char, null, ["john", "adams"] as String[], [2, 6] as int[], null)
         String json = TestUtil.getJsonString(foo)
         TestUtil.printLine("json0=" + json)
 
-        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
-        assertEquals((byte)1, map.get("_byte"))
-        assertEquals((short)2, map.get("_short"))
+        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
+        assertEquals((byte) 1, map.get("_byte"))
+        assertEquals((short) 2, map.get("_short"))
         assertEquals(3, map.get("_int"))
         assertEquals(4L, map.get("_long"))
         assertEquals(5.0f, map.get("_float"), 0.0001f)
         assertEquals(6.0d, map.get("_double"), 0.0001d)
         assertEquals(true, map.get("_boolean"))
-        assertEquals((char)'J', map.get("_char"))
+        assertEquals((char) 'J', map.get("_char"))
 
         Map prim = (Map) map.get("_Byte")
         assertNull(prim)
@@ -278,15 +255,14 @@ class TestConstructor
         TestUtil.printLine("json1=" + json1)
         assertTrue(json.equals(json1))
 
-        map = (Map) JsonReader.jsonToJava(json1, [(JsonReader.USE_MAPS):true] as Map)
+        map = (Map) JsonReader.jsonToJava(json1, [(JsonReader.USE_MAPS): true] as Map)
         json = TestUtil.getJsonString(map)
         TestUtil.printLine("json2=" + json)
         assertTrue(json.equals(json1))
     }
 
     @Test
-    void testConstructorWithObjectArg()
-    {
+    void testConstructorWithObjectArg() {
         Canine bella = new Canine('Bella')
         String json = TestUtil.getJsonString(bella)
         TestUtil.printLine("json = " + json)
@@ -295,8 +271,7 @@ class TestConstructor
     }
 
     @Test
-    void testNoNullConstructor()
-    {
+    void testNoNullConstructor() {
         NoNullConstructor noNull = new NoNullConstructor(new ArrayList(), [:], "", new Date())
         noNull.list = null;
         noNull.map = null;
@@ -313,8 +288,7 @@ class TestConstructor
     }
 
     @Test
-    void testJsonReaderConstructor()
-    {
+    void testJsonReaderConstructor() {
         String json = '{"@type":"sun.util.calendar.ZoneInfo","zone":"EST"}'
         JsonReader jr = new JsonReader(new ByteArrayInputStream(json.bytes))
         TimeZone tz = (TimeZone) jr.readObject()
@@ -323,8 +297,7 @@ class TestConstructor
     }
 
     @Test
-    void testWriterObjectAPI()
-    {
+    void testWriterObjectAPI() {
         String json = "[1,true,null,3.14,[]]"
         Object o = JsonReader.jsonToJava(json)
         assert TestUtil.getJsonString(o) == json
@@ -338,8 +311,7 @@ class TestConstructor
     }
 
     @Test
-    void testUrlInConstructor()
-    {
+    void testUrlInConstructor() {
         Web addr = new Web(new URL("http://acme.com"))
         String json = TestUtil.getJsonString(addr)
         TestUtil.printLine("json = " + json)
@@ -348,10 +320,9 @@ class TestConstructor
     }
 
     @Test
-    void testMapConstructor()
-    {
+    void testMapConstructor() {
         String json = JsonWriter.objectToJson(new Canine('Bella'))
-        Map root = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map root = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
 
         JsonReader reader = new JsonReader([:])
         Canine bella = (Canine) reader.jsonObjectsToJava(root)
@@ -359,8 +330,7 @@ class TestConstructor
     }
 
     @Test
-    void testReaderInputStreamConstructor()
-    {
+    void testReaderInputStreamConstructor() {
         Canine dog = new Canine('Eddie')
         String json = JsonWriter.objectToJson(dog)
         ByteArrayInputStream inputStream = new ByteArrayInputStream(json.getBytes())
@@ -368,7 +338,7 @@ class TestConstructor
         assert eddie.name == 'Eddie'
 
         inputStream = new ByteArrayInputStream(json.getBytes())
-        Map dogMap = JsonReader.jsonToJava(inputStream, [(JsonReader.USE_MAPS):true] as Map)
+        Map dogMap = JsonReader.jsonToJava(inputStream, [(JsonReader.USE_MAPS): true] as Map)
         assert dogMap.name == 'Eddie'
     }
 }

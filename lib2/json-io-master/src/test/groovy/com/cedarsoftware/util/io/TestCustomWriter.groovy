@@ -19,45 +19,36 @@ import org.junit.Test
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestCustomWriter
-{
-    static class Pet
-    {
+class TestCustomWriter {
+    static class Pet {
         int age
         String type
         String name
 
-        boolean equals(o)
-        {
-            if (this.is(o))
-            {
+        boolean equals(o) {
+            if (this.is(o)) {
                 return true
             }
-            if (!(o instanceof Pet))
-            {
+            if (!(o instanceof Pet)) {
                 return false
             }
 
             Pet pet = (Pet) o
 
-            if (age != pet.age)
-            {
+            if (age != pet.age) {
                 return false
             }
-            if (name != pet.name)
-            {
+            if (name != pet.name) {
                 return false
             }
-            if (type != pet.type)
-            {
+            if (type != pet.type) {
                 return false
             }
 
             return true
         }
 
-        int hashCode()
-        {
+        int hashCode() {
             int result
             result = age
             result = 31 * result + type.hashCode()
@@ -66,44 +57,35 @@ class TestCustomWriter
         }
     }
 
-    static class Person
-    {
+    static class Person {
         String firstName
         String lastName
         List<Pet> pets = new ArrayList<>()
 
-        boolean equals(o)
-        {
-            if (this.is(o))
-            {
+        boolean equals(o) {
+            if (this.is(o)) {
                 return true
             }
-            if (!(o instanceof Person))
-            {
+            if (!(o instanceof Person)) {
                 return false
             }
 
             Person person = (Person) o
 
-            if (firstName != person.firstName)
-            {
+            if (firstName != person.firstName) {
                 return false
             }
-            if (lastName != person.lastName)
-            {
+            if (lastName != person.lastName) {
                 return false
             }
 
-            if (pets.size() != person.pets.size())
-            {
+            if (pets.size() != person.pets.size()) {
                 return false
             }
 
             int len = pets.size()
-            for (int i = 0; i < len; i++)
-            {
-                if (pets[i] != person.pets[i])
-                {
+            for (int i = 0; i < len; i++) {
+                if (pets[i] != person.pets[i]) {
                     return false
                 }
             }
@@ -111,8 +93,7 @@ class TestCustomWriter
             return true
         }
 
-        int hashCode()
-        {
+        int hashCode() {
             int result
             result = firstName.hashCode()
             result = 31 * result + lastName.hashCode()
@@ -121,10 +102,8 @@ class TestCustomWriter
         }
     }
 
-    static class CustomPersonWriter implements JsonWriter.JsonClassWriterEx
-    {
-        void write(Object o, boolean showType, Writer output, Map<String, Object> args) throws IOException
-        {
+    static class CustomPersonWriter implements JsonWriter.JsonClassWriterEx {
+        void write(Object o, boolean showType, Writer output, Map<String, Object> args) throws IOException {
             Person p = (Person) o
             output.write('"f":"')
             output.write(p.getFirstName())
@@ -133,8 +112,7 @@ class TestCustomWriter
             output.write('","p":[')
 
             Iterator<Pet> i = p.getPets().iterator()
-            while (i.hasNext())
-            {
+            while (i.hasNext()) {
                 Pet pet = i.next()
                 output.write('{"n":"')
                 output.write(pet.name)
@@ -143,8 +121,7 @@ class TestCustomWriter
                 output.write('","a":')
                 output.write(pet.age.toString())
                 output.write('}')
-                if (i.hasNext())
-                {
+                if (i.hasNext()) {
                     output.write(',');
                 }
             }
@@ -154,20 +131,16 @@ class TestCustomWriter
         }
     }
 
-    static class CustomPersonWriterAddField implements JsonWriter.JsonClassWriterEx
-    {
-        void write(Object o, boolean showType, Writer output, Map<String, Object> args) throws IOException
-        {
+    static class CustomPersonWriterAddField implements JsonWriter.JsonClassWriterEx {
+        void write(Object o, boolean showType, Writer output, Map<String, Object> args) throws IOException {
             JsonWriter writer = JsonWriter.JsonClassWriterEx.Support.getWriter(args);
             output.write("\"_version\":12,");
             writer.writeObject(o, false, true);
         }
     }
 
-    static class CustomPersonReader implements JsonReader.JsonClassReaderEx
-    {
-        Object read(Object jOb, Deque<JsonObject<String, Object>> stack, Map<String, Object> args)
-        {
+    static class CustomPersonReader implements JsonReader.JsonClassReaderEx {
+        Object read(Object jOb, Deque<JsonObject<String, Object>> stack, Map<String, Object> args) {
             JsonReader reader = JsonReader.JsonClassReaderEx.Support.getReader(args)
             assert reader instanceof JsonReader
             JsonObject map = (JsonObject) jOb
@@ -176,8 +149,7 @@ class TestCustomWriter
             p.lastName = map.l
             p.pets = []
             Object[] petz = map.p
-            for (Map pet : petz)
-            {
+            for (Map pet : petz) {
                 Pet petObj = new Pet()
                 petObj.age = pet.a
                 petObj.name = pet.n
@@ -188,16 +160,13 @@ class TestCustomWriter
         }
     }
 
-    static class BadCustomPWriter implements JsonWriter.JsonClassWriterEx
-    {
-        void write(Object o, boolean showType, Writer output, Map<String, Object> args) throws IOException
-        {
+    static class BadCustomPWriter implements JsonWriter.JsonClassWriterEx {
+        void write(Object o, boolean showType, Writer output, Map<String, Object> args) throws IOException {
             throw new RuntimeException('Bad custom writer')
         }
     }
 
-    static Person createTestPerson()
-    {
+    static Person createTestPerson() {
         Person p = new Person()
         p.firstName = 'Michael'
         p.lastName = 'Bolton'
@@ -206,8 +175,7 @@ class TestCustomWriter
         return p
     }
 
-    static Pet createPet(String name, String type, int age)
-    {
+    static Pet createPet(String name, String type, int age) {
         Pet pet = new Pet()
         pet.name = name
         pet.type = type
@@ -216,8 +184,7 @@ class TestCustomWriter
     }
 
     @Test
-    void testCustomWriter()
-    {
+    void testCustomWriter() {
         Person p = createTestPerson()
         String jsonCustom = TestUtil.getJsonString(p, [(JsonWriter.CUSTOM_WRITER_MAP): [(Person.class): new CustomPersonWriter()]])
         Map obj = TestUtil.readJsonMap(jsonCustom, [(JsonReader.CUSTOM_READER_MAP): [(Person.class): new CustomPersonReader()], (JsonReader.NOT_CUSTOM_READER_MAP): []])
@@ -237,7 +204,7 @@ class TestCustomWriter
 
         Person personCustom = TestUtil.readJsonObject(jsonCustom,
                 [
-                    (JsonReader.CUSTOM_READER_MAP) : [(Person.class):new CustomPersonReader()]
+                        (JsonReader.CUSTOM_READER_MAP): [(Person.class): new CustomPersonReader()]
                 ])
         assert personCustom.firstName == 'Michael'
         assert personCustom.lastName == 'Bolton'
@@ -250,20 +217,20 @@ class TestCustomWriter
         assert 'Chi hua hua' == petz[1].type
         assert 3 == petz[1].age
 
-        String jsonOrig = TestUtil.getJsonString(p, [(JsonWriter.CUSTOM_WRITER_MAP):[(Person.class):new CustomPersonWriter()],(JsonWriter.NOT_CUSTOM_WRITER_MAP):[Person.class]])
+        String jsonOrig = TestUtil.getJsonString(p, [(JsonWriter.CUSTOM_WRITER_MAP): [(Person.class): new CustomPersonWriter()], (JsonWriter.NOT_CUSTOM_WRITER_MAP): [Person.class]])
         assert jsonCustom != jsonOrig
         assert jsonCustom.length() < jsonOrig.length()
 
-        String jsonCustom2 = TestUtil.getJsonString(p, [(JsonWriter.CUSTOM_WRITER_MAP):[(Person.class):new CustomPersonWriter()]])
+        String jsonCustom2 = TestUtil.getJsonString(p, [(JsonWriter.CUSTOM_WRITER_MAP): [(Person.class): new CustomPersonWriter()]])
         String jsonOrig2 = JsonWriter.objectToJson(p)
         assert jsonCustom == jsonCustom2
         assert jsonOrig == jsonOrig2
 
         Person personOrig = TestUtil.readJsonObject(jsonOrig,
                 [
-                        (JsonReader.CUSTOM_READER_MAP):[(Person.class):new CustomPersonReader()],
-                        (JsonReader.NOT_CUSTOM_READER_MAP):[Person.class]
-                 ])
+                        (JsonReader.CUSTOM_READER_MAP)    : [(Person.class): new CustomPersonReader()],
+                        (JsonReader.NOT_CUSTOM_READER_MAP): [Person.class]
+                ])
         assert personOrig == personCustom
 
         p = JsonReader.jsonToJava(jsonCustom)
@@ -271,23 +238,19 @@ class TestCustomWriter
     }
 
     @Test
-    void testCustomWriterException()
-    {
+    void testCustomWriterException() {
         Person p = createTestPerson()
-        try
-        {
+        try {
             TestUtil.getJsonString(p, [(JsonWriter.CUSTOM_WRITER_MAP): [(Person.class): new BadCustomPWriter()]])
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('error writing object')
         }
     }
 
     @Test
-    void testCustomWriterAddField()
-    {
+    void testCustomWriterAddField() {
         Person p = createTestPerson()
         String jsonCustom = TestUtil.getJsonString(p, [(JsonWriter.CUSTOM_WRITER_MAP): [(Person.class): new CustomPersonWriterAddField()]])
         assert jsonCustom.contains("_version\":12");

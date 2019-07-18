@@ -25,11 +25,9 @@ import static org.junit.Assert.assertTrue
  *         limitations under the License.
  */
 @CompileStatic
-class TestRoots
-{
+class TestRoots {
     @Test
-    void testStringRoot()
-    {
+    void testStringRoot() {
         Gson gson = new Gson()
         String g = gson.toJson("root should not be a string")
         String j = JsonWriter.objectToJson("root should not be a string")
@@ -37,8 +35,7 @@ class TestRoots
     }
 
     @Test
-    void testRoots()
-    {
+    void testRoots() {
         // Test Object[] as root element passed in
         Object[] foo = [new TestObject("alpha"), new TestObject("beta")] as Object[];
 
@@ -80,8 +77,7 @@ class TestRoots
     }
 
     @Test
-    void testRootTypes()
-    {
+    void testRootTypes() {
         assertEquals(25L, TestUtil.readJsonObject("25"))
         assertEquals(25.0d, TestUtil.readJsonObject("25.0") as Double, 0.00001d)
         assertEquals(true, TestUtil.readJsonObject("true"))
@@ -90,8 +86,7 @@ class TestRoots
     }
 
     @Test
-    void testRoots2()
-    {
+    void testRoots2() {
         // Test root JSON type as [ ]
         Object array = ['Hello'] as Object[]
         String json = TestUtil.getJsonString(array)
@@ -113,16 +108,14 @@ class TestRoots
     }
 
     @Test
-    void testNull()
-    {
+    void testNull() {
         String json = JsonWriter.objectToJson(null)
         TestUtil.printLine('json=' + json)
         assert 'null' == json
     }
 
     @Test
-    void testEmptyObject()
-    {
+    void testEmptyObject() {
         Object o = TestUtil.readJsonObject('{}')
         assert JsonObject.class == o.getClass()
 

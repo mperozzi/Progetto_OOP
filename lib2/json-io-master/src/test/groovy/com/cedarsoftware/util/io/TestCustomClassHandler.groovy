@@ -24,32 +24,26 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestCustomClassHandler
-{
-    public static class WeirdDate extends Date
-    {
+class TestCustomClassHandler {
+    public static class WeirdDate extends Date {
         public WeirdDate(Date date) { super(date.getTime()) }
 
         public WeirdDate(long millis) { super(millis) }
     }
 
-    public class WeirdDateWriter implements JsonWriter.JsonClassWriter
-    {
-        public void write(Object o, boolean showType, Writer out)
-        {
+    public class WeirdDateWriter implements JsonWriter.JsonClassWriter {
+        public void write(Object o, boolean showType, Writer out) {
             String value = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format((Date) o)
             out.write("\"stuff\":\"")
             out.write(value)
             out.write('"')
         }
 
-        public boolean hasPrimitiveForm()
-        {
+        public boolean hasPrimitiveForm() {
             return true;
         }
 
-        public void writePrimitiveForm(Object o, Writer out)
-        {
+        public void writePrimitiveForm(Object o, Writer out) {
             String value = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format((Date) o)
             out.write('"')
             out.write(value)
@@ -57,31 +51,23 @@ class TestCustomClassHandler
         }
     }
 
-    public class WeirdDateReader implements JsonReader.JsonClassReader
-    {
-        public Object read(Object o, Deque<JsonObject<String, Object>> stack)
-        {
-            if (o instanceof String)
-            {
-                try
-                {
+    public class WeirdDateReader implements JsonReader.JsonClassReader {
+        public Object read(Object o, Deque<JsonObject<String, Object>> stack) {
+            if (o instanceof String) {
+                try {
                     return new WeirdDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse((String) o))
                 }
-                catch (ParseException e)
-                {
+                catch (ParseException e) {
                     throw new JsonIoException("Date format incorrect")
                 }
             }
 
             JsonObject jObj = (JsonObject) o
-            if (jObj.containsKey("stuff"))
-            {
-                try
-                {
+            if (jObj.containsKey("stuff")) {
+                try {
                     return jObj.target = new WeirdDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse((String) jObj.get("stuff")))
                 }
-                catch (ParseException e)
-                {
+                catch (ParseException e) {
                     throw new JsonIoException("Date format incorrect")
                 }
             }
@@ -91,24 +77,23 @@ class TestCustomClassHandler
     }
 
     @Test
-    void testCustomClassReaderWriter()
-    {
+    void testCustomClassReaderWriter() {
         WeirdDate now = new WeirdDate(System.currentTimeMillis())
         String json = TestUtil.getJsonString(now,
                 [
-                        (JsonWriter.CUSTOM_WRITER_MAP):[(WeirdDate.class):new WeirdDateWriter()]
+                        (JsonWriter.CUSTOM_WRITER_MAP): [(WeirdDate.class): new WeirdDateWriter()]
                 ])
         TestUtil.printLine("json=" + json)
         WeirdDate date = (WeirdDate) TestUtil.readJsonObject(json,
                 [
-                        (JsonReader.CUSTOM_READER_MAP):[(WeirdDate.class):new WeirdDateReader()]
+                        (JsonReader.CUSTOM_READER_MAP): [(WeirdDate.class): new WeirdDateReader()]
                 ])
         assertTrue(now.equals(date))
 
         json = TestUtil.getJsonString(now,
                 [
-                    (JsonWriter.CUSTOM_WRITER_MAP):[(WeirdDate.class):new WeirdDateWriter()],
-                    (JsonWriter.NOT_CUSTOM_WRITER_MAP):[WeirdDate.class]
+                        (JsonWriter.CUSTOM_WRITER_MAP)    : [(WeirdDate.class): new WeirdDateWriter()],
+                        (JsonWriter.NOT_CUSTOM_WRITER_MAP): [WeirdDate.class]
                 ])
         TestUtil.printLine("json=" + json)
         assertTrue(now.equals(date))

@@ -20,19 +20,16 @@ import org.junit.Test
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestTypeSubstitution
-{
-    static class Person
-    {
+class TestTypeSubstitution {
+    static class Person {
         String name
         Map pets = new HashMap();
     }
 
     @Test
-    void testBasicTypeSubAtRoot()
-    {
-        Map<String, String> types = ['java.util.ArrayList':'al']
-        Map args = [(JsonWriter.TYPE_NAME_MAP):types]
+    void testBasicTypeSubAtRoot() {
+        Map<String, String> types = ['java.util.ArrayList': 'al']
+        Map args = [(JsonWriter.TYPE_NAME_MAP): types]
         List list = ['alpha', 'bravo', 'charlie']
         String json = JsonWriter.objectToJson(list, args)
         List test = (List) JsonReader.jsonToJava(json, args)
@@ -40,17 +37,16 @@ class TestTypeSubstitution
     }
 
     @Test
-    void testBasicTypeSubInFieldAndInnerClass()
-    {
+    void testBasicTypeSubInFieldAndInnerClass() {
         Person p = new Person()
         p.name = 'John'
-        p.pets = [Eddie:'Dog', Bella:'Dog']
+        p.pets = [Eddie: 'Dog', Bella: 'Dog']
 
         Map<String, String> types = [
-                'java.util.LinkedHashMap':'lmap',
-                'com.cedarsoftware.util.io.TestTypeSubstitution$Person':'person'
+                'java.util.LinkedHashMap'                              : 'lmap',
+                'com.cedarsoftware.util.io.TestTypeSubstitution$Person': 'person'
         ]
-        Map args = [(JsonWriter.TYPE_NAME_MAP):types]
+        Map args = [(JsonWriter.TYPE_NAME_MAP): types]
         String json = JsonWriter.objectToJson(p, args)
         args[(JsonReader.USE_MAPS)] = true
         Person clone = JsonReader.jsonToJava(json, args)

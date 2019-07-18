@@ -1,6 +1,7 @@
 package com.company.projectoop.parsing;
 
 //segue importazione delle librerie necessarie
+
 import org.json.simple.*;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
@@ -21,6 +22,7 @@ import java.lang.Object;
 /**
  * Classe che implementa i metodi descritti nell'intefaccia Parsejson.
  * Viene scaricato il JSON dall'URL e se ne ricava il link per scaricare il file CSV e si effettua il download.
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -29,7 +31,7 @@ import java.lang.Object;
 @Repository
 @Service("Parsejson_Impl")
 
-public class Parsejson_Impl implements Parsejson{
+public class Parsejson_Impl implements Parsejson {
 
     private static String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=european-structural-investment-funds-esif-2014-2020-achievements";
     private static String FolderPath = "dataset.csv ";
@@ -86,6 +88,7 @@ public class Parsejson_Impl implements Parsejson{
 
     /**
      * Metodo che effettua il download di un file prendendo in input il link di download
+     *
      * @param URLText
      */
     private static void Download_csv_FromURL(String URLText) {

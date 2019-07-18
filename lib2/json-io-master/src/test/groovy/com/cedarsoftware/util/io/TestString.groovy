@@ -24,10 +24,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestString
-{
-    private static class ManyStrings implements Serializable
-    {
+class TestString {
+    private static class ManyStrings implements Serializable {
         private static final int MAX_UTF8_CHAR = 100
         // Foreign characters test (UTF8 multi-byte chars)
         private final String _range
@@ -39,24 +37,20 @@ class TestString
         private final Object _poly
         private final String _null
 
-        private ManyStrings()
-        {
+        private ManyStrings() {
             _null = null;
             StringBuffer s = new StringBuffer()
-            for (int i = 0; i < MAX_UTF8_CHAR; i++)
-            {
+            for (int i = 0; i < MAX_UTF8_CHAR; i++) {
                 s.append((char) i)
             }
             _range = s.toString()
 
             // BYZANTINE MUSICAL SYMBOL PSILI
-            try
-            {
+            try {
                 byte[] symbol = [(byte) 0xf0, (byte) 0x9d, (byte) 0x80, (byte) 0x80] as byte[]
                 _utf8HandBuilt = new String(symbol, "UTF-8")
             }
-            catch (UnsupportedEncodingException e)
-            {
+            catch (UnsupportedEncodingException e) {
                 TestUtil.printLine("Get a new JVM that supports UTF-8")
             }
 
@@ -69,15 +63,13 @@ class TestString
     }
 
     @Test
-    void testString()
-    {
+    void testString() {
         ManyStrings test = new ManyStrings()
         String jsonOut = TestUtil.getJsonString(test)
         TestUtil.printLine("json=" + jsonOut)
         ManyStrings that = (ManyStrings) TestUtil.readJsonObject(jsonOut)
 
-        for (int i = 0; i < ManyStrings.MAX_UTF8_CHAR; i++)
-        {
+        for (int i = 0; i < ManyStrings.MAX_UTF8_CHAR; i++) {
             assertTrue(that._range.charAt(i) == (char) i)
         }
 
@@ -109,26 +101,23 @@ class TestString
     }
 
     @Test
-    void testRootString()
-    {
+    void testRootString() {
         String s = '"root string"'
-        Object o = JsonReader.jsonToJava(s, [(JsonReader.USE_MAPS):true] as Map)
+        Object o = JsonReader.jsonToJava(s, [(JsonReader.USE_MAPS): true] as Map)
         assertEquals("root string", o)
         o = TestUtil.readJsonObject(s)
         assertEquals("root string", o)
     }
 
     @Test
-    void testStringAsObject()
-    {
+    void testStringAsObject() {
         String json = '{"@type":"string","value":"Sledge Hammer"}'
         String x = TestUtil.readJsonObject(json)
         assert x == 'Sledge Hammer'
     }
 
     @Test
-    void testFrenchChar()
-    {
+    void testFrenchChar() {
         String json = '"Réunion"'
         String x = TestUtil.readJsonObject(json)
         assert x == 'Réunion'

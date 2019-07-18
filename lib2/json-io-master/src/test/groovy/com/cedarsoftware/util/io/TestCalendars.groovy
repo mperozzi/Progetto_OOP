@@ -21,17 +21,14 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestCalendars
-{
-    public static class TestCalendar implements Serializable
-    {
+class TestCalendars {
+    public static class TestCalendar implements Serializable {
         private Calendar _cal;
         private GregorianCalendar _greg;
     }
 
     @Test
-    void testCalendarAsField()
-    {
+    void testCalendarAsField() {
         Calendar greg = new GregorianCalendar()
         greg.setTimeZone(TimeZone.getTimeZone("PST"))
         greg.set(1965, 11, 17, 14, 30, 16)
@@ -48,8 +45,7 @@ class TestCalendars
     }
 
     @Test
-    void testCalendarTypedArray()
-    {
+    void testCalendarTypedArray() {
         GregorianCalendar[] gregs = [new GregorianCalendar()] as GregorianCalendar[]
         String json = TestUtil.getJsonString(gregs)
         TestUtil.printLine("json=" + json)
@@ -58,8 +54,7 @@ class TestCalendars
     }
 
     @Test
-    void testCalendarUntypedArray()
-    {
+    void testCalendarUntypedArray() {
         Calendar estCal = (Calendar) TestUtil.readJsonObject('{"@type":"java.util.GregorianCalendar","time":"1965-12-17T09:30:16.623-0500","zone":"EST"}')
         Calendar utcCal = (Calendar) TestUtil.readJsonObject('{"@type":"java.util.GregorianCalendar","time":"1965-12-17T14:30:16.623-0000"}')
         String json = TestUtil.getJsonString([estCal, utcCal] as Object[])
@@ -71,8 +66,7 @@ class TestCalendars
     }
 
     @Test
-    void testCalendarCollection()
-    {
+    void testCalendarCollection() {
         List gregs = new ArrayList()
         gregs.add(new GregorianCalendar())
         String json = TestUtil.getJsonString(gregs)
@@ -83,8 +77,7 @@ class TestCalendars
     }
 
     @Test
-    void testCalendarInMapValue()
-    {
+    void testCalendarInMapValue() {
         Calendar now = Calendar.instance
         Map map = [:]
         map.c = now
@@ -96,8 +89,7 @@ class TestCalendars
     }
 
     @Test
-    void testCalendarInMapKey()
-    {
+    void testCalendarInMapKey() {
         Calendar now = Calendar.instance
         Map map = [:]
         map[now] = "c"
@@ -110,32 +102,29 @@ class TestCalendars
     }
 
     @Test
-    void testCalendarInMapofMaps()
-    {
+    void testCalendarInMapofMaps() {
         Calendar now = Calendar.instance
         String json = TestUtil.getJsonString([now] as Object[])
         TestUtil.printLine("json=" + json)
 
-        Object[] items = (Object[]) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Object[] items = (Object[]) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         Map item = (Map) items[0]
         assertTrue(item.containsKey("time"))
         assertTrue(item.containsKey("zone"))
     }
 
     @Test
-    void testBadCalendar()
-    {
-        try
-        {
+    void testBadCalendar() {
+        try {
             TestUtil.readJsonObject('{"@type":"java.util.GregorianCalendar","time":"2011-12-08X13:29:58.822-0500","zone":"bad zone"}')
             fail()
         }
-        catch(Exception ignored) { }
+        catch (Exception ignored) {
+        }
     }
 
     @Test
-    void testCalendar()
-    {
+    void testCalendar() {
         Calendar greg = new GregorianCalendar()
         greg.setTimeZone(TimeZone.getTimeZone("PST"))
         greg.set(1965, 11, 17, 14, 30, 16)

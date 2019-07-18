@@ -23,11 +23,9 @@ import static org.junit.Assert.fail
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestLocale
-{
+class TestLocale {
     @Test
-    void testLocale()
-    {
+    void testLocale() {
         Locale locale = new Locale(Locale.ENGLISH.language, Locale.US.country)
         String json = TestUtil.getJsonString(locale)
         TestUtil.printLine("json=" + json)
@@ -40,14 +38,12 @@ class TestLocale
         us = (Locale) TestUtil.readJsonObject(json)
         assertTrue(locale.equals(us))
 
-        try
-        {
+        try {
             String noProps = '{"@type":"java.util.Locale"}'
             TestUtil.readJsonObject(noProps)
             fail()
         }
-        catch(Exception e)
-        {
+        catch (Exception e) {
             assert e.message.toLowerCase().contains("must specify 'language'")
         }
 
@@ -65,8 +61,7 @@ class TestLocale
     }
 
     @Test
-    void testLocaleArray()
-    {
+    void testLocaleArray() {
         Locale locale = new Locale(Locale.ENGLISH.language, Locale.US.country)
         String json = TestUtil.getJsonString([locale] as Object[])
         TestUtil.printLine("json=" + json)
@@ -84,8 +79,7 @@ class TestLocale
     }
 
     @Test
-    void testLocaleInMapValue()
-    {
+    void testLocaleInMapValue() {
         Locale locale = new Locale(Locale.ENGLISH.language, Locale.US.country)
         Map map = new HashMap()
         map.put("us", locale)
@@ -97,8 +91,7 @@ class TestLocale
     }
 
     @Test
-    void testLocaleInMapKey()
-    {
+    void testLocaleInMapKey() {
         Locale locale = new Locale(Locale.ENGLISH.language, Locale.US.country)
         Map map = new HashMap()
         map.put(locale, "us")
@@ -111,19 +104,17 @@ class TestLocale
     }
 
     @Test
-    void testLocaleInMapOfMaps()
-    {
+    void testLocaleInMapOfMaps() {
         Locale locale = new Locale(Locale.ENGLISH.language, Locale.US.country)
         String json = TestUtil.getJsonString(locale)
         TestUtil.printLine("json=" + json)
-        Map map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         assertTrue("en".equals(map.get("language")))
         assertTrue("US".equals(map.get("country")))
     }
 
     @Test
-    void testLocaleRef()
-    {
+    void testLocaleRef() {
         Locale locale = new Locale(Locale.ENGLISH.language, Locale.US.country)
         String json = TestUtil.getJsonString([locale, locale] as Object[])
         TestUtil.printLine("json=" + json)
@@ -135,12 +126,11 @@ class TestLocale
     }
 
     @Test
-    void testLocaleInMap()
-    {
+    void testLocaleInMap() {
         def map = [
-                (Locale.US):'United States of America',
-                (Locale.CANADA):'Canada',
-                (Locale.UK): 'United Kingdom']
+                (Locale.US)    : 'United States of America',
+                (Locale.CANADA): 'Canada',
+                (Locale.UK)    : 'United Kingdom']
 
         String json = TestUtil.getJsonString(map)
         Map map2 = (Map) TestUtil.readJsonObject(json)

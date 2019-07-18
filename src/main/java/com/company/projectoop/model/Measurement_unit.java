@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Measurement_unit {
 
     private String measurement_unit;
 
-    public Measurement_unit() {}
+    public Measurement_unit() {
+    }
 
     public String getMeasurement_unit() {
         return measurement_unit;

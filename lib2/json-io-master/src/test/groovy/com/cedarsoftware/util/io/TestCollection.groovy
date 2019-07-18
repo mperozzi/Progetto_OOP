@@ -26,8 +26,7 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestCollection
-{
+class TestCollection {
     public static Date _testDate = new Date()
     public static Integer _CONST_INT = new Integer(36)
 
@@ -40,8 +39,7 @@ class TestCollection
         String foo = "bar"
     }
 
-    static class EmptyCols
-    {
+    static class EmptyCols {
         Collection col = new LinkedList()
         List list = new ArrayList()
         Map map = new HashMap()
@@ -50,23 +48,19 @@ class TestCollection
         SortedMap sortedMap = new TreeMap()
     }
 
-    static class ParameterizedCollection
-    {
+    static class ParameterizedCollection {
         Map<String, Set<Point>> content = new LinkedHashMap<String, Set<Point>>()
     }
 
-    static class PointList
-    {
+    static class PointList {
         List<Point> points;
     }
 
-    static class EmptyArrayList
-    {
+    static class EmptyArrayList {
         ArrayList<String> list = []
     }
 
-    private static class ManyCollections implements Serializable
-    {
+    private static class ManyCollections implements Serializable {
         private Collection[] _cols;
         private List _strings_a;
         private List _strings_b;
@@ -88,8 +82,7 @@ class TestCollection
         private Set _strs_d;
         private HashSet _typedSet;
 
-        private void init()
-        {
+        private void init() {
             Collection array = new ArrayList()
             array.add(_testDate)
             array.add("Hello")
@@ -204,8 +197,7 @@ class TestCollection
     }
 
     @Test
-    void testCollection()
-    {
+    void testCollection() {
         TestUtil.printLine("\nTestJsonReaderWriter.testCollection()")
         ManyCollections obj = new ManyCollections()
         obj.init()
@@ -222,8 +214,7 @@ class TestCollection
 //        System.out.TestUtil.printLine("writer._identity = " + writer._identity)
     }
 
-    private void assertCollection(ManyCollections root)
-    {
+    private void assertCollection(ManyCollections root) {
         assertTrue(root._cols.length == 3)
         assertTrue(root._cols[0].getClass().equals(ArrayList.class))
         assertTrue(root._cols[1].getClass().equals(HashSet.class))
@@ -339,16 +330,16 @@ class TestCollection
         assertTrue(root._strs_d instanceof TreeSet)
 
         assertTrue(root._typedCol != null)
-        assertTrue(root._typedCol .size() == 6)
+        assertTrue(root._typedCol.size() == 6)
         assertTrue("string".equals(root._typedCol.get(0)))
         assertTrue(null == root._typedCol.get(1))
         assertTrue((new Date(19)).equals(root._typedCol.get(2)))
-        assertTrue((Boolean)root._typedCol.get(3))
+        assertTrue((Boolean) root._typedCol.get(3))
         assertTrue(17.76 == (Double) root._typedCol.get(4))
         assertTrue(TimeZone.getTimeZone("PST").equals(root._typedCol.get(5)))
 
         assertTrue(root._typedSet != null)
-        assertTrue(root._typedSet .size() == 6)
+        assertTrue(root._typedSet.size() == 6)
         assertTrue(root._typedSet.contains("string"))
         assertTrue(root._typedCol.contains(null))
         assertTrue(root._typedCol.contains(new Date(19)))
@@ -358,13 +349,12 @@ class TestCollection
     }
 
     @Test
-    void testReconstituteCollection2()
-    {
+    void testReconstituteCollection2() {
         ManyCollections testCol = new ManyCollections()
         testCol.init()
         String json0 = TestUtil.getJsonString(testCol)
         TestUtil.printLine("json0=" + json0)
-        Map testCol2 = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Map testCol2 = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
 
         String json1 = TestUtil.getJsonString(testCol2)
         TestUtil.printLine("json1=" + json1)
@@ -375,21 +365,19 @@ class TestCollection
     }
 
     @Test
-    void testAlwaysShowType()
-    {
-		ManyCollections tc = new ManyCollections()
-		tc.init()
-        def args = [(JsonWriter.TYPE):true]
+    void testAlwaysShowType() {
+        ManyCollections tc = new ManyCollections()
+        tc.init()
+        def args = [(JsonWriter.TYPE): true]
         def json0 = JsonWriter.objectToJson(tc, args)
-		def json1 = JsonWriter.objectToJson(tc)
-		TestUtil.printLine("json0 = " + json0)
-		TestUtil.printLine("json1 = " + json1)
-		assertTrue(json0.length() > json1.length())
+        def json1 = JsonWriter.objectToJson(tc)
+        TestUtil.printLine("json0 = " + json0)
+        TestUtil.printLine("json1 = " + json1)
+        assertTrue(json0.length() > json1.length())
     }
 
     @Test
-    void testCollectionWithEmptyElement()
-    {
+    void testCollectionWithEmptyElement() {
         List list = new ArrayList()
         list.add("a")
         list.add(null)
@@ -407,8 +395,7 @@ class TestCollection
     }
 
     @Test
-    void testCollectionWithReferences()
-    {
+    void testCollectionWithReferences() {
         TestObject o = new TestObject("JSON")
         List list = new ArrayList()
         list.add(o)
@@ -428,8 +415,7 @@ class TestCollection
     }
 
     @Test
-    void testCollectionWithNonJsonPrimitives()
-    {
+    void testCollectionWithNonJsonPrimitives() {
         Collection col = new ArrayList()
         col.add(new Integer(7))
         col.add(new Short((short) 9))
@@ -440,8 +426,7 @@ class TestCollection
     }
 
     @Test
-    void testCollectionWithParameterizedTypes()
-    {
+    void testCollectionWithParameterizedTypes() {
         String json = '{"@type":"' + ParameterizedCollection.class.getName() + '", "content":{"foo":[{"x":1,"y":2},{"x":10,"y":20}],"bar":[{"x":3,"y":4}, {"x":30,"y":40}]}}'
         ParameterizedCollection pCol = (ParameterizedCollection) JsonReader.jsonToJava(json)
         Set<Point> points = pCol.content.get("foo")
@@ -476,8 +461,7 @@ class TestCollection
     }
 
     @Test
-    void testEmptyCollections()
-    {
+    void testEmptyCollections() {
         EmptyCols emptyCols;
         String className = TestCollection.class.getName()
         String json = '{"@type":"' + className + '$EmptyCols","col":{},"list":{},"map":{},"set":{},"sortedSet":{},"sortedMap":{}}'
@@ -499,8 +483,7 @@ class TestCollection
     }
 
     @Test
-    void testEnumWithPrivateMembersInCollection()
-    {
+    void testEnumWithPrivateMembersInCollection() {
         TestEnum4 x = TestEnum4.B;
         List list = new ArrayList()
         list.add(x)
@@ -510,7 +493,7 @@ class TestCollection
         assertEquals('{"@type":"java.util.ArrayList","@items":[{"@type":"' + className + '$TestEnum4","age":21,"foo":"bar","name":"B"}]}', json)
 
         ByteArrayOutputStream ba = new ByteArrayOutputStream()
-        JsonWriter writer = new JsonWriter(ba, [(JsonWriter.ENUM_PUBLIC_ONLY):true])
+        JsonWriter writer = new JsonWriter(ba, [(JsonWriter.ENUM_PUBLIC_ONLY): true])
         writer.write(list)
         json = new String(ba.toByteArray())
         TestUtil.printLine(json)
@@ -518,8 +501,7 @@ class TestCollection
     }
 
     @Test
-    void testGenericInfoCollection()
-    {
+    void testGenericInfoCollection() {
         String className = PointList.class.getName()
         String json = '{"@type":"' + className + '","points":{"@type":"java.util.ArrayList","@items":[{"x":1,"y":2}]}}'
         PointList list = (PointList) TestUtil.readJsonObject(json)
@@ -529,8 +511,7 @@ class TestCollection
     }
 
     @Test
-    void testLocaleInCollection()
-    {
+    void testLocaleInCollection() {
         Locale locale = new Locale(Locale.ENGLISH.getLanguage(), Locale.US.getCountry())
         List list = new ArrayList()
         list.add(locale)
@@ -542,8 +523,7 @@ class TestCollection
     }
 
     @Test
-    void testMapOfMapsCollection()
-    {
+    void testMapOfMapsCollection() {
         List stuff = new ArrayList()
         stuff.add("Hello")
         Object testObj = new TestObject("test object")
@@ -553,7 +533,7 @@ class TestCollection
         String json = TestUtil.getJsonString(stuff)
         TestUtil.printLine("json=" + json)
 
-        JsonObject map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        JsonObject map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         Object[] items = map.getArray()
         assertTrue(items.length == 4)
         assertTrue("Hello".equals(items[0]))
@@ -563,7 +543,7 @@ class TestCollection
         list.add([123L, null, true, "Hello"] as Object[])
         json = TestUtil.getJsonString(list)
         TestUtil.printLine("json=" + json)
-        map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         items = (Object[]) map.getArray()
         assertTrue(items.length == 1)
         Object[] oa = (Object[]) items[0];
@@ -575,8 +555,7 @@ class TestCollection
     }
 
     @Test
-    void testReconstituteCollection()
-    {
+    void testReconstituteCollection() {
         TestObject to = new TestObject("football")
         Collection objs = new ArrayList()
         Date now = new Date()
@@ -585,7 +564,7 @@ class TestCollection
         objs.add("This is a string")
         objs.add(null)
         objs.add(to)
-        objs.add(["dog", ["a","b","c"] as String[]] as Object[])
+        objs.add(["dog", ["a", "b", "c"] as String[]] as Object[])
         Collection two = new ArrayList()
         two.add(objs)
         two.add("bella")
@@ -593,7 +572,7 @@ class TestCollection
 
         String json0 = TestUtil.getJsonString(two)
         TestUtil.printLine("json0=" + json0)
-        Map map = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         map.hashCode()
         String json1 = TestUtil.getJsonString(map)
         TestUtil.printLine("json1=" + json1)
@@ -620,13 +599,12 @@ class TestCollection
     }
 
     @Test
-    void testReconstituteEmptyCollection()
-    {
+    void testReconstituteEmptyCollection() {
         Collection empty = new ArrayList()
         String json0 = TestUtil.getJsonString(empty)
         TestUtil.printLine("json0=" + json0)
 
-        Map map = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         assertTrue(map != null)
         assertTrue(map.isEmpty())
         String json1 = TestUtil.getJsonString(map)
@@ -638,7 +616,7 @@ class TestCollection
         json0 = TestUtil.getJsonString(list)
         TestUtil.printLine("json0=" + json0)
 
-        Object[] array = (Object[]) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Object[] array = (Object[]) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         assertTrue(array != null)
         list = array
         assertTrue(list.length == 2)
@@ -649,8 +627,7 @@ class TestCollection
     }
 
     @Test
-    void testUntypedCollections()
-    {
+    void testUntypedCollections() {
         Object[] poly = ["Road Runner", 16L, 3.1415d, true, false, null, 7, "Coyote", "Coyote"] as Object[];
         String json = TestUtil.getJsonString(poly)
         TestUtil.printLine("json=" + json)
@@ -669,14 +646,13 @@ class TestCollection
     }
 
     @Test
-    void testEmptyArrayList()
-    {
+    void testEmptyArrayList() {
         EmptyArrayList x = new EmptyArrayList()
         String json = TestUtil.getJsonString(x)
         TestUtil.printLine(json)
         assertTrue(json.contains('list":[]'))
 
-        Map obj = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map obj = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         json = TestUtil.getJsonString(obj)
         TestUtil.printLine(json)
         assertTrue(json.contains('list":[]'))

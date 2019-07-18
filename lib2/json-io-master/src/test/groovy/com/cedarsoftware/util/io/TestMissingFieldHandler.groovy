@@ -24,10 +24,8 @@ import org.junit.Test
  *         limitations under the License.
  */
 @CompileStatic
-class TestMissingFieldHandler
-{
-    private static class CustomPoint
-    {
+class TestMissingFieldHandler {
+    private static class CustomPoint {
         public long x
         // y is deleted
         //public long y
@@ -35,14 +33,11 @@ class TestMissingFieldHandler
         public long newY
     }
 
-    private static class CustomPointWithRef
-    {
-        private static class Inner1
-        {
+    private static class CustomPointWithRef {
+        private static class Inner1 {
         }
 
-        private static class Inner2
-        {
+        private static class Inner2 {
             public Object inner12
         }
         public Inner1 inner1
@@ -93,14 +88,12 @@ class TestMissingFieldHandler
     private static final String OLD_CUSTOM_POINT2 = '{"@type":"com.cedarsoftware.util.io.TestMissingFieldHandler$CustomPointWithRef","inner1":{"@id":1},"inner2":{"@type":"com.cedarsoftware.util.io.TestMissingFieldHandler$CustomPointWithRef$Inner2","inner12":{"@ref":1}},"b":true,"bb":true,"by":9,"bby":9,"c":"9","cc":"9","d":9.0,"dd":9.0,"f":9.0,"ff":9.0,"i":9,"ii":9,"l":9,"ll":9,"s":9,"ss":9,"aStringArray":["foo","bar"],"inner2WithNoSerializedType":{"inner12":null}}';
 
     @Test
-    void testMissingHandler()
-    {
+    void testMissingHandler() {
         CustomPoint pt = new CustomPoint()
         pt.x = 5
 
         JsonReader.MissingFieldHandler missingHandler = new JsonReader.MissingFieldHandler() {
-            void fieldMissing(Object object, String fieldName, Object value)
-            {
+            void fieldMissing(Object object, String fieldName, Object value) {
                 ((CustomPoint) object).newY = (long) value
             }
         }
@@ -112,8 +105,7 @@ class TestMissingFieldHandler
     }
 
     @Test
-    void testMissingHandlerWithRef()
-    {
+    void testMissingHandlerWithRef() {
         //this is used to generate the OLD_CUSTOM_POINT2 string
         //        CustomPointWithRef pt = new CustomPointWithRef()
         //        pt.inner1 = new CustomPointWithRef.Inner1()
@@ -141,10 +133,8 @@ class TestMissingFieldHandler
         def isStringArrayOk = false
         def isInner2WithNoSerializedTypeOk = false
         JsonReader.MissingFieldHandler missingHandler = new JsonReader.MissingFieldHandler() {
-            void fieldMissing(Object object, String fieldName, Object value)
-            {
-                switch (fieldName)
-                {
+            void fieldMissing(Object object, String fieldName, Object value) {
+                switch (fieldName) {
                     case "inner2":
                         ((CustomPointWithRef) object).inner2Missing = (CustomPointWithRef.Inner2) value
                         break
@@ -199,7 +189,7 @@ class TestMissingFieldHandler
                     case "aStringArray":
                         isStringArrayOk = value == null
                         break
-                    case "inner2WithNoSerializedType" :
+                    case "inner2WithNoSerializedType":
                         isInner2WithNoSerializedTypeOk = value == null
                         break
                 }

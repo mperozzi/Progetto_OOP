@@ -22,11 +22,9 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestWriters
-{
+class TestWriters {
     @Test
-    void testUnusedAPIs()
-    {
+    void testUnusedAPIs() {
         Writers.TimeZoneWriter tzw = new Writers.TimeZoneWriter()
         tzw.writePrimitiveForm("", new StringWriter())
 
@@ -44,8 +42,7 @@ class TestWriters
     }
 
     @Test
-    void testNumericTruth()
-    {
+    void testNumericTruth() {
         assertFalse JsonWriter.isTrue(new BigInteger(0))
         assertTrue JsonWriter.isTrue(new BigInteger(1))
         assertFalse JsonWriter.isTrue(new BigDecimal(0.0))

@@ -19,33 +19,29 @@ import org.junit.Test
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestNoType
-{
-    static class Junk
-    {
+class TestNoType {
+    static class Junk {
         Object name
         List things = []
         Map namesToAge = [:]
         Object[] stuff
     }
 
-    static class CollectionTest
-    {
+    static class CollectionTest {
         Collection foos
         Object[] bars
     }
 
     @Test
-    void testNoType()
-    {
+    void testNoType() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
         cal.clear()
         cal.set(-700, 5, 10)
 
         Junk j = new Junk()
-        j.stuff = [(int)1, 2L, new BigInteger(3), new BigDecimal(4.0), cal.getTime(), 'Hello', Junk.class] as Object[]
+        j.stuff = [(int) 1, 2L, new BigInteger(3), new BigDecimal(4.0), cal.getTime(), 'Hello', Junk.class] as Object[]
         j.name = 'Zeus'
-        j.things = [(int)1, 2L, new BigInteger(3), new BigDecimal(4.0), cal.getTime(), 'Hello', Junk.class] as Object[]
+        j.things = [(int) 1, 2L, new BigInteger(3), new BigDecimal(4.0), cal.getTime(), 'Hello', Junk.class] as Object[]
         j.namesToAge.Appollo = 2500L
         j.namesToAge.Hercules = 2489 as int
         j.namesToAge.Poseidon = 2502 as BigInteger
@@ -53,14 +49,13 @@ class TestNoType
         j.namesToAge.Zeus = cal.getTime()
 
         String json = TestUtil.getJsonString(j)
-        String json2 = TestUtil.getJsonString(j, [(JsonWriter.TYPE):false])
+        String json2 = TestUtil.getJsonString(j, [(JsonWriter.TYPE): false])
         assert json != json2
         assert json2 == '{"name":"Zeus","things":[1,2,"3","4",-84243801600000,"Hello","com.cedarsoftware.util.io.TestNoType$Junk"],"namesToAge":{"Appollo":2500,"Hercules":2489,"Poseidon":"2502","Aphrodite":"2499.0","Zeus":-84243801600000},"stuff":[1,2,"3","4",-84243801600000,"Hello","com.cedarsoftware.util.io.TestNoType$Junk"]}'
     }
 
     @Test
-    public void testItems() 
-    {
+    public void testItems() {
         String json = '{"groups":["one","two","three"],"search":{"datalist":[]}}'
 
         Map map = JsonReader.jsonToJava(json)
@@ -79,15 +74,14 @@ class TestNoType
     }
 
     @Test
-    public void testCollections()
-    {
+    public void testCollections() {
         CollectionTest cols = new CollectionTest()
         cols.foos = new ArrayList()
-        cols.foos.addAll([1,2,"4",8])
-        cols.bars = [1,3,"5",7] as Object[]
+        cols.foos.addAll([1, 2, "4", 8])
+        cols.bars = [1, 3, "5", 7] as Object[]
 
         String json = JsonWriter.objectToJson(cols, [(JsonWriter.TYPE): false])
-        Map map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         assert map.foos[0] == 1
         assert map.foos[1] == 2
         assert map.foos[2] == "4"
@@ -106,11 +100,10 @@ class TestNoType
     }
 
     @Test
-    public void testObjectArray()
-    {
-        def array = [[1L,2L,3L] as Object[], ['a', 'b', 'c'] as Object[]] as Object[]
+    public void testObjectArray() {
+        def array = [[1L, 2L, 3L] as Object[], ['a', 'b', 'c'] as Object[]] as Object[]
         String json = JsonWriter.objectToJson(array)
-        Object[] list = (Object[]) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Object[] list = (Object[]) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
 
         assert list[0] instanceof Object[]
         assert list[0][0] == 1L

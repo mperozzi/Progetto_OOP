@@ -1,8 +1,10 @@
 package com.cedarsoftware.util.io
+
 import org.junit.Test
 
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
+
 /**
  * @author John DeRegnaucourt (jdereg@gmail.com)
  *         <br>
@@ -20,11 +22,9 @@ import javax.script.ScriptEngineManager
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestJavascript
-{
+class TestJavascript {
     @Test
-    void testJsonUtilRefInsideArray()
-    {
+    void testJsonUtilRefInsideArray() {
         ScriptEngineManager factory = new ScriptEngineManager()
         ScriptEngine engine = factory.getEngineByName("JavaScript")
 
@@ -45,8 +45,7 @@ assert(array[0] === array[1]);   // Exactly the same instance
     }
 
     @Test
-    void testJsonUtilForwardRefInsideArray()
-    {
+    void testJsonUtilForwardRefInsideArray() {
         ScriptEngineManager factory = new ScriptEngineManager()
         ScriptEngine engine = factory.getEngineByName("JavaScript")
 
@@ -67,8 +66,7 @@ assert(array[0] === array[1]);   // Exactly the same instance
     }
 
     @Test
-    void testJsonUtilRefInsideObject()
-    {
+    void testJsonUtilRefInsideObject() {
         ScriptEngineManager factory = new ScriptEngineManager()
         ScriptEngine engine = factory.getEngineByName("JavaScript")
 
@@ -92,8 +90,7 @@ assert(!testObj._other._other['@ref']);
     }
 
     @Test
-    void testJsonUtilRefCycle()
-    {
+    void testJsonUtilRefCycle() {
         ScriptEngineManager factory = new ScriptEngineManager()
         ScriptEngine engine = factory.getEngineByName("JavaScript")
 

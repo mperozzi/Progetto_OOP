@@ -31,38 +31,32 @@ import static org.junit.Assert.assertTrue
  *         limitations under the License.
  */
 @CompileStatic
-class TestArrays
-{
+class TestArrays {
     public static Date _testDate = new Date()
-	public static Character _CONST_CHAR = new Character('j' as char)
-	public static Byte _CONST_BYTE = new Byte((byte) 16)
-	public static Short _CONST_SHORT = new Short((short) 26)
-	public static Integer _CONST_INT = new Integer(36)
-	public static Long _CONST_LONG = new Long(46)
-	public static Float _CONST_FLOAT = new Float(56.56f)
-	public static Double _CONST_DOUBLE = new Double(66.66)
+    public static Character _CONST_CHAR = new Character('j' as char)
+    public static Byte _CONST_BYTE = new Byte((byte) 16)
+    public static Short _CONST_SHORT = new Short((short) 26)
+    public static Integer _CONST_INT = new Integer(36)
+    public static Long _CONST_LONG = new Long(46)
+    public static Float _CONST_FLOAT = new Float(56.56f)
+    public static Double _CONST_DOUBLE = new Double(66.66)
 
-    static class CharArrayTest
-    {
+    static class CharArrayTest {
         char[] chars_a;
         Character[] chars_b;
     }
 
-    private static class Empty implements Serializable
-    {
-        static double multiply(double x, double y)
-        {
+    private static class Empty implements Serializable {
+        static double multiply(double x, double y) {
             return x * y;
         }
 
-        boolean equals(Object other)
-        {
+        boolean equals(Object other) {
             return other instanceof Empty;
         }
     }
 
-    static class ManyArrays implements Serializable
-    {
+    static class ManyArrays implements Serializable {
         private Empty _empty_a;
         private Empty _empty_b;
         private Empty[] _empty_c;
@@ -159,7 +153,7 @@ class TestArrays
         private StringBuffer[][] _stringbuffer_c;
 
         private Object _oStringBuffer_a;
-        private Object [] _oStringBuffer_b;
+        private Object[] _oStringBuffer_b;
 
         private TestObject _testobj_a;
         private TestObject[] _testobj_b;
@@ -180,10 +174,9 @@ class TestArrays
         private Object _arrayS;
         private Object _arrayArrayO;
 
-        public ManyArrays() { }
+        public ManyArrays() {}
 
-        public void init()
-        {
+        public void init() {
             _empty_a = new Empty()
             _empty_b = null
             _empty_c = [] as Empty[]
@@ -308,8 +301,7 @@ class TestArrays
     }
 
     @Test
-    void testArray()
-    {
+    void testArray() {
         ManyArrays obj = new ManyArrays()
         obj.init()
         String jsonOut = TestUtil.getJsonString(obj)
@@ -323,8 +315,7 @@ class TestArrays
 //        String j = gson.toJson(obj)
     }
 
-    private void assertArray(ManyArrays root)
-    {
+    private void assertArray(ManyArrays root) {
         assertTrue(root._empty_a != null)
         assertNull(root._empty_b)
         assertTrue(root._empty_c.length == 0)
@@ -657,7 +648,8 @@ class TestArrays
 
         assertTrue(root._testRefs1.length == 10)
         assertNotSame(root._testRefs1[0], root._testRefs0[0])
-        assertSame(root._testRefs1[1], root._testRefs0[1])    // Works because we only read in Boolean.TRUE, Boolean.FALSE, or null
+        assertSame(root._testRefs1[1], root._testRefs0[1])
+        // Works because we only read in Boolean.TRUE, Boolean.FALSE, or null
         assertSame(root._testRefs1[2], root._testRefs0[2])
         assertSame(root._testRefs1[3], root._testRefs0[3])
         assertSame(root._testRefs1[4], root._testRefs0[4])
@@ -673,8 +665,8 @@ class TestArrays
         assertTrue("foo".equals(items[0]))
         assertTrue(Boolean.TRUE.equals(items[1]))
         assertNull(items[2])
-        assertTrue(((Long)16L).equals(items[3]))
-        assertTrue(((Double)3.14).equals(items[4]))
+        assertTrue(((Long) 16L).equals(items[3]))
+        assertTrue(((Double) 3.14).equals(items[4]))
 
         assertTrue(root._arrayS instanceof String[])
         String[] strItems = (String[]) root._arrayS;
@@ -704,8 +696,7 @@ class TestArrays
     }
 
     @Test
-    void testReconstituteObjectArray()
-    {
+    void testReconstituteObjectArray() {
         Date now = new Date()
         TestObject to = new TestObject("football")
         TimeZone tz = TimeZone.getTimeZone("EST")
@@ -713,11 +704,11 @@ class TestArrays
         col.add("Collection inside array")
         col.add(tz)
         col.add(now)
-        Object[] objs = [now, 123.45d, 0.04f, "This is a string", null,  true, to, tz, col, (short) 7, (byte) -127] as Object[]
+        Object[] objs = [now, 123.45d, 0.04f, "This is a string", null, true, to, tz, col, (short) 7, (byte) -127] as Object[]
         Object[] two = [objs, "bella", objs] as Object[]
         String json0 = TestUtil.getJsonString(two)
         TestUtil.printLine("json0=" + json0)
-        Object[] array = (Object[]) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Object[] array = (Object[]) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         String json1 = TestUtil.getJsonString(array)
         TestUtil.printLine("json1=" + json1)
 
@@ -742,7 +733,7 @@ class TestArrays
         assertTrue("Collection inside array".equals(c.get(0)))
         assertTrue(tz.equals(c.get(1)))
         assertTrue(now.equals(c.get(2)))
-        assertTrue(7 == (Short)arr1[9])
+        assertTrue(7 == (Short) arr1[9])
         assertTrue(-127 == (Byte) arr1[10])
         assertTrue(json0.equals(json1))
 
@@ -751,7 +742,7 @@ class TestArrays
         json0 = TestUtil.getJsonString(ta)
         TestUtil.printLine("json0=" + json0)
 
-        Map map = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         json1 = TestUtil.getJsonString(map)
         TestUtil.printLine("json1=" + json1)
 
@@ -759,54 +750,53 @@ class TestArrays
     }
 
     @Test
-    void testReconstituteObjectArrayTypes()
-    {
+    void testReconstituteObjectArrayTypes() {
         TestUtil.printLine("testReconstituteObjectArrayTypes")
-        Object[] bytes = [_CONST_BYTE,  _CONST_BYTE] as Object[]
+        Object[] bytes = [_CONST_BYTE, _CONST_BYTE] as Object[]
         testReconstituteArrayHelper(bytes)
-        Byte[] Bytes = [_CONST_BYTE,  _CONST_BYTE] as Byte[]
+        Byte[] Bytes = [_CONST_BYTE, _CONST_BYTE] as Byte[]
         testReconstituteArrayHelper(Bytes)
-        byte[] bites = [_CONST_BYTE,  _CONST_BYTE] as byte[]
+        byte[] bites = [_CONST_BYTE, _CONST_BYTE] as byte[]
         testReconstituteArrayHelper(bites)
 
-        Object[] shorts = [_CONST_SHORT,  _CONST_SHORT] as Object[]
+        Object[] shorts = [_CONST_SHORT, _CONST_SHORT] as Object[]
         testReconstituteArrayHelper(shorts)
-        Short[] Shorts = [_CONST_SHORT,  _CONST_SHORT] as Short[]
+        Short[] Shorts = [_CONST_SHORT, _CONST_SHORT] as Short[]
         testReconstituteArrayHelper(Shorts)
-        short[] shortz = [_CONST_SHORT,  _CONST_SHORT] as short[]
+        short[] shortz = [_CONST_SHORT, _CONST_SHORT] as short[]
         testReconstituteArrayHelper(shortz)
 
-        Object[] ints = [_CONST_INT,  _CONST_INT] as Object[]
+        Object[] ints = [_CONST_INT, _CONST_INT] as Object[]
         testReconstituteArrayHelper(ints)
-        Integer[] Ints = [_CONST_INT,  _CONST_INT] as Integer[]
+        Integer[] Ints = [_CONST_INT, _CONST_INT] as Integer[]
         testReconstituteArrayHelper(Ints)
-        int[] intz = [_CONST_INT,  _CONST_INT] as int[]
+        int[] intz = [_CONST_INT, _CONST_INT] as int[]
         testReconstituteArrayHelper(intz)
 
-        Object[] longs = [_CONST_LONG,  _CONST_LONG] as Object[]
+        Object[] longs = [_CONST_LONG, _CONST_LONG] as Object[]
         testReconstituteArrayHelper(longs)
-        Long[] Longs = [_CONST_LONG,  _CONST_LONG] as Long[]
+        Long[] Longs = [_CONST_LONG, _CONST_LONG] as Long[]
         testReconstituteArrayHelper(Longs)
-        long[] longz = [_CONST_LONG,  _CONST_LONG] as long[]
+        long[] longz = [_CONST_LONG, _CONST_LONG] as long[]
         testReconstituteArrayHelper(longz)
 
-        Object[] floats = [_CONST_FLOAT,  _CONST_FLOAT] as Object[]
+        Object[] floats = [_CONST_FLOAT, _CONST_FLOAT] as Object[]
         testReconstituteArrayHelper(floats)
-        Float[] Floats = [_CONST_FLOAT,  _CONST_FLOAT] as Float[]
+        Float[] Floats = [_CONST_FLOAT, _CONST_FLOAT] as Float[]
         testReconstituteArrayHelper(Floats)
-        float[] floatz = [_CONST_FLOAT,  _CONST_FLOAT] as float[]
+        float[] floatz = [_CONST_FLOAT, _CONST_FLOAT] as float[]
         testReconstituteArrayHelper(floatz)
 
-        Object[] doubles = [_CONST_DOUBLE,  _CONST_DOUBLE] as Object[]
+        Object[] doubles = [_CONST_DOUBLE, _CONST_DOUBLE] as Object[]
         testReconstituteArrayHelper(doubles)
-        Double[] Doubles = [_CONST_DOUBLE,  _CONST_DOUBLE] as Double[]
+        Double[] Doubles = [_CONST_DOUBLE, _CONST_DOUBLE] as Double[]
         testReconstituteArrayHelper(Doubles)
-        double[] doublez = [_CONST_DOUBLE,  _CONST_DOUBLE] as double[]
+        double[] doublez = [_CONST_DOUBLE, _CONST_DOUBLE] as double[]
         testReconstituteArrayHelper(doublez)
 
         Object[] booleans = [Boolean.TRUE, Boolean.TRUE] as Object[]
         testReconstituteArrayHelper(booleans)
-        Boolean[] Booleans = [Boolean.TRUE,  Boolean.TRUE] as Boolean[]
+        Boolean[] Booleans = [Boolean.TRUE, Boolean.TRUE] as Boolean[]
         testReconstituteArrayHelper(Booleans)
         boolean[] booleanz = [true, true] as boolean[]
         testReconstituteArrayHelper(booleanz)
@@ -850,13 +840,12 @@ class TestArrays
         testReconstituteArrayHelper(calendarz)
     }
 
-    private void testReconstituteArrayHelper(Object foo)
-    {
+    private void testReconstituteArrayHelper(Object foo) {
         assertTrue(Array.getLength(foo) == 2)
         String json0 = TestUtil.getJsonString(foo)
         TestUtil.printLine("json0=" + json0)
 
-        Object array = JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Object array = JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         String json1 = TestUtil.getJsonString(array)
         TestUtil.printLine("json1=" + json1)
         assertEquals(json0, json1)
@@ -864,13 +853,12 @@ class TestArrays
     }
 
     @Test
-    void testReconstituteEmptyArray()
-    {
+    void testReconstituteEmptyArray() {
         Object[] empty = [] as Object[]
         String json0 = TestUtil.getJsonString(empty)
         TestUtil.printLine("json0=" + json0)
 
-        empty = (Object[]) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        empty = (Object[]) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         assertTrue(empty != null)
         assertTrue(empty != null)
         assertTrue(empty.length == 0)
@@ -883,13 +871,13 @@ class TestArrays
         json0 = TestUtil.getJsonString(list)
         TestUtil.printLine("json0=" + json0)
 
-        list = (Object[]) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        list = (Object[]) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         assertTrue(list != null)
         assertTrue(list.length == 2)
         Map e1 = (Map) list[0];
         Map e2 = (Map) list[1];
         assertTrue(e1.get("@items") == e2.get("@items"))
-        assertTrue(((Object[])e1.get("@items")).length == 0)
+        assertTrue(((Object[]) e1.get("@items")).length == 0)
 
         json1 = TestUtil.getJsonString(list)
         TestUtil.printLine("json1=" + json1)
@@ -897,13 +885,12 @@ class TestArrays
     }
 
     @Test
-    void testReconstituteTypedArray()
-    {
+    void testReconstituteTypedArray() {
         String[] strs = ["tom", "dick", "harry"] as String[]
         Object[] objs = [strs, "a", strs] as Object[]
         String json0 = TestUtil.getJsonString(objs)
         TestUtil.printLine("json0=" + json0)
-        Object array = JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Object array = JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         String json1 = TestUtil.getJsonString(array)
         TestUtil.printLine("json1=" + json1)
 
@@ -923,13 +910,12 @@ class TestArrays
     }
 
     @Test
-    void testReconstituteArray()
-    {
+    void testReconstituteArray() {
         ManyArrays testArray = new ManyArrays()
         testArray.init()
         String json0 = TestUtil.getJsonString(testArray)
         TestUtil.printLine("json0=" + json0)
-        Map testArray2 = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Map testArray2 = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
 
         String json1 = TestUtil.getJsonString(testArray2)
         TestUtil.printLine("json1=" + json1)
@@ -940,13 +926,12 @@ class TestArrays
     }
 
     @Test
-    void testReconstituteEmptyObject()
-    {
+    void testReconstituteEmptyObject() {
         Empty empty = new Empty()
         String json0 = TestUtil.getJsonString(empty)
         TestUtil.printLine("json0=" + json0)
 
-        Map m = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS):true] as Map)
+        Map m = (Map) JsonReader.jsonToJava(json0, [(JsonReader.USE_MAPS): true] as Map)
         assertTrue(m.isEmpty())
 
         String json1 = TestUtil.getJsonString(m)
@@ -955,11 +940,10 @@ class TestArrays
     }
 
     @Test
-    void testAlwaysShowType()
-    {
+    void testAlwaysShowType() {
         ManyArrays ta = new ManyArrays()
         ta.init()
-        String json0 = JsonWriter.objectToJson(ta, [(JsonWriter.TYPE): (Object)true])
+        String json0 = JsonWriter.objectToJson(ta, [(JsonWriter.TYPE): (Object) true])
         ManyArrays thatTa = (ManyArrays) TestUtil.readJsonObject(json0)
         assertTrue(DeepEquals.deepEquals(ta, thatTa))
         String json1 = JsonWriter.objectToJson(ta)
@@ -969,8 +953,7 @@ class TestArrays
     }
 
     @Test
-    void testArraysAsList()
-    {
+    void testArraysAsList() {
         List strs = ['alpha', 'bravo', 'charlie']
         String json = TestUtil.getJsonString(strs)
         List foo = (List) TestUtil.readJsonObject(json)
@@ -981,8 +964,7 @@ class TestArrays
 
     // Currently allows , at end.  Future, may drop this support.
     @Test
-    void testBadArray()
-    {
+    void testBadArray() {
         String json = "[1, 10, 100,]"
         Object[] array = (Object[]) TestUtil.readJsonObject(json)
         assertTrue(array.length == 3)
@@ -992,13 +974,12 @@ class TestArrays
     }
 
     @Test
-    void testCharArray()
-    {
+    void testCharArray() {
         CharArrayTest cat = new CharArrayTest()
         cat.chars_a = ['a' as char, '\t' as char, '\u0005' as char] as char[]
         cat.chars_b = ['b' as char, '\t' as char, '\u0002' as char] as Character[]
 
-        String json0 = JsonWriter.objectToJson(cat, [(JsonWriter.TYPE):(Object)true])
+        String json0 = JsonWriter.objectToJson(cat, [(JsonWriter.TYPE): (Object) true])
         TestUtil.printLine(json0)
 
         CharArrayTest cat2 = (CharArrayTest) TestUtil.readJsonObject(json0)
@@ -1012,7 +993,7 @@ class TestArrays
         assertEquals(chars_b.length, 3)
         assertTrue(chars_b[0] == 'b' as char)
         assertTrue(chars_b[1] == '\t' as char)
-        assertTrue(chars_b[2] =='\u0002' as char)
+        assertTrue(chars_b[2] == '\u0002' as char)
 
         String json1 = JsonWriter.objectToJson(cat)
         TestUtil.printLine(json1)
@@ -1028,30 +1009,24 @@ class TestArrays
         assertEquals(chars_b.length, 3)
         assertTrue(chars_b[0] == 'b' as char)
         assertTrue(chars_b[1] == '\t' as char)
-        assertTrue(chars_b[2] =='\u0002' as char)
+        assertTrue(chars_b[2] == '\u0002' as char)
     }
 
     @Test
-    void testEmptyArray()
-    {
+    void testEmptyArray() {
         String json = '{"@type":"[Ljava.lang.String;"}'
-        String[] s = (String[])JsonReader.jsonToJava(json)
+        String[] s = (String[]) JsonReader.jsonToJava(json)
         assertTrue(s != null)
         assertTrue(s.length == 0)
     }
 
     @Test
-    void testMultiDimensionalArrays()
-    {
-        int[][][][] x = [[[[0,1],[0,1]],[[0,1],[0,1]]],[[[0,1],[0,1]],[[0,1],[0,1]]]] as int[][][][]
-        for (int a=0; a < 2; a++)
-        {
-            for (int b=0; b < 2; b++)
-            {
-                for (int c=0; c < 2; c++)
-                {
-                    for (int d=0; d < 2; d++)
-                    {
+    void testMultiDimensionalArrays() {
+        int[][][][] x = [[[[0, 1], [0, 1]], [[0, 1], [0, 1]]], [[[0, 1], [0, 1]], [[0, 1], [0, 1]]]] as int[][][][]
+        for (int a = 0; a < 2; a++) {
+            for (int b = 0; b < 2; b++) {
+                for (int c = 0; c < 2; c++) {
+                    for (int d = 0; d < 2; d++) {
                         x[a][b][c][d] = a + b + c + d
                     }
                 }
@@ -1062,29 +1037,21 @@ class TestArrays
         int[][][][] y = (int[][][][]) TestUtil.readJsonObject(json)
 
 
-        for (int a=0; a < 2; a++)
-        {
-            for (int b=0; b < 2; b++)
-            {
-                for (int c=0; c < 2; c++)
-                {
-                    for (int d=0; d < 2; d++)
-                    {
+        for (int a = 0; a < 2; a++) {
+            for (int b = 0; b < 2; b++) {
+                for (int c = 0; c < 2; c++) {
+                    for (int d = 0; d < 2; d++) {
                         assertTrue(y[a][b][c][d] == a + b + c + d)
                     }
                 }
             }
         }
 
-        Integer[][][][] xx = [[[[0,1],[0,1]],[[0,1],[0,1]]],[[[0,1],[0,1]],[[0,1],[0,1]]]] as Integer[][][][]
-        for (int a=0; a < 2; a++)
-        {
-            for (int b=0; b < 2; b++)
-            {
-                for (int c=0; c < 2; c++)
-                {
-                    for (int d=0; d < 2; d++)
-                    {
+        Integer[][][][] xx = [[[[0, 1], [0, 1]], [[0, 1], [0, 1]]], [[[0, 1], [0, 1]], [[0, 1], [0, 1]]]] as Integer[][][][]
+        for (int a = 0; a < 2; a++) {
+            for (int b = 0; b < 2; b++) {
+                for (int c = 0; c < 2; c++) {
+                    for (int d = 0; d < 2; d++) {
                         xx[a][b][c][d] = a + b + c + d
                     }
                 }
@@ -1094,14 +1061,10 @@ class TestArrays
         json = TestUtil.getJsonString(xx)
         Integer[][][][] yy = (Integer[][][][]) TestUtil.readJsonObject(json)
 
-        for (int a=0; a < 2; a++)
-        {
-            for (int b=0; b < 2; b++)
-            {
-                for (int c=0; c < 2; c++)
-                {
-                    for (int d=0; d < 2; d++)
-                    {
+        for (int a = 0; a < 2; a++) {
+            for (int b = 0; b < 2; b++) {
+                for (int c = 0; c < 2; c++) {
+                    for (int d = 0; d < 2; d++) {
                         assertTrue(yy[a][b][c][d] == a + b + c + d)
                     }
                 }
@@ -1110,8 +1073,7 @@ class TestArrays
     }
 
     @Test
-    void testObjectArrayStringReference()
-    {
+    void testObjectArrayStringReference() {
         String s = "dogs"
         String json = TestUtil.getJsonString([s, s] as Object[])
         TestUtil.printLine("json = " + json)
@@ -1122,8 +1084,7 @@ class TestArrays
     }
 
     @Test
-    void testStringArrayStringReference()
-    {
+    void testStringArrayStringReference() {
         String s = "dogs"
         String json = TestUtil.getJsonString([s, s] as String[])
         TestUtil.printLine("json = " + json)
@@ -1134,27 +1095,23 @@ class TestArrays
     }
 
     @Test
-    void testReferencedEmptyArray()
-    {
+    void testReferencedEmptyArray() {
         String[] array = [] as String[]
         Object[] refArray = [array] as Object[]
         String json = JsonWriter.objectToJson(refArray)
         TestUtil.printLine("json=" + json)
         Object[] oa = (Object[]) JsonReader.jsonToJava(json)
         assertTrue(oa[0].getClass().equals(([] as String[]).class))
-        assertTrue(((String[])oa[0]).length == 0)
+        assertTrue(((String[]) oa[0]).length == 0)
     }
 
     @Test
-    void testUntypedArray()
-    {
+    void testUntypedArray() {
         Object[] args = (Object[]) TestUtil.readJsonObject('["string",17, null, true, false, [], -1273123,32131, 1e6, 3.14159, -9223372036854775808, 9223372036854775807]')
 
-        for (int i=0; i < args.length; i++)
-        {
+        for (int i = 0; i < args.length; i++) {
             TestUtil.printLine("args[" + i + "]=" + args[i])
-            if (args[i] != null)
-            {
+            if (args[i] != null) {
                 TestUtil.printLine("args[" + i + "]=" + args[i].getClass().getName())
             }
         }

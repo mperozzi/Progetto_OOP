@@ -1,8 +1,10 @@
 package com.cedarsoftware.util.io
+
 import org.junit.Test
 
 import static org.junit.Assert.assertNotSame
 import static org.junit.Assert.assertTrue
+
 /**
  * @author John DeRegnaucourt (jdereg@gmail.com)
  *         <br>
@@ -20,10 +22,8 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestDouble
-{
-    private static class ManyDoubles implements Serializable
-    {
+class TestDouble {
+    private static class ManyDoubles implements Serializable {
         private final Double _arrayElement
         private final Double[] _typeArray
         private final Object[] _objArray
@@ -34,8 +34,7 @@ class TestDouble
         private final Double _max
         private final Double _null
 
-        private ManyDoubles()
-        {
+        private ManyDoubles() {
             _arrayElement = new Double(-1)
             _polyRefTarget = new Double(71)
             _polyRef = _polyRefTarget
@@ -49,14 +48,12 @@ class TestDouble
         }
     }
 
-    private static class DoubleHolder
-    {
+    private static class DoubleHolder {
         protected double number
     }
 
     @Test
-    void testDouble()
-    {
+    void testDouble() {
         ManyDoubles test = new ManyDoubles()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine("json = " + json)
@@ -89,64 +86,59 @@ class TestDouble
     }
 
     @Test
-    void testNanAsRoot()
-    {
-        Object json = JsonWriter.objectToJson(Double.NaN, [(JsonWriter.TYPE):false])
+    void testNanAsRoot() {
+        Object json = JsonWriter.objectToJson(Double.NaN, [(JsonWriter.TYPE): false])
         assert json.contains('null')
 
-        json = JsonWriter.objectToJson(Double.NEGATIVE_INFINITY, [(JsonWriter.TYPE):false])
+        json = JsonWriter.objectToJson(Double.NEGATIVE_INFINITY, [(JsonWriter.TYPE): false])
         assert json.contains('null')
 
-        json = JsonWriter.objectToJson(Double.POSITIVE_INFINITY, [(JsonWriter.TYPE):false])
-        assert json.contains('null')
-    }
-
-    @Test
-    void testNanMapKey()
-    {
-        Object json = JsonWriter.objectToJson([field:Double.NaN], [(JsonWriter.TYPE):false])
-        assert json.contains('null')
-
-        json = JsonWriter.objectToJson([field:Double.NEGATIVE_INFINITY], [(JsonWriter.TYPE):false])
-        assert json.contains('null')
-
-        json = JsonWriter.objectToJson([field:Double.POSITIVE_INFINITY], [(JsonWriter.TYPE):false])
+        json = JsonWriter.objectToJson(Double.POSITIVE_INFINITY, [(JsonWriter.TYPE): false])
         assert json.contains('null')
     }
 
     @Test
-    void testNanObjectField()
-    {
+    void testNanMapKey() {
+        Object json = JsonWriter.objectToJson([field: Double.NaN], [(JsonWriter.TYPE): false])
+        assert json.contains('null')
+
+        json = JsonWriter.objectToJson([field: Double.NEGATIVE_INFINITY], [(JsonWriter.TYPE): false])
+        assert json.contains('null')
+
+        json = JsonWriter.objectToJson([field: Double.POSITIVE_INFINITY], [(JsonWriter.TYPE): false])
+        assert json.contains('null')
+    }
+
+    @Test
+    void testNanObjectField() {
         DoubleHolder holder = new DoubleHolder()
         holder.number = Double.NaN
-        Object json = JsonWriter.objectToJson(holder, [(JsonWriter.TYPE):false])
+        Object json = JsonWriter.objectToJson(holder, [(JsonWriter.TYPE): false])
         assert json.contains('null')
 
         holder.number = Double.NEGATIVE_INFINITY
-        json = JsonWriter.objectToJson(holder, [(JsonWriter.TYPE):false])
+        json = JsonWriter.objectToJson(holder, [(JsonWriter.TYPE): false])
         assert json.contains('null')
 
         holder.number = Double.POSITIVE_INFINITY
-        json = JsonWriter.objectToJson(holder, [(JsonWriter.TYPE):false])
+        json = JsonWriter.objectToJson(holder, [(JsonWriter.TYPE): false])
         assert json.contains('null')
     }
 
     @Test
-    void testNanArrayElement()
-    {
-        Object json = JsonWriter.objectToJson([Double.NaN], [(JsonWriter.TYPE):false])
+    void testNanArrayElement() {
+        Object json = JsonWriter.objectToJson([Double.NaN], [(JsonWriter.TYPE): false])
         assert json.contains('null')
 
-        json = JsonWriter.objectToJson([Double.NEGATIVE_INFINITY], [(JsonWriter.TYPE):false])
+        json = JsonWriter.objectToJson([Double.NEGATIVE_INFINITY], [(JsonWriter.TYPE): false])
         assert json.contains('null')
 
-        json = JsonWriter.objectToJson([field:Double.POSITIVE_INFINITY], [(JsonWriter.TYPE):false])
+        json = JsonWriter.objectToJson([field: Double.POSITIVE_INFINITY], [(JsonWriter.TYPE): false])
         assert json.contains('null')
     }
 
     @Test
-    void testNanAsRoot2()
-    {
+    void testNanAsRoot2() {
         Object json = JsonWriter.objectToJson(Double.NaN)
         assert json.contains('null')
 
@@ -158,21 +150,19 @@ class TestDouble
     }
 
     @Test
-    void testNanMapKey2()
-    {
-        Object json = JsonWriter.objectToJson([field:Double.NaN])
+    void testNanMapKey2() {
+        Object json = JsonWriter.objectToJson([field: Double.NaN])
         assert json.contains('null')
 
-        json = JsonWriter.objectToJson([field:Double.NEGATIVE_INFINITY])
+        json = JsonWriter.objectToJson([field: Double.NEGATIVE_INFINITY])
         assert json.contains('null')
 
-        json = JsonWriter.objectToJson([field:Double.POSITIVE_INFINITY])
+        json = JsonWriter.objectToJson([field: Double.POSITIVE_INFINITY])
         assert json.contains('null')
     }
 
     @Test
-    void testNanObjectField2()
-    {
+    void testNanObjectField2() {
         DoubleHolder holder = new DoubleHolder()
         holder.number = Double.NaN
         Object json = JsonWriter.objectToJson(holder)
@@ -188,15 +178,14 @@ class TestDouble
     }
 
     @Test
-    void testNanArrayElement2()
-    {
+    void testNanArrayElement2() {
         Object json = JsonWriter.objectToJson([Double.NaN])
         assert json.contains('null')
 
         json = JsonWriter.objectToJson([Double.NEGATIVE_INFINITY])
         assert json.contains('null')
 
-        json = JsonWriter.objectToJson([field:Double.POSITIVE_INFINITY])
+        json = JsonWriter.objectToJson([field: Double.POSITIVE_INFINITY])
         assert json.contains('null')
     }
 }

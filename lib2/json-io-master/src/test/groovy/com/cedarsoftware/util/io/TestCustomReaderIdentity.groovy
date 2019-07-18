@@ -19,93 +19,88 @@ import org.junit.Test
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestCustomReaderIdentity
-{
-	static class CustomDataReader implements JsonReader.JsonClassReader
-	{
-		public Object read(Object jOb, Deque<JsonObject<String, Object>> stack)
-		{
-			CustomDataClass customClass = new CustomDataClass();
-			customClass.setTest("blab");
-			return customClass;
-		}
-	}
+class TestCustomReaderIdentity {
+    static class CustomDataReader implements JsonReader.JsonClassReader {
+        public Object read(Object jOb, Deque<JsonObject<String, Object>> stack) {
+            CustomDataClass customClass = new CustomDataClass();
+            customClass.setTest("blab");
+            return customClass;
+        }
+    }
 
-	/**
-	 * This test uses a customReader to read two identical instances in a collection.
-	 * A customWriter is not necessary.
-	 */
-	@Test
-	public void testCustomReaderSerialization()
-	{
-		List<CustomDataClass> elements = new LinkedList<>();
-		CustomDataClass element = new CustomDataClass();
-		element.setTest("hallo");
+    /**
+     * This test uses a customReader to read two identical instances in a collection.
+     * A customWriter is not necessary.
+     */
+    @Test
+    public void testCustomReaderSerialization() {
+        List<CustomDataClass> elements = new LinkedList<>();
+        CustomDataClass element = new CustomDataClass();
+        element.setTest("hallo");
 
-		elements.add(element);
-		elements.add(element);
+        elements.add(element);
+        elements.add(element);
 
-		String json = JsonWriter.objectToJson(elements);
+        String json = JsonWriter.objectToJson(elements);
 
 
-		Object obj = TestUtil.readJsonObject(json, [(CustomDataClass.class):new CustomDataReader()])
-		assert obj != null
-	}
+        Object obj = TestUtil.readJsonObject(json, [(CustomDataClass.class): new CustomDataReader()])
+        assert obj != null
+    }
 
-	/**
-	 * This test does not use a customReader to read two identical instances in a collection.
-	 * A customWriter is not necessary.
-	 */
-	@Test
-	public void testSerializationOld()
-	{
-		List<WithoutCustomReaderClass> elements = new LinkedList<>();
-		WithoutCustomReaderClass element = new WithoutCustomReaderClass();
-		element.setTest("hallo");
+    /**
+     * This test does not use a customReader to read two identical instances in a collection.
+     * A customWriter is not necessary.
+     */
+    @Test
+    public void testSerializationOld() {
+        List<WithoutCustomReaderClass> elements = new LinkedList<>();
+        WithoutCustomReaderClass element = new WithoutCustomReaderClass();
+        element.setTest("hallo");
 
-		elements.add(element);
-		elements.add(element);
+        elements.add(element);
+        elements.add(element);
 
-		String json = JsonWriter.objectToJson(elements);
+        String json = JsonWriter.objectToJson(elements);
 
-		Object obj = TestUtil.readJsonObject(json, [(CustomDataClass.class):new CustomDataReader()])
-		assert obj != null
-	}
+        Object obj = TestUtil.readJsonObject(json, [(CustomDataClass.class): new CustomDataReader()])
+        assert obj != null
+    }
 
-	@Test
-	public void testInSet(){
-		Set<WithoutCustomReaderClass> set = new HashSet<>();
+    @Test
+    public void testInSet() {
+        Set<WithoutCustomReaderClass> set = new HashSet<>();
 
-		CustomDataClass element = new CustomDataClass();
-		element.setTest("hallo");
+        CustomDataClass element = new CustomDataClass();
+        element.setTest("hallo");
 
-		WithoutCustomReaderClass e1 = new WithoutCustomReaderClass();
-		e1.setCustomReaderInner(element);
+        WithoutCustomReaderClass e1 = new WithoutCustomReaderClass();
+        e1.setCustomReaderInner(element);
 
-		WithoutCustomReaderClass e2 = new WithoutCustomReaderClass();
-		e2.setCustomReaderInner(element);
+        WithoutCustomReaderClass e2 = new WithoutCustomReaderClass();
+        e2.setCustomReaderInner(element);
 
-		set.add(e1);
-		set.add(e2);
+        set.add(e1);
+        set.add(e2);
 
-		String json = JsonWriter.objectToJson(set);
+        String json = JsonWriter.objectToJson(set);
 
-		Object obj = TestUtil.readJsonObject(json, [(CustomDataClass.class):new CustomDataReader()])
-		assert obj != null
-	}
+        Object obj = TestUtil.readJsonObject(json, [(CustomDataClass.class): new CustomDataReader()])
+        assert obj != null
+    }
 
-	@Test
-	public void testInArray(){
-		CustomDataClass[] array = new CustomDataClass[2];
-		CustomDataClass element = new CustomDataClass();
-		element.setTest("hallo");
+    @Test
+    public void testInArray() {
+        CustomDataClass[] array = new CustomDataClass[2];
+        CustomDataClass element = new CustomDataClass();
+        element.setTest("hallo");
 
-		array[0] = element;
-		array[1] = element;
+        array[0] = element;
+        array[1] = element;
 
-		String json = JsonWriter.objectToJson(array);
+        String json = JsonWriter.objectToJson(array);
 
-		Object obj = TestUtil.readJsonObject(json, [(CustomDataClass.class):new CustomDataReader()])
-		assert obj != null
-	}
+        Object obj = TestUtil.readJsonObject(json, [(CustomDataClass.class): new CustomDataReader()])
+        assert obj != null
+    }
 }

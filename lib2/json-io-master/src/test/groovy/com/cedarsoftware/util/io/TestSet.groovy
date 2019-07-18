@@ -5,6 +5,7 @@ import org.junit.Test
 
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertTrue
+
 /**
  * @author John DeRegnaucourt (jdereg@gmail.com)
  *         <br>
@@ -23,12 +24,13 @@ import static org.junit.Assert.assertTrue
  *         limitations under the License.
  */
 @CompileStatic
-class TestSet
-{
-    static class ManySets implements Serializable
-    {
-        private enum EnumValues { E1, E2, E3 }
-        private enum EmptyValues {  }
+class TestSet {
+    static class ManySets implements Serializable {
+        private enum EnumValues {
+            E1, E2, E3
+        }
+
+        private enum EmptyValues {}
 
         private Set _hashSet
         private Set _treeSet
@@ -36,8 +38,7 @@ class TestSet
         private EnumSet<EmptyValues> _emptyEnumSet
         private EnumSet<EnumValues> _setOfEnums
 
-        private void init()
-        {
+        private void init() {
             _hashSet = new HashSet()
             _hashSet.add("alpha")
             _hashSet.add("bravo")
@@ -74,14 +75,12 @@ class TestSet
             _setOfEnums = EnumSet.allOf(EnumValues)
         }
 
-        protected ManySets()
-        {
+        protected ManySets() {
         }
     }
 
     @Test
-    void testSet()
-    {
+    void testSet() {
         ManySets set = new ManySets()
         set.init()
         String json = TestUtil.getJsonString(set)

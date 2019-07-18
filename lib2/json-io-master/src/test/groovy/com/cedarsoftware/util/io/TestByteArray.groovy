@@ -21,11 +21,9 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestByteArray
-{
+class TestByteArray {
     @Test
-    void testPerformance()
-    {
+    void testPerformance() {
         byte[] bytes = new byte[128 * 1024]
         Random r = new Random()
         r.nextBytes(bytes)
@@ -33,8 +31,7 @@ class TestByteArray
 
         byte[] bytes2 = (byte[]) TestUtil.readJsonObject(json)
 
-        for (int i = 0; i < bytes.length; i++)
-        {
+        for (int i = 0; i < bytes.length; i++) {
             assertTrue(bytes[i] == bytes2[i])
         }
     }

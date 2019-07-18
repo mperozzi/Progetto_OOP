@@ -19,11 +19,9 @@ import org.junit.Test
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestJsonIoException
-{
+class TestJsonIoException {
     @Test
-    void testJsonIoExceptionConstructors()
-    {
+    void testJsonIoExceptionConstructors() {
         new JsonIoException()
         new JsonIoException(new RuntimeException('Hey'))
     }

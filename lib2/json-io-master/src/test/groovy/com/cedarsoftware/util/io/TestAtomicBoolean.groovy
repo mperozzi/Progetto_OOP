@@ -27,10 +27,8 @@ import static org.junit.Assert.fail
  *         limitations under the License.
  */
 @CompileStatic
-class TestAtomicBoolean
-{
-    static class TestAtomicBooleanField
-    {
+class TestAtomicBoolean {
+    static class TestAtomicBooleanField {
         AtomicBoolean value
         AtomicBoolean nullValue
         AtomicBoolean strValue
@@ -40,8 +38,7 @@ class TestAtomicBoolean
     }
 
     @Test
-    void testAssignAtomicBoolean()
-    {
+    void testAssignAtomicBoolean() {
         String json = '''{"@type":"com.cedarsoftware.util.io.TestAtomicBoolean$TestAtomicBooleanField","value":true,"nullValue":null,"strValue":"true","emptyStrValue":"", "objValue":{"value":false},"values":[false,null,true, "true"]}'''
         TestAtomicBooleanField atom2 = (TestAtomicBooleanField) JsonReader.jsonToJava(json)
 
@@ -60,26 +57,23 @@ class TestAtomicBoolean
         assert json == '''{"@type":"com.cedarsoftware.util.io.TestAtomicBoolean$TestAtomicBooleanField","value":true,"nullValue":null,"strValue":true,"emptyStrValue":null,"objValue":false,"values":[false,null,true,true]}'''
 
         json = '''{"@type":"com.cedarsoftware.util.io.TestAtomicBoolean$TestAtomicBooleanField","value":16.5}'''
-        try
-        {
+        try {
             JsonReader.jsonToJava(json)
             fail()
         }
-        catch (JsonIoException ignored)
-        { }
+        catch (JsonIoException ignored) {
+        }
     }
 
     @Test
-    void testAssignAtomicBooleanStringToMaps()
-    {
+    void testAssignAtomicBooleanStringToMaps() {
         String json = '{"@type":"' + TestAtomicBooleanField.class.name + '","strValue":""}'
-        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         assertNull(map.fromString)      // allowing "" to null out non-primitive fields in map-of-map mode
     }
 
     @Test
-    void testAtomicBooleanInCollection()
-    {
+    void testAtomicBooleanInCollection() {
         AtomicBoolean atomicBoolean = new AtomicBoolean(true)
         List list = new ArrayList()
         list.add(atomicBoolean)

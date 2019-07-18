@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -16,7 +17,8 @@ public class To {
     private int to;
 
     //costruttore della classe
-    public To() {}
+    public To() {
+    }
 
     public int getTo() {
         return to;

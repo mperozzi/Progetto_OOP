@@ -24,82 +24,68 @@ import java.util.concurrent.ConcurrentSkipListMap
  *         limitations under the License.
  */
 @CompileStatic
-class TestInnerCollections
-{
+class TestInnerCollections {
     @Test
-    void testLinkedHashMap_LinkedKeySet()
-    {
+    void testLinkedHashMap_LinkedKeySet() {
         keySetTest(new LinkedHashMap())
     }
 
     @Test
-    void testHashMap_KeySet()
-    {
+    void testHashMap_KeySet() {
         keySetTest(new HashMap<>())
     }
 
     @Test
-    void testTreeMap_KeySet()
-    {
+    void testTreeMap_KeySet() {
         keySetTest(new TreeMap<>())
     }
 
     @Test
-    void testConcurrentMap_KeySet()
-    {
+    void testConcurrentMap_KeySet() {
         keySetTest(new ConcurrentHashMap<>())
     }
 
     @Test
-    void testSkipListMap_KeySet()
-    {
+    void testSkipListMap_KeySet() {
         keySetTest(new ConcurrentSkipListMap<>())
     }
 
     @Test
-    void testIdentityMap_KeySet()
-    {
+    void testIdentityMap_KeySet() {
         keySetTest(new IdentityHashMap<>())
     }
 
     @Test
-    void testLinkedHashMap_LinkedValues()
-    {
+    void testLinkedHashMap_LinkedValues() {
         valuesTest(new LinkedHashMap<>())
     }
 
     @Test
-    void testHashMap_Values()
-    {
+    void testHashMap_Values() {
         valuesTest(new HashMap<>())
     }
 
     @Test
-    void testTreeMap_Values()
-    {
+    void testTreeMap_Values() {
         valuesTest(new TreeMap<>())
     }
 
     @Test
-    void testConcurrentMap_Values()
-    {
+    void testConcurrentMap_Values() {
         valuesTest(new ConcurrentHashMap<>())
     }
 
     @Test
-    void testSkipListMap_Values()
-    {
+    void testSkipListMap_Values() {
         valuesTest(new ConcurrentSkipListMap<>())
     }
 
     @Test
-    void testIdentityMap_Values()
-    {
+    void testIdentityMap_Values() {
         valuesTest(new IdentityHashMap<>())
     }
 
-    static void keySetTest(Map map)
-    {
+    static void keySetTest(Map map) {
         map.a = 'alpha'
         map.b = 'beta'
         map.c = 'charlie'
@@ -112,8 +98,7 @@ class TestInnerCollections
         assert set.contains('c')
     }
 
-    static void valuesTest(Map map)
-    {
+    static void valuesTest(Map map) {
         map.a = 'alpha'
         map.b = 'beta'
         map.c = 'charlie'

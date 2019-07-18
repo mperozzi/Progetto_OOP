@@ -22,11 +22,9 @@ import static org.junit.Assert.fail
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestJsonObject
-{
+class TestJsonObject {
     @Test
-    void testNewPrimitiveWrapper()
-    {
+    void testNewPrimitiveWrapper() {
         assertTrue MetaUtils.isLogicalPrimitive(Byte.class)
         assertTrue MetaUtils.isLogicalPrimitive(Byte.TYPE)
         assertTrue MetaUtils.isLogicalPrimitive(Short.class)
@@ -49,46 +47,39 @@ class TestJsonObject
         assertTrue MetaUtils.isLogicalPrimitive(BigInteger.class)
         assertTrue MetaUtils.isLogicalPrimitive(BigDecimal.class)
         assertTrue MetaUtils.isLogicalPrimitive(Number.class)
-        try
-        {
+        try {
             MetaUtils.isLogicalPrimitive(null)
             fail()
         }
-        catch (NullPointerException ignored)
-        { }
+        catch (NullPointerException ignored) {
+        }
     }
 
     @Test
-    void testGetId()
-    {
+    void testGetId() {
         JsonObject jObj = new JsonObject()
         assert -1L == jObj.getId()
     }
 
     @Test
-    void testGetPrimitiveValue()
-    {
+    void testGetPrimitiveValue() {
         JsonObject jObj = new JsonObject()
         jObj.setType('long')
         jObj.value = 10L
         assert 10L == jObj.getPrimitiveValue()
 
         jObj.setType('phoney')
-        try
-        {
+        try {
             jObj.getPrimitiveValue()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('invalid primitive type')
         }
 
-        try
-        {
+        try {
             jObj.getLength()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('called')
             assert e.message.toLowerCase().contains('non-collection')
         }

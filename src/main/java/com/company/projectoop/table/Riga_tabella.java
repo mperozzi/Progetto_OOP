@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Classe che implementa la struttura base di una riga della tabella del dataset per immagazzinare
  * i dati estrapolati dal CSV.
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -96,9 +97,8 @@ public class Riga_tabella {
 
     /**
      * getter dei vari campi della riga della tabella
-     * @return
      *
-     * setter dei vari campi della riga della tabella
+     * @return setter dei vari campi della riga della tabella
      */
 
     public String getMs() {
@@ -161,7 +161,7 @@ public class Riga_tabella {
         return ind_code.getInd_code();
     }
 
-    public void setInd_code (String ind_code) {
+    public void setInd_code(String ind_code) {
         this.ind_code.setInd_code(ind_code);
     }
 

@@ -17,56 +17,45 @@ package com.cedarsoftware.util.io;
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-public class Dog
-{
+public class Dog {
     public int x;
 
-    public int hashCode()
-    {
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + x;
         return result;
     }
 
-    public boolean equals(Object obj)
-    {
-        if (this.is(obj))
-        {
+    public boolean equals(Object obj) {
+        if (this.is(obj)) {
             return true;
         }
-        if (obj == null)
-        {
+        if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass())
-        {
+        if (getClass() != obj.getClass()) {
             return false;
         }
         Dog other = (Dog) obj;
-        if (x != other.x)
-        {
+        if (x != other.x) {
             return false;
         }
         return true;
     }
 
-    public static createLeg(Dog dog)
-    {
+    public static createLeg(Dog dog) {
         return new Leg(dog)
     }
 
-    public class Leg
-    {
+    public class Leg {
         public int y;
 
-        public int getParentX()
-        {
+        public int getParentX() {
             return x;
         }
 
-        public int hashCode()
-        {
+        public int hashCode() {
             final int prime = 31;
             int result = 1;
             result = prime * result + getOuterType().hashCode()
@@ -74,107 +63,83 @@ public class Dog
             return result;
         }
 
-        public boolean equals(Object obj)
-        {
-            if (this.is(obj))
-            {
+        public boolean equals(Object obj) {
+            if (this.is(obj)) {
                 return true;
             }
-            if (obj == null)
-            {
+            if (obj == null) {
                 return false;
             }
-            if (getClass() != obj.getClass())
-            {
+            if (getClass() != obj.getClass()) {
                 return false;
             }
             Leg other = (Leg) obj;
-            if (!getOuterType().equals(other.getOuterType()))
-            {
+            if (!getOuterType().equals(other.getOuterType())) {
                 return false;
             }
-            if (y != other.y)
-            {
+            if (y != other.y) {
                 return false;
             }
             return true;
         }
 
-        private Dog getOuterType()
-        {
+        private Dog getOuterType() {
             return Dog.this;
         }
     }
 
-    public static class Shoe
-    {
-        private Shoe(Leg leg)
-        {
-            if (leg == null)
-            {
+    public static class Shoe {
+        private Shoe(Leg leg) {
+            if (leg == null) {
                 throw new IllegalArgumentException(
                         "A Shoe without a leg ... what a pity")
             }
         }
 
-        public static Shoe construct()
-        {
+        public static Shoe construct() {
             return new Shoe(new Leg(new Dog()))
         }
     }
 
-    public static class OtherShoe
-    {
+    public static class OtherShoe {
         private Leg leg;
 
-        private OtherShoe(Leg leg)
-        {
-            if (leg == null)
-            {
+        private OtherShoe(Leg leg) {
+            if (leg == null) {
                 throw new IllegalArgumentException("A Shoe without a leg ... what a pity")
             }
             this.leg = leg;
         }
 
-        public static OtherShoe construct()
-        {
+        public static OtherShoe construct() {
             Leg leg2 = new Leg(new Dog())
             leg2.y = 5;
             return new OtherShoe(leg2)
         }
 
-        public int hashCode()
-        {
+        public int hashCode() {
             final int prime = 31;
             int result = 1;
             result = prime * result + ((leg == null) ? 0 : leg.hashCode())
             return result;
         }
 
-        public boolean equals(Object obj)
-        {
-            if (this.is(obj))
-            {
+        public boolean equals(Object obj) {
+            if (this.is(obj)) {
                 return true;
             }
-            if (obj == null)
-            {
+            if (obj == null) {
                 return false;
             }
-            if (getClass() != obj.getClass())
-            {
+            if (getClass() != obj.getClass()) {
                 return false;
             }
             OtherShoe other = (OtherShoe) obj;
-            if (leg == null)
-            {
-                if (other.leg != null)
-                {
+            if (leg == null) {
+                if (other.leg != null) {
                     return false;
                 }
-            }
-            else if (!leg.equals(other.leg))
-            {
+            } else if (!leg.equals(other.leg)) {
                 return false;
             }
             return true;

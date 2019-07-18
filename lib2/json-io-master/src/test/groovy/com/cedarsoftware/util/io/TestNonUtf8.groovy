@@ -23,15 +23,13 @@ import java.nio.charset.Charset
  *         limitations under the License.
  */
 @CompileStatic
-class TestNonUtf8
-{
+class TestNonUtf8 {
     /**
      * Use '-Dfile.encoding=ASCII' when running this test to ensure that json-io is correctly
      * handling everything internally as UTF-8.
      */
     @Test
-    void testNonUtf8()
-    {
+    void testNonUtf8() {
         println Charset.availableCharsets()
         println Charset.defaultCharset()
 

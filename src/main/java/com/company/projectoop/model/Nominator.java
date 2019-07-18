@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Nominator {
 
     private int nominator;
 
-    public Nominator() {}
+    public Nominator() {
+    }
 
     public int getNominator() {
         return nominator;

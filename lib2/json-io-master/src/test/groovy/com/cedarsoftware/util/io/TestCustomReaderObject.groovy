@@ -19,28 +19,24 @@ import org.junit.Test
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestCustomReaderObject
-{
-	static class CustomReader implements JsonReader.JsonClassReaderEx
-	{
-		public Object read(Object jOb, Deque<JsonObject<String, Object>> stack, Map<String, Object> args)
-		{
-			ObjectResolver resolver = (ObjectResolver) args.get(JsonReader.OBJECT_RESOLVER);
-			resolver.traverseFields(stack, (JsonObject<String, Object>) jOb);
-			Object target = ((JsonObject<String, Object>) jOb).getTarget();
-			return target;
-		}
-	}
+class TestCustomReaderObject {
+    static class CustomReader implements JsonReader.JsonClassReaderEx {
+        public Object read(Object jOb, Deque<JsonObject<String, Object>> stack, Map<String, Object> args) {
+            ObjectResolver resolver = (ObjectResolver) args.get(JsonReader.OBJECT_RESOLVER);
+            resolver.traverseFields(stack, (JsonObject<String, Object>) jOb);
+            Object target = ((JsonObject<String, Object>) jOb).getTarget();
+            return target;
+        }
+    }
 
-	/**
-	 * This test uses a customReader to read the entire object.
-	 */
-	@Test
-	public void testCustomReaderSerialization()
-	{
-		TestCustomWriter.Person p = TestCustomWriter.createTestPerson();
-		String json = JsonWriter.objectToJson(p);
-		TestCustomWriter.Person pRead = TestUtil.readJsonObject(json, [(CustomDataClass.class):new CustomReader()]) as TestCustomWriter.Person
-		assert p.equals(pRead)
-	}
+    /**
+     * This test uses a customReader to read the entire object.
+     */
+    @Test
+    public void testCustomReaderSerialization() {
+        TestCustomWriter.Person p = TestCustomWriter.createTestPerson();
+        String json = JsonWriter.objectToJson(p);
+        TestCustomWriter.Person pRead = TestUtil.readJsonObject(json, [(CustomDataClass.class): new CustomReader()]) as TestCustomWriter.Person
+        assert p.equals(pRead)
+    }
 }

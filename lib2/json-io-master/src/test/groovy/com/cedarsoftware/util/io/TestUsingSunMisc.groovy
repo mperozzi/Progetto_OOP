@@ -22,20 +22,17 @@ import static org.junit.Assert.fail
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestUsingSunMisc
-{
-    static class ShouldBeImpossibleToInstantiate
-    {
+class TestUsingSunMisc {
+    static class ShouldBeImpossibleToInstantiate {
         private x = 0;
-        ShouldBeImpossibleToInstantiate()
-        {
+
+        ShouldBeImpossibleToInstantiate() {
             throw new JsonIoException("Go away")
         }
     }
 
     @Test
-    void testCustomTopReaderShoe()
-    {
+    void testCustomTopReaderShoe() {
         Dog.Shoe shoe = Dog.Shoe.construct()
 
         // Dirty Workaround otherwise
@@ -43,14 +40,12 @@ class TestUsingSunMisc
         array[0] = shoe;
         String workaroundString = JsonWriter.objectToJson(array)
         JsonReader.assignInstantiator(Dog.Shoe.class, new JsonReader.ClassFactoryEx() {
-            Object newInstance(Class c, Map args)
-            {
+            Object newInstance(Class c, Map args) {
                 return Dog.Shoe.construct()
             }
         })
-        TestUtil.readJsonObject(workaroundString, [(JsonReader.CUSTOM_READER_MAP):[(Dog.Shoe.class):new JsonReader.JsonClassReader() {
-            public Object read(Object jOb, Deque<JsonObject<String, Object>> stack)
-            {
+        TestUtil.readJsonObject(workaroundString, [(JsonReader.CUSTOM_READER_MAP): [(Dog.Shoe.class): new JsonReader.JsonClassReader() {
+            public Object read(Object jOb, Deque<JsonObject<String, Object>> stack) {
                 // no need to do anything special
                 return jOb
             }
@@ -64,17 +59,15 @@ class TestUsingSunMisc
         // It is expected, that this object is instantiated twice:
         // -once for analysis + Stack
         // -deserialization with Stack
-        TestUtil.readJsonObject(json, [(JsonReader.CUSTOM_READER_MAP):[(Dog.Shoe.class):new JsonReader.JsonClassReader() {
-            public Object read(Object jOb, Deque<JsonObject<String, Object>> stack)
-            {
+        TestUtil.readJsonObject(json, [(JsonReader.CUSTOM_READER_MAP): [(Dog.Shoe.class): new JsonReader.JsonClassReader() {
+            public Object read(Object jOb, Deque<JsonObject<String, Object>> stack) {
                 return jOb
             }
         }]])
     }
 
     @Test
-    void testDirectCreation()
-    {
+    void testDirectCreation() {
         MetaUtils.useUnsafe = true;
         // this test will fail without directCreation
         Dog.OtherShoe shoe = Dog.OtherShoe.construct()
@@ -83,15 +76,13 @@ class TestUsingSunMisc
         oShoe = (Dog.OtherShoe) JsonReader.jsonToJava(JsonWriter.objectToJson(shoe))
         assertTrue(shoe.equals(oShoe))
 
-        try
-        {
+        try {
             MetaUtils.useUnsafe = false;
             shoe = Dog.OtherShoe.construct()
             JsonReader.jsonToJava(JsonWriter.objectToJson(shoe))
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('no constructor found')
         }
 
@@ -103,26 +94,21 @@ class TestUsingSunMisc
     }
 
     @Test
-    void testImpossibleClass()
-    {
-        try
-        {
+    void testImpossibleClass() {
+        try {
             ShouldBeImpossibleToInstantiate s = new ShouldBeImpossibleToInstantiate()
             fail()
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.message.toLowerCase().concat("go away")
         }
 
         String json = '{"@type":"' + ShouldBeImpossibleToInstantiate.class.name + '", "x":50}'
-        try
-        {
+        try {
             JsonReader.jsonToJava(json)
             fail()
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.message.toLowerCase().concat("go away")
         }
 

@@ -24,126 +24,104 @@ import static org.junit.Assert.assertNull
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestTemplateFields
-{
-    static class Test1
-    {
+class TestTemplateFields {
+    static class Test1 {
         protected Test2<String, Object> internalMember = new Test2<>()
     }
 
-    static class Test2<K, V>
-    {
+    static class Test2<K, V> {
         protected Map<K, Collection<? extends V>> hsOne = new HashMap<>()
         protected Class<?> two = LinkedList.class
     }
 
-    static class Person
-    {
+    static class Person {
         String name
         int age
 
-        Person(String n, int a) { name = n; age = a}
+        Person(String n, int a) { name = n; age = a }
     }
 
-    static class Test3
-    {
+    static class Test3 {
         protected Test4<String> internalMember = new Test4<>()
     }
 
-    static class Test4<V>
-    {
+    static class Test4<V> {
         protected Person two = new Person('Jane', 45)
     }
 
-    class Single<T>
-    {
+    class Single<T> {
         private T field1;
         private T field2;
 
-        public Single(T field1, T field2)
-        {
+        public Single(T field1, T field2) {
             this.field1 = field1;
             this.field2 = field2;
         }
     }
 
-    class UseSingle
-    {
+    class UseSingle {
         private Single<String> single;
 
-        public UseSingle(Single<String> single)
-        {
+        public UseSingle(Single<String> single) {
             this.single = single;
         }
     }
 
-    static class StaticSingle<T>
-    {
+    static class StaticSingle<T> {
         private T field1;
 
-        public StaticSingle(T field1)
-        {
+        public StaticSingle(T field1) {
             this.field1 = field1;
         }
     }
 
-    static class StaticUseSingle
-    {
+    static class StaticUseSingle {
         private StaticSingle<String> single;
 
-        public StaticUseSingle(StaticSingle<String> single)
-        {
+        public StaticUseSingle(StaticSingle<String> single) {
             this.single = single;
         }
     }
 
-    class TwoParam<T, V>
-    {
+    class TwoParam<T, V> {
         private T field1;
         private T field2;
         private V field3;
 
-        public TwoParam(T field1, T field2, V field3)
-        {
+        public TwoParam(T field1, T field2, V field3) {
             this.field1 = field1;
             this.field2 = field2;
             this.field3 = field3;
         }
     }
 
-    class UseTwoParam
-    {
+    class UseTwoParam {
         private TwoParam twoParam;
 
-        public UseTwoParam(TwoParam twoParam)
-        {
+        public UseTwoParam(TwoParam twoParam) {
             this.twoParam = twoParam;
         }
     }
 
-    static class ThreeType<T, U, V>
-    {
+    static class ThreeType<T, U, V> {
         T t;
         U u;
         V v;
 
-        public ThreeType(T tt, U uu, V vv)
-        {
+        public ThreeType(T tt, U uu, V vv) {
             t = tt;
             u = uu;
             v = vv;
         }
     }
 
-    static class GenericHolder
-    {
+    static class GenericHolder {
         ThreeType<Point, String, Point> a;
     }
 
     // This test was provided by Github user: reuschling
     @Test
-    void testTemplateClassField()
-    {
+    void testTemplateClassField() {
         Test1 container = new Test1()
         Test1 container2 = new Test1()
         LinkedList<Test1> llList = new LinkedList<>()
@@ -156,8 +134,7 @@ class TestTemplateFields
     }
 
     @Test
-    void testTemplateNonClassFields()
-    {
+    void testTemplateNonClassFields() {
         Test3 container = new Test3()
         String json = JsonWriter.objectToJson(container)
         // This would throw exception in the past
@@ -167,8 +144,7 @@ class TestTemplateFields
     }
 
     @Test
-    void testSingle()
-    {
+    void testSingle() {
         UseSingle useSingle = new UseSingle(new Single<String>("Steel", "Wood"))
         String json = JsonWriter.objectToJson(useSingle)
         UseSingle other = (UseSingle) JsonReader.jsonToJava(json)
@@ -178,8 +154,7 @@ class TestTemplateFields
     }
 
     @Test
-    void testTwoParam()
-    {
+    void testTwoParam() {
         UseTwoParam useTwoParam = new UseTwoParam(new TwoParam("Hello", "Goodbye", new Point(20, 40)))
         String json = JsonWriter.objectToJson(useTwoParam)
         UseTwoParam other = (UseTwoParam) JsonReader.jsonToJava(json)
@@ -214,8 +189,7 @@ class TestTemplateFields
     }
 
     @Test
-    void testStaticSingle()
-    {
+    void testStaticSingle() {
         StaticUseSingle useSingle = new StaticUseSingle(new StaticSingle<>("Boonies"))
 
         String json = JsonWriter.objectToJson(useSingle)
@@ -226,8 +200,7 @@ class TestTemplateFields
     }
 
     @Test
-    void test3TypeGeneric()
-    {
+    void test3TypeGeneric() {
         String json = '{"@type":"' + GenericHolder.class.getName() + '","a":{"t":{"x":1,"y":2},"u":"Sochi","v":{"x":10,"y":20}}}'
         GenericHolder gen = (GenericHolder) JsonReader.jsonToJava(json)
         assertEquals(new Point(1, 2), gen.a.t)

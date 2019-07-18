@@ -1,4 +1,5 @@
 package com.cedarsoftware.util.io
+
 import com.google.gson.Gson
 import groovy.transform.CompileStatic
 import org.junit.Ignore
@@ -6,6 +7,7 @@ import org.junit.Test
 
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertNotNull
+
 /**
  * Test cases for JsonReader / JsonWriter
  *
@@ -26,11 +28,9 @@ import static org.junit.Assert.assertNotNull
  *         limitations under the License.
  */
 @CompileStatic
-class TestBigJson
-{
+class TestBigJson {
     @Test
-    void testBigJsonToMaps()
-    {
+    void testBigJsonToMaps() {
         String json = TestUtil.fetchResource('big5D.json')
         Map map = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         assertEquals('big5D', map.ncube)
@@ -40,25 +40,23 @@ class TestBigJson
     }
 
     @Test
-    void testJsonIoVersusGson()
-    {
+    void testJsonIoVersusGson() {
         String json = TestUtil.fetchResource('big5D.json')
 
         Gson gson = new Gson()
         long start = System.nanoTime()
         gson.fromJson(json, Object.class)
         long stop = System.nanoTime()
-        println ((stop - start) / 1000000L)
+        println((stop - start) / 1000000L)
 
         start = System.nanoTime()
         JsonReader.jsonToJava(json)
         stop = System.nanoTime()
-        println ((stop - start) / 1000000L)
+        println((stop - start) / 1000000L)
     }
 
     @Ignore
-    void testGsonOnHugeFile()
-    {
+    void testGsonOnHugeFile() {
         String json = TestUtil.fetchResource('big.json')
 
         Gson gson = new Gson()
@@ -67,9 +65,8 @@ class TestBigJson
         long stop = System.nanoTime()
         println 'gson: ' + ((stop - start) / 1000000L)
 
-        int i=0
-        while (i++ < 50i)
-        {
+        int i = 0
+        while (i++ < 50i) {
             gson = new Gson()
             start = System.nanoTime()
             gson.fromJson(json, Object.class)
@@ -79,25 +76,23 @@ class TestBigJson
     }
 
     @Ignore
-    void testJsonOnHugeFile()
-    {
+    void testJsonOnHugeFile() {
         String json = TestUtil.fetchResource('big.json')
 
         long start = System.nanoTime()
-        JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         long stop = System.nanoTime()
-        println ((stop - start) / 1000000L)
+        println((stop - start) / 1000000L)
 
 //        println 'num read = ' + FastPushbackReader.numread
 //        println 'num push = ' + FastPushbackReader.numpush
 
-        int i=0
-        while (i++ < 50i)
-        {
+        int i = 0
+        while (i++ < 50i) {
             start = System.nanoTime()
             JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
             stop = System.nanoTime()
-            println ((stop - start) / 1000000L)
+            println((stop - start) / 1000000L)
         }
     }
 }

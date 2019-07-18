@@ -1,4 +1,4 @@
 var annotated_dup =
-[
-    [ "com", "namespacecom.html", "namespacecom" ]
-];
+    [
+        ["com", "namespacecom.html", "namespacecom"]
+    ];

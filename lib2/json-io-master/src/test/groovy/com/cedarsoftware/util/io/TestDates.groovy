@@ -27,68 +27,59 @@ import static org.junit.Assert.fail
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestDates
-{
-    static class DateTest
-    {
+class TestDates {
+    static class DateTest {
         Date birthDay
         Date anniversary
         java.sql.Date christmas
     }
 
-    static class TestDateField
-    {
+    static class TestDateField {
         Date fromString
         Date[] dates
     }
 
-    static class DateTrick
-    {
+    static class DateTrick {
         private Date _userDate
     }
 
-    static class LongTrick
-    {
+    static class LongTrick {
         private long _userDate
     }
 
-    static class ObjectDateField
-    {
+    static class ObjectDateField {
         private Object date
-        private ObjectDateField(Object date)
-        {
+
+        private ObjectDateField(Object date) {
             this.date = date
         }
     }
 
-    private static class DateField
-    {
+    private static class DateField {
         private Date date
-        private DateField(Date date)
-        {
+
+        private DateField(Date date) {
             this.date = date
         }
     }
 
-    static class SqlDateField
-    {
+    static class SqlDateField {
         private java.sql.Date date
-        private SqlDateField(java.sql.Date date)
-        {
-            this.date = date
-        }
-    }
-    static class TimestampField
-    {
-        private Timestamp date
-        private TimestampField(Timestamp date)
-        {
+
+        private SqlDateField(java.sql.Date date) {
             this.date = date
         }
     }
 
-    static class TestDate implements Serializable
-    {
+    static class TimestampField {
+        private Timestamp date
+
+        private TimestampField(Timestamp date) {
+            this.date = date
+        }
+    }
+
+    static class TestDate implements Serializable {
         private final Date _arrayElement
         private final Date[] _typeArray
         private final Object[] _objArray
@@ -99,14 +90,13 @@ class TestDates
         private final Date _max
         private final Date _null
 
-        private TestDate()
-        {
+        private TestDate() {
             _arrayElement = new Date(-1)
             _polyRefTarget = new Date(71)
             _polyRef = _polyRefTarget;
             _polyNotRef = new Date(71)
             Date local = new Date(75)
-            _null  = null;
+            _null = null;
             _typeArray = [_arrayElement, new Date(69), local, _null, null, new Date(69)] as Date[]
             _objArray = [_arrayElement, new Date(69), local, _null, null, new Date(69)] as Object[]
             _min = new Date(Long.MIN_VALUE)
@@ -114,37 +104,34 @@ class TestDates
         }
     }
 
-    private static void compareTimePortion(Calendar exp, Calendar act)
-    {
+    private static void compareTimePortion(Calendar exp, Calendar act) {
         assertEquals(exp.get(Calendar.HOUR_OF_DAY), act.get(Calendar.HOUR_OF_DAY))
         assertEquals(exp.get(Calendar.MINUTE), act.get(Calendar.MINUTE))
         assertEquals(exp.get(Calendar.SECOND), act.get(Calendar.SECOND))
         assertEquals(exp.get(Calendar.MILLISECOND), act.get(Calendar.MILLISECOND))
     }
 
-    private static void compareDatePortion(Calendar exp, Calendar act)
-    {
+    private static void compareDatePortion(Calendar exp, Calendar act) {
         assertEquals(exp.get(Calendar.YEAR), act.get(Calendar.YEAR))
         assertEquals(exp.get(Calendar.MONTH), act.get(Calendar.MONTH))
         assertEquals(exp.get(Calendar.DAY_OF_MONTH), act.get(Calendar.DAY_OF_MONTH))
     }
 
     @Test
-    void testAssignDateFromEmptyString()
-    {
+    void testAssignDateFromEmptyString() {
         String thisClass = TestDateField.class.name
         String json = '{"@type":"' + thisClass + '","fromString":""}'
         TestDateField tdf = (TestDateField) TestUtil.readJsonObject(json)
         assertNull(tdf.fromString)
 
-        Map jObj = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        Map jObj = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         assertNull(jObj.fromString)
 
         json = '{"@type":"' + thisClass + '","fromString":null,"dates":[""]}'
         tdf = (TestDateField) TestUtil.readJsonObject(json)
         assertNull(tdf.dates[0])
 
-        jObj = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS):true] as Map)
+        jObj = (Map) JsonReader.jsonToJava(json, [(JsonReader.USE_MAPS): true] as Map)
         json = TestUtil.getJsonString(jObj)
         tdf = (TestDateField) TestUtil.readJsonObject(json)
         assertNull(tdf.dates[0])
@@ -155,8 +142,7 @@ class TestDates
     }
 
     @Test
-    void testDateParse()
-    {
+    void testDateParse() {
         String json = '{"@type":"date","value":"2014 July 9"}'
         Date date = (Date) JsonReader.jsonToJava(json)
         Calendar cal = Calendar.instance;
@@ -167,20 +153,17 @@ class TestDates
         assertEquals(9, cal.get(Calendar.DAY_OF_MONTH))
 
         json = '{"@type":"date","value":"2014 Juggler 9"}'
-        try
-        {
+        try {
             JsonReader.jsonToJava(json)
             fail()
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             assert e.message.toLowerCase().contains("unable to parse")
         }
     }
 
     @Test
-    void testDate()
-    {
+    void testDate() {
         TestDate test = new TestDate()
         String json = TestUtil.getJsonString(test)
         TestUtil.printLine('json = ' + json)
@@ -190,7 +173,8 @@ class TestDates
         assertTrue(that._polyRefTarget.equals(new Date(71)))
         assertTrue(that._polyRef.equals(new Date(71)))
         assertTrue(that._polyNotRef.equals(new Date(71)))
-        assertNotSame(that._polyRef, that._polyRefTarget)  // not same because Date's are treated as immutable primitives
+        assertNotSame(that._polyRef, that._polyRefTarget)
+        // not same because Date's are treated as immutable primitives
         assertNotSame(that._polyNotRef, that._polyRef)
 
         assertTrue(that._typeArray.length == 6)
@@ -227,8 +211,7 @@ class TestDates
     }
 
     @Test
-    void testCustomDateFormat()
-    {
+    void testCustomDateFormat() {
         DateTest dt = new DateTest()
         Calendar c = Calendar.instance
         c.clear()
@@ -402,8 +385,7 @@ class TestDates
      * per date.  (Date's are more than 8 bytes, longs are 8).
      */
     @Test
-    void testDateLongSubstitution()
-    {
+    void testDateLongSubstitution() {
         long now = System.currentTimeMillis()
         DateTrick d = new DateTrick()
         d._userDate = new Date(now)
@@ -421,19 +403,17 @@ class TestDates
     }
 
     @Test
-    void testDateMissingValue()
-    {
-        try
-        {
+    void testDateMissingValue() {
+        try {
             TestUtil.readJsonObject('[{"@type":"date"}]')
             fail()
         }
-        catch (Exception ignored) { }
+        catch (Exception ignored) {
+        }
     }
 
     @Test
-    void testDates()
-    {
+    void testDates() {
         // As root
         long now = System.currentTimeMillis()
         Date utilDate = new Date(now)
@@ -448,13 +428,13 @@ class TestDates
 
         json = TestUtil.getJsonString(sqlDate)
         TestUtil.printLine(json)
-        java.sql.Date checkSqlDate = (java.sql.Date)TestUtil.readJsonObject(json)
+        java.sql.Date checkSqlDate = (java.sql.Date) TestUtil.readJsonObject(json)
         assertTrue(checkSqlDate instanceof java.sql.Date)
         assertEquals(checkSqlDate, sqlDate)
 
         json = TestUtil.getJsonString(sqlTimestamp)
         TestUtil.printLine(json)
-        Timestamp checkSqlTimestamp = (Timestamp)TestUtil.readJsonObject(json)
+        Timestamp checkSqlTimestamp = (Timestamp) TestUtil.readJsonObject(json)
         assertTrue(checkSqlTimestamp instanceof Timestamp)
         assertEquals(checkSqlTimestamp, sqlTimestamp)
 
@@ -542,10 +522,9 @@ class TestDates
     }
 
     @Test
-    void testSqlDate()
-    {
+    void testSqlDate() {
         long now = System.currentTimeMillis()
-        Date[] dates = [new Date(now), new java.sql.Date(now), new Timestamp(now) ] as Date[]
+        Date[] dates = [new Date(now), new java.sql.Date(now), new Timestamp(now)] as Date[]
         String json = TestUtil.getJsonString(dates)
         TestUtil.printLine('json=' + json)
         Date[] dates2 = (Date[]) TestUtil.readJsonObject(json)
@@ -558,8 +537,7 @@ class TestDates
     }
 
     @Test
-    void testNullDateHandling()
-    {
+    void testNullDateHandling() {
         DateField dateField = new DateField(new Date())
         dateField.date = null
         String json = TestUtil.getJsonString(dateField)
@@ -568,37 +546,32 @@ class TestDates
     }
 
     @Test
-    void testDateReaderNullHandling()
-    {
+    void testDateReaderNullHandling() {
         Readers.DateReader reader = new Readers.DateReader()
-        try
-        {
-            reader.read(null, new ArrayDeque<JsonObject<String,Object>>(), [:])
+        try {
+            reader.read(null, new ArrayDeque<JsonObject<String, Object>>(), [:])
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('unable to parse')
             assert e.message.toLowerCase().contains('null')
         }
     }
 
     @Test
-    void testJavaDefaultTimeFormatParsing()
-    {
+    void testJavaDefaultTimeFormatParsing() {
         Date now = new Date()
         String nowStr = now.toString()
         Readers.DateReader reader = new Readers.DateReader()
-        Date now2 = reader.read(nowStr, new ArrayDeque<JsonObject<String,Object>>(), [:])
+        Date now2 = reader.read(nowStr, new ArrayDeque<JsonObject<String, Object>>(), [:])
         assert nowStr == now2.toString()
     }
 
     @Test
-    void testDateWithTimeZoneOffsetParsing()
-    {
+    void testDateWithTimeZoneOffsetParsing() {
         String date = "9 July 1930 11:02-05:00"
         Readers.DateReader reader = new Readers.DateReader()
-        Date then = reader.read(date, new ArrayDeque<JsonObject<String,Object>>(), [:])
+        Date then = reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])
 
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone('UTC'))
         cal.clear()
@@ -607,8 +580,7 @@ class TestDates
     }
 
     @Test
-    void testDayRemainderRemoval()
-    {
+    void testDayRemainderRemoval() {
         String date = "sat 6 Jun 2015"
         Readers.DateReader reader = new Readers.DateReader()
         Date date1 = reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])
@@ -621,104 +593,85 @@ class TestDates
     }
 
     @Test
-    void testBadDayOfWeek()
-    {
+    void testBadDayOfWeek() {
         String date = "crunchy 6 Jun 2015"
         Readers.DateReader reader = new Readers.DateReader()
-        try
-        {
+        try {
             reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('crunchy')
         }
     }
 
     @Test
-    void testBadMonth()
-    {
+    void testBadMonth() {
         String date = "2015/13/1"
         Readers.DateReader reader = new Readers.DateReader()
-        try
-        {
+        try {
             reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('between 1 and 12')
         }
     }
 
     @Test
-    void testBadDay()
-    {
+    void testBadDay() {
         String date = "2015/9/34"
         Readers.DateReader reader = new Readers.DateReader()
-        try
-        {
+        try {
             reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('between 1 and 31')
         }
     }
 
     @Test
-    void testBadHour()
-    {
+    void testBadHour() {
         String date = "2015/9/30 25:30"
         Readers.DateReader reader = new Readers.DateReader()
-        try
-        {
+        try {
             reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('between 0 and 23')
         }
     }
 
     @Test
-    void testBadMinute()
-    {
+    void testBadMinute() {
         String date = "2015/9/30 20:65"
         Readers.DateReader reader = new Readers.DateReader()
-        try
-        {
+        try {
             reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('between 0 and 59')
         }
     }
 
     @Test
-    void testBadSecond()
-    {
+    void testBadSecond() {
         String date = "2015/9/30 20:55:70"
         Readers.DateReader reader = new Readers.DateReader()
-        try
-        {
+        try {
             reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])
             fail()
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('between 0 and 59')
         }
     }
 
     @Test
-    void testZForGMT()
-    {
+    void testZForGMT() {
         String date = "2015/9/30 20:55Z"
         Readers.DateReader reader = new Readers.DateReader()
         Date date1 = reader.read(date, new ArrayDeque<JsonObject<String, Object>>(), [:])

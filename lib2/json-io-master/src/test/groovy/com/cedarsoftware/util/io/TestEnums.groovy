@@ -24,33 +24,33 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestEnums
-{
-    private enum TestEnum1 { A, B, C }
+class TestEnums {
+    private enum TestEnum1 {
+        A, B, C
+    }
 
     private enum TestEnum2
     {
-        A() {},
-        B() {},
-        C() {}
+        A(){},
+        B(){},
+        C(){}
     }
 
     private enum TestEnum3
     {
-        A("Foo") {
+        A("Foo"){
             void doXX() {}
         },
-        B("Bar") {
+        B("Bar"){
             void doXX() {}
         },
-        C(null) {
+        C(null){
             void doXX() {}
         };
 
         private final String val
 
-        TestEnum3(String val)
-        {
+        TestEnum3(String val) {
             this.val = val;
         }
 
@@ -67,16 +67,14 @@ class TestEnums
     }
 
     @Test
-    void testEnums()
-    {
+    void testEnums() {
 
         Collection<Object> collection = new LinkedList<Object>()
         collection.addAll(Arrays.asList(TestEnum1.values()))
         collection.addAll(Arrays.asList(TestEnum2.values()))
         collection.addAll(Arrays.asList(TestEnum3.values()))
 
-        for (Object o : collection)
-        {
+        for (Object o : collection) {
             String json = TestUtil.getJsonString(o)
             TestUtil.printLine("json=" + json)
             Object read = TestUtil.readJsonObject(json)
@@ -107,8 +105,7 @@ class TestEnums
     }
 
     @Test
-    void testEnumWithPrivateMembersAsField()
-    {
+    void testEnumWithPrivateMembersAsField() {
         TestEnum4 x = TestEnum4.B;
         String json = TestUtil.getJsonString(x)
         TestUtil.printLine(json)
@@ -127,37 +124,30 @@ class TestEnums
     {
         EXCLUDE, FEDERATE_THIS, FEDERATE_ORIGIN;
 
-        static FederationStrategy fromName(String name)
-        {
-            for (FederationStrategy type : values())
-            {
-                if (type.name().equalsIgnoreCase(name))
-                {
+        static FederationStrategy fromName(String name) {
+            for (FederationStrategy type : values()) {
+                if (type.name().equalsIgnoreCase(name)) {
                     return type
                 }
             }
             return FEDERATE_THIS
         }
 
-        boolean exceeds(FederationStrategy type)
-        {
+        boolean exceeds(FederationStrategy type) {
             return this.ordinal() > type.ordinal()
         }
 
-        boolean atLeast(FederationStrategy type)
-        {
+        boolean atLeast(FederationStrategy type) {
             return this.ordinal() >= type.ordinal()
         }
 
-        String toString()
-        {
+        String toString() {
             return name()
         }
     }
 
     @Test
-    void testEnumNoOrdinal()
-    {
+    void testEnumNoOrdinal() {
         DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
         dateformat.setTimeZone(TimeZone.getTimeZone("UTC"))
         HashMap<String, Object> config = new HashMap<>()

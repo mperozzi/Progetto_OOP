@@ -9,10 +9,8 @@ import java.util.concurrent.atomic.AtomicLong
 /**
  * Created by jderegnaucourt on 2015/02/21.
  */
-class TestMapsToClasses
-{
-    static class Person
-    {
+class TestMapsToClasses {
+    static class Person {
         String fname
         String lname
         String age
@@ -21,22 +19,19 @@ class TestMapsToClasses
         Object[] pets2
     }
 
-    static class Address
-    {
+    static class Address {
         String street
         String city
         String state
         String zip
     }
 
-    static class Pet
-    {
+    static class Pet {
         String name
         String type
     }
 
-    static class AllTypes
-    {
+    static class AllTypes {
         boolean aBoolean
         byte aByte
         short aShort
@@ -58,8 +53,7 @@ class TestMapsToClasses
     }
 
     @Test
-    void testMapsToClasses()
-    {
+    void testMapsToClasses() {
         String json =
                 """{
   "@type":"com.cedarsoftware.util.io.TestMapsToClasses\$Person",
@@ -112,8 +106,7 @@ class TestMapsToClasses
     }
 
     @Test
-    void testAllTypesEmptyString()
-    {
+    void testAllTypesEmptyString() {
         String json =
                 """{
     "@type":"com.cedarsoftware.util.io.TestMapsToClasses\$AllTypes",
@@ -139,18 +132,18 @@ class TestMapsToClasses
 """
         AllTypes types = JsonReader.jsonToJava(json)
         assert types.aBoolean == false
-        assert types.aByte == (byte)0
-        assert types.aShort == (short)0
-        assert types.anInt == (int)0
-        assert types.aLong == (long)0
+        assert types.aByte == (byte) 0
+        assert types.aShort == (short) 0
+        assert types.anInt == (int) 0
+        assert types.aLong == (long) 0
         assert types.aFloat == 0.0f
         assert types.aDouble == 0.0d
         assert types.aString == ""
         assert types.aDate == null
-        assert types.aByteWrap == (byte)0
-        assert types.aShortWrap == (short)0
-        assert types.anIntWrap == (int)0
-        assert types.aLongWrap == (long)0
+        assert types.aByteWrap == (byte) 0
+        assert types.aShortWrap == (short) 0
+        assert types.anIntWrap == (int) 0
+        assert types.aLongWrap == (long) 0
         assert types.aFloatWrap == 0.0f
         assert types.aDoubleWrap == 0.0d
 //        assert types.atomicBoolean.get() == false
@@ -159,8 +152,7 @@ class TestMapsToClasses
     }
 
     @Test
-    void testAllTypesNull()
-    {
+    void testAllTypesNull() {
         String json =
                 """{
     "@type":"com.cedarsoftware.util.io.TestMapsToClasses\$AllTypes",
@@ -186,10 +178,10 @@ class TestMapsToClasses
 """
         AllTypes types = JsonReader.jsonToJava(json)
         assert types.aBoolean == false
-        assert types.aByte == (byte)0
-        assert types.aShort == (short)0
-        assert types.anInt == (int)0
-        assert types.aLong == (long)0
+        assert types.aByte == (byte) 0
+        assert types.aShort == (short) 0
+        assert types.anInt == (int) 0
+        assert types.aLong == (long) 0
         assert types.aFloat == 0.0f
         assert types.aDouble == 0.0d
         assert types.aString == null

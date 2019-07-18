@@ -22,11 +22,9 @@ import static org.junit.Assert.assertTrue
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestAlwaysShowType
-{
+class TestAlwaysShowType {
     @Test
-    void testAlwaysShowType()
-    {
+    void testAlwaysShowType() {
         TestObject btc = new TestObject("Bitcoin")
         btc._other = new TestObject("Satoshi")
         Map args = new HashMap()

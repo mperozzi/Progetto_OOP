@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Investment_priority {
 
     private String investment_priority;
 
-    public Investment_priority() {}
+    public Investment_priority() {
+    }
 
     public String getInvestment_priority() {
         return investment_priority;

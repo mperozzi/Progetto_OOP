@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -16,7 +17,8 @@ public class Cci {
     private String cci;
 
     //costruttore della classe
-    public Cci() { }
+    public Cci() {
+    }
 
     public String getCci() {
         return cci;

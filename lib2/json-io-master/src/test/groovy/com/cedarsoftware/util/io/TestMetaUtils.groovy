@@ -23,11 +23,9 @@ import static org.junit.Assert.assertFalse
  *         See the License for the specific language governing permissions and
  *         limitations under the License.
  */
-class TestMetaUtils
-{
+class TestMetaUtils {
     @Test
-    void testFillArgs()
-    {
+    void testFillArgs() {
         Object[] ret = MetaUtils.fillArgs([Set.class] as Class[], false)
         assert ret[0] instanceof Set
         assertFalse ret[0] instanceof SortedSet
@@ -75,23 +73,18 @@ class TestMetaUtils
     }
 
     @Test
-    void testNewPrimitiveWrapper()
-    {
-        try
-        {
+    void testNewPrimitiveWrapper() {
+        try {
             MetaUtils.convert(TimeZone.class, "")
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('not have primitive wrapper')
         }
 
-        try
-        {
+        try {
             MetaUtils.convert(Float.class, "float")
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('error creating primitive wrapper')
         }
 
@@ -99,22 +92,18 @@ class TestMetaUtils
     }
 
     @Test
-    void tryOtherConstructors()
-    {
-        try
-        {
+    void tryOtherConstructors() {
+        try {
             MetaUtils.tryOtherConstruction(Byte.TYPE)
         }
-        catch (JsonIoException e)
-        {
+        catch (JsonIoException e) {
             assert e.message.toLowerCase().contains('cannot instantiate')
             assert e.message.toLowerCase().contains('byte')
         }
     }
 
     @Test
-    void testGetDistance()
-    {
+    void testGetDistance() {
         int x = MetaUtils.getDistance(Serializable.class, Externalizable.class)
         assert x == 1
 
@@ -123,8 +112,7 @@ class TestMetaUtils
     }
 
     @Test
-    void testLoggingMessage()
-    {
+    void testLoggingMessage() {
         Map data = ['a': 'Alpha', 'b': 'Bravo', 'car': 'McLaren 675LT', 'pi': 3.1415926535897932384]
         String methodName = 'blame'
         Object[] args = [17, 34.5, data]

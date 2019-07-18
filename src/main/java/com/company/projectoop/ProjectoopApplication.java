@@ -9,11 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Classe principale dell'applicazione. All'avvio dell'app
  * viene scaricato il file CSV e viene popolata la struttura
  * dati contenente i dati all'interno.
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
 
-@SpringBootApplication (scanBasePackages={"com.company.projectoop"})
+@SpringBootApplication(scanBasePackages = {"com.company.projectoop"})
 
 public class ProjectoopApplication {
 

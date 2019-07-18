@@ -21,6 +21,7 @@ import java.util.List;
  * Viene effettuato il parsing del CSV e i dati vengono immagazzinati in una lista.
  * Sono presenti i metodi per la restituzione all'utente dei dati e metadati.
  * Sono presenti i metodi che implementano i filtri.
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -1459,6 +1460,7 @@ public class Parsecsv_Impl implements Parsecsv {
 
     /**
      * Metodo che restituisce i  valori di un determinato campo della dataset
+     *
      * @param field
      * @return
      * @throws Exception
@@ -1475,7 +1477,7 @@ public class Parsecsv_Impl implements Parsecsv {
             }
 
         } catch (NoSuchMethodException e) {
-            throw  new Exception("Inserire un campo corretto del dataset");
+            throw new Exception("Inserire un campo corretto del dataset");
 
         } catch (IllegalAccessException e) {
             e.printStackTrace();

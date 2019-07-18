@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Classe che identifica un campo della tabella
+ *
  * @author Matteo Perozzi
  * @author Ettore Zamponi
  */
@@ -15,7 +16,8 @@ public class Ind_code {
 
     private String ind_code;
 
-    public Ind_code() {}
+    public Ind_code() {
+    }
 
     public String getInd_code() {
         return ind_code;
