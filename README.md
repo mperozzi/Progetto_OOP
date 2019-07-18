@@ -1,4 +1,4 @@
-## Progetto per l'esame di OOP
+# Progetto per l'esame di OOP
 
 PER AVERE ULTERIORI INFORMAZIONI CONSULTARE LA SEZIONE wiki
 
