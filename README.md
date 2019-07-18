@@ -13,6 +13,17 @@ RIFERIMENTO ALLA DIRECTORY:  https://github.com/mperozzi/Progetto_OOP/blob/maste
 RIFERIMENTO ALL FILE HTML:  https://github.com/mperozzi/Progetto_OOP/blob/master/JavaDOC/html/index.html
 
 
+***
+
+
+## Diagrammi UML delle classi
+
+
+
+## Casi d'uso
+
+
+
 ## Tabella dei rooth path per API REST GET
 * `/getalldata` --> Per restituire un JSON con tutti i dati del dataset organizzati
 * `/getmetadata` --> Per restituire un JSON con i metadati
