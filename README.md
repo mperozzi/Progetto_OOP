@@ -3,6 +3,9 @@
 PER AVERE ULTERIORI INFORMAZIONI CONSULTARE LA SEZIONE wiki
 
 
+***
+
+
 ## Per accedere alla documentazione del codice:
 1. Aprire la directory javaDOC
 2. Aprire la directory html
@@ -16,12 +19,29 @@ RIFERIMENTO ALL FILE HTML:  https://github.com/mperozzi/Progetto_OOP/blob/master
 ***
 
 
-## Diagrammi UML delle classi
+## Diagrammi UML
+
+### Diagrammi delle classi
+
+![Package progectoop e controller](https://user-images.githubusercontent.com/33483944/61475900-18e9c580-a98c-11e9-8f31-dc1ce873dcca.jpg)
+
+![Package table](https://user-images.githubusercontent.com/33483944/61476049-70883100-a98c-11e9-881a-e6a916989117.jpg)
+
+![Package parsing](https://user-images.githubusercontent.com/33483944/61476101-90b7f000-a98c-11e9-863a-8372fdba6df3.jpg)
 
 
+![Package model](https://user-images.githubusercontent.com/33483944/61476143-a88f7400-a98c-11e9-862a-e9a0be49ddbf.jpg)
 
-## Casi d'uso
 
+***
+
+
+### Casi d'uso
+
+![Casi D'uso](https://user-images.githubusercontent.com/33483944/61475600-7cbfbe80-a98b-11e9-8aa5-0c28c6fe0d2d.jpg)
+
+
+***
 
 
 ## Tabella dei rooth path per API REST GET
