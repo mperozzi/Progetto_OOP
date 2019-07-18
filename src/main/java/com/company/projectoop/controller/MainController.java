@@ -23,7 +23,7 @@ public class MainController {
     Parsecsv_Impl p = new Parsecsv_Impl();
 
     /**
-     * Presentazione. Response che si ottiene appena si accede al localhost
+     * Presentazione. Response che si ottiene appena si accede al localhost e ad ogni rotta sbagliata
      *
      * @return
      */
@@ -33,11 +33,13 @@ public class MainController {
                 new ResponseEntity<>("Questi sono i root path che possono essere impostati:" + "\n" +
                         "/getalldata --> Per restituire un JSON con tutti i dati organizzati" + "\n" +
                         "/getmetadata --> Per restituire un JSON con i metadati" + "\n" +
-                        "/logicalfilter/{operator}/<parametri e valori> --> Per applicare filtri logici" + "\n" +
-                        "/conditionalfilter/{operator}/<parametri e valori> --> Per applicare i filtri condizionali" + "\n" +
+                        "/logicalfilter/{operator}?<parametri e valori> --> Per applicare filtri logici" + "\n" +
+                        "/conditionalfilter/{operator}?<parametri e valori> --> Per applicare i filtri condizionali" + "\n" +
                         "/stats/{field} --> Per ottenere le statistiche complete di un determinato campo" + "\n" +
-                        "/stats/{statistica desiderata}/{field} ---> Per ottenere la singola statistica di un determinato campo" + "\n" +
-                        "/get/{field} --> Per ottenere i valori di un determinato campo della tabella", HttpStatus.OK);
+                        "/singlestats/{field}/{statistica desiderata} ---> Per ottenere la singola statistica di un determinato campo" + "\n" +
+                        "/get/{field} --> Per ottenere i valori di un determinato campo della tabella" + "\n" +
+                        "/countocc/{field}/{valore del campo} -->  Per contare quante occorrenze di un determinato valore all'interno di un campo ci sono"
+                        , HttpStatus.OK);
     }
 
     /**
@@ -91,21 +93,44 @@ public class MainController {
      * @throws Exception
      */
     @RequestMapping(value = "/stats/{field}", method = RequestMethod.GET)
-    public String Stats(@PathVariable String field) throws Exception {
+    public JSONObject Stats(@PathVariable String field) throws Exception {
         JSONObject add = new JSONObject();
         try {
-
             add.put("field: ", field);
-            add.put("sum: ", Parsecsv_Impl.sumValue(field.toLowerCase()));
-            add.put("min: ", Parsecsv_Impl.minValue(field.toLowerCase()));
-            add.put("max: ", Parsecsv_Impl.maxValue(field.toLowerCase()));
-            add.put("avg: ", Parsecsv_Impl.avgValue(field.toLowerCase()));
-            add.put("devstd: ", Parsecsv_Impl.devstdValue(field.toLowerCase()));
-            add.put("count: ", Parsecsv_Impl.countValue(field.toLowerCase()));
         } catch (Exception e) {
             throw new Exception();
         }
-        return add.toString();
+        try {
+            add.put("sum: ", Parsecsv_Impl.sumValue(field.toLowerCase()));
+        } catch (Exception e) {
+            throw new Exception("Impossibile calcolare somma");
+        }
+        try {
+            add.put("min: ", Parsecsv_Impl.minValue(field.toLowerCase()));
+        } catch (Exception e) {
+            throw new Exception("Impossibile individuare minimo");
+        }
+        try {
+            add.put("max: ", Parsecsv_Impl.maxValue(field.toLowerCase()));
+        } catch (Exception e) {
+            throw new Exception("Impossibile individuare massimo");
+        }
+        try {
+            add.put("avg: ", Parsecsv_Impl.avgValue(field.toLowerCase()));
+        } catch (Exception e) {
+            throw new Exception("Impossibile calcolare media");
+        }
+        try {
+            add.put("devstd: ", Parsecsv_Impl.devstdValue(field.toLowerCase()));
+        } catch (Exception e) {
+            throw new Exception("Impossibile calcolare deviazione standard");
+        }
+        try {
+            add.put("count: ", Parsecsv_Impl.countValue(field.toLowerCase()));
+        } catch (Exception e) {
+            throw new Exception("Impossibile contare elementi diversi da 0");
+        }
+        return add;
     }
 
     /**
@@ -122,35 +147,53 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/stats/{choise}/{field}", method = RequestMethod.GET)
-    public String sumValue(@PathVariable String field, @PathVariable String choise) throws Exception {
+    @RequestMapping(value = "/singlestats/{field}/{choise}", method = RequestMethod.GET)
+    public JSONObject Singlestat(@PathVariable String field, @PathVariable String choise) throws Exception {
         JSONObject add = new JSONObject();
         try {
-            if (choise == "sum") {
-                //calcoliamo la somma e la mettiamo nel JSON
-                add.put("field: ", field);
-                add.put("sum: ", Parsecsv_Impl.sumValue(field.toLowerCase()));
-            } else if (choise == "max") {
-                add.put("field: ", field);
-                add.put("max: ", Parsecsv_Impl.maxValue(field.toLowerCase()));
-            } else if (choise == "min") {
-                add.put("field: ", field);
-                add.put("min: ", Parsecsv_Impl.minValue(field.toLowerCase()));
-            } else if (choise == "avg") {
-                add.put("field: ", field);
-                add.put("avg: ", Parsecsv_Impl.avgValue(field.toLowerCase()));
-            } else if (choise == "count") {
-                add.put("field: ", field);
-                add.put("count: ", Parsecsv_Impl.countValue(field.toLowerCase()));
-            } else if (choise == "devstd") {
-                add.put("field: ", field);
-                add.put("devstd: ", Parsecsv_Impl.devstdValue(field.toLowerCase()));
+            switch (choise) {
+                case "sum": {
+                    add.put("field: ", field);
+                    add.put("sum: ", Parsecsv_Impl.sumValue(field.toLowerCase()));
+                }
+                break;
+
+                case "max": {
+                    add.put("field: ", field);
+                    add.put("max: ", Parsecsv_Impl.maxValue(field.toLowerCase()));
+                }
+                break;
+
+                case "min": {
+                    add.put("field: ", field);
+                    add.put("min: ", Parsecsv_Impl.minValue(field.toLowerCase()));
+                }
+                break;
+
+                case "avg": {
+                    add.put("field: ", field);
+                    add.put("avg: ", Parsecsv_Impl.avgValue(field.toLowerCase()));
+                }
+                break;
+
+                case "devstd": {
+                    add.put("field: ", field);
+                    add.put("devstd: ", Parsecsv_Impl.devstdValue(field.toLowerCase()));
+                }
+                break;
+
+                case "count": {
+                    add.put("field: ", field);
+                    add.put("count: ", Parsecsv_Impl.countValue(field.toLowerCase()));
+                }
+                break;
             }
 
         } catch (Exception e) {
             throw new Exception();
         }
-        return add.toString();
+
+        return add;
     }
 
     /**
@@ -162,18 +205,18 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/count/{field}", method = RequestMethod.GET)
-    public String CountOccorrenze(@PathVariable String field, @RequestParam String value) throws Exception {
+    @RequestMapping(value = "/countocc/{field}/{value}", method = RequestMethod.GET)
+    public JSONObject CountOccorrenze(@PathVariable String field, @PathVariable String value) throws Exception {
         JSONObject add = new JSONObject();
 
         try {
             add.put("field: ", field);
-            add.put("count", Parsecsv_Impl.countOcc(field, value));
+            add.put("countocc: ", Parsecsv_Impl.countOcc(field, value));
         } catch (Exception e) {
             throw new Exception();
         }
 
-        return add.toString();
+        return add;
     }
 
     /**

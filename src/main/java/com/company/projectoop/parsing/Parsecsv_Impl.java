@@ -942,26 +942,14 @@ public class Parsecsv_Impl implements Parsecsv {
                 //richiamo del metodo richiesto dall'utente su cui applicare il filtro
                 method1 = riga.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
 
-                //assegnazione della variabile per applicare il filtro in base al tipo di dato
-                if (Float.class.isInstance(method1.invoke(riga))) {
-                    s_filter1 = Float.toString((float) method1.invoke(riga));
-                    if (s_filter1.equals(value)) {
-                        counter++;
-                    } else break;
+                //effettuo il controllo
+                s_filter1 = method1.invoke(riga).toString();
 
-                } else if (Integer.class.isInstance(method1.invoke(riga))) {
-                    s_filter1 = Integer.toString((int) method1.invoke(riga));
-                    if (s_filter1.equals(value)) {
-                        counter++;
-                    } else break;
-
-                } else {
-                    s_filter1 = (String) method1.invoke(riga);
-                    if (s_filter1.equals(value)) {
-                        counter++;
-                    } else break;
+                if (s_filter1.equals(value)) {
+                    counter++;
                 }
             }
+
         } catch (NoSuchMethodException e) {
             throw new Exception("Inserire un campo corretto del dataset");
 
@@ -1367,34 +1355,23 @@ public class Parsecsv_Impl implements Parsecsv {
 
                                 //assegnazione della variabile per applicare il filtro in base al tipo di dato
 
-                                if (Float.class.isInstance(method.invoke(riga))) {
+                                if (String.class.isInstance(method.invoke(riga)))
+                                    throw new Exception("Inserire un campo che contenga valori numerici");
+
+                                else {
                                     float valuemod = Float.parseFloat(value);
                                     fvalue = ((float) method.invoke(riga));
                                     float valuemod2 = Float.parseFloat(value2);
                                     if (valuemod > valuemod2) {
-                                        if ((ivalue < valuemod) && (ivalue > valuemod2)) {
+                                        if ((fvalue < valuemod) && (fvalue > valuemod2)) {
                                             list.add(riga);
                                         }
-                                    } else if ((ivalue > valuemod) && (ivalue < valuemod2)) {
-                                        list.add(riga);
-                                    }
-
-                                } else if (Integer.class.isInstance(method.invoke(riga))) {
-                                    ivalue = ((int) method.invoke(riga));
-                                    int valuemod = Integer.parseInt(value);
-                                    int valuemod2 = Integer.parseInt(value2);
-                                    ivalue = ((int) method.invoke(riga));
-
-                                    if (valuemod > valuemod2) {
-                                        if ((ivalue < valuemod) && (ivalue > valuemod2)) {
+                                    } else if (valuemod < valuemod2) {
+                                        if ((fvalue > valuemod) && (ivalue < valuemod2)) {
                                             list.add(riga);
                                         }
-                                    } else if ((ivalue > valuemod) && (ivalue < valuemod2)) {
-                                        list.add(riga);
                                     }
-
-                                } else if (String.class.isInstance(method.invoke(riga)))
-                                    throw new Exception("Inserire un campo che contenga valori numerici");
+                                }
                             }
                         }
                     } catch (NoSuchMethodException e) {
