@@ -16,11 +16,11 @@ Lo sviluppo è stato effettuato mediante il linguaggio Java e l'IDE IntelliJ IDE
 
 Abbiamo strutturato il nostro progetto come segue per renderlo più comprensibile possibile e facilitarne la manutenzione:
 
-*
-*
-*
-*
-*
+* com.company.projectoop
+* com.company.projectoop.controller
+* com.company.projectoop.model
+* com.company.projectoop.parsing
+* com.company.projectoop.table
 
 ***
 
