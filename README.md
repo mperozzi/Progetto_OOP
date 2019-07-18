@@ -1,25 +1,33 @@
 # Progetto per l'esame di OOP
 
-PER AVERE ULTERIORI INFORMAZIONI CONSULTARE LA SEZIONE wiki
-
+In questa repository è presente il progetto sviluppato per il corso Programmazione ad Oggetti, relativo all'appello di luglio 2019. Per ulteriori informazioni, cosnultare la sezione "Wiki".
 
 ***
 
+## Descrizione
 
-## Per accedere alla documentazione del codice:
-1. Aprire la directory javaDOC
-2. Aprire la directory html
-3. Il link alla pagina web che riporta la documentazione del progetto è index.html
- 
-RIFERIMENTO ALLA DIRECTORY:  https://github.com/mperozzi/Progetto_OOP/blob/master/JavaDOC/html
+Dopo esserci stato assegnato un dataset CSV con all'interno molti valori, abbiamo realizzato un applicativo Java in grado di effettuare il download del file stesso dalla sorgente, effettuare il parsing dei dati ed immagazzinarli in un'apposita struttura (ArrayList). Questa sarà poi manipolabile dall'utente mediante filtri appositi per andar a visualizzare alcuni valori specificati dall'utente piuttosto che altri, il tutto tramite interrogazioni API REST.
 
-RIFERIMENTO ALL FILE HTML:  https://github.com/mperozzi/Progetto_OOP/blob/master/JavaDOC/html/index.html
+Lo sviluppo è stato effettuato mediante il linguaggio Java e l'IDE IntelliJ IDEA e il framework Spring. Le richieste dell'utente, invece, sono state applicate tramite Postman. Altri software sono stati Maven e naturalmente GitHub. 
 
+***
+
+## Struttura del progetto
+
+Abbiamo strutturato il nostro progetto come segue per renderlo più comprensibile possibile e facilitarne la manutenzione:
+
+*
+*
+*
+*
+*
 
 ***
 
 
 ## Diagrammi UML
+
+Tramite il linguaggio UML di modellazione specifico per la programmazione ad oggetti abbiamo realizzato i seguenti diagrammi. 
 
 ### Diagrammi delle classi
 
@@ -36,7 +44,7 @@ RIFERIMENTO ALL FILE HTML:  https://github.com/mperozzi/Progetto_OOP/blob/master
 ***
 
 
-### Casi d'uso
+### Diagramma dei Casi d'uso
 
 ![Casi D'uso](https://user-images.githubusercontent.com/33483944/61475600-7cbfbe80-a98b-11e9-8aa5-0c28c6fe0d2d.jpg)
 
@@ -45,15 +53,16 @@ RIFERIMENTO ALL FILE HTML:  https://github.com/mperozzi/Progetto_OOP/blob/master
 
 
 ## Tabella dei rooth path per API REST GET
+
 * `/getalldata` --> Per restituire un JSON con tutti i dati del dataset organizzati
-* `/getmetadata` --> Per restituire un JSON con i metadati
-* `/logicalfilter/operatore?field1=primo campo del dataset sul quale applicare il filtro&value1=valore del campo&field2=secondo campo del dataset sul quale applicare il filtro&value2=valore del campo` --> Per applicare i filtri logici
+* `/getmetadata` --> Per restituire un JSON con tutti i metadati
+* `/logicalfilter/operatore?field1="primo campo del dataset sul quale applicare il filtro"&value1="valore del primo campo"&field2="secondo campo del dataset sul quale applicare il filtro"&value2="valore del secondo campo"` --> Per applicare i filtri logici
 * `/conditionalfilter/operatore?field=campo numerico del dataset&value=valore sul quale effettuare l'operazione` --> Per applicare i filtri condizionali maggiore, maggiore uguale, minore e minore uguale
-* `/conditionalfilter/operatore?field=campo numerico del dataset&value=valore sul quale effettuare l'operazione&value2=altro valore sul quale effettuare l'operazione` --> Per applicare il filtro condizionale compreso tra 
+* `/conditionalfilter/operatore?field=campo numerico del dataset&value=valore sul quale effettuare l'operazione&value2=altro valore sul quale effettuare l'operazione` --> Per applicare il filtro condizionale compreso tra i due valori inseriti
 * `/stats/campo numerico del dataset sul quale effettuare la statistica` --> Per ottenere le statistiche complete di un determinato campo
 * `/singlestats/campo sul quale effettuare la statistica/statistica desiderata` ---> Per ottenere la singola statistica di un determinato campo
 * `/get/campo del dataset` --> Per ottenere i valori di un determinato campo della tabella
-* /countocc/campo del dataset/valore del campo che si vuole contare -->  Per contare quante occorrenze di un determinato valore ci sono all'interno di un campo
+* `/countocc/campo del dataset/valore del campo che si vuole contare` -->  Per contare quante occorrenze di quel determinato valore ci sono all'interno di un campo
 
 ***
 
@@ -97,12 +106,15 @@ RIFERIMENTO ALL FILE HTML:  https://github.com/mperozzi/Progetto_OOP/blob/master
 ***
 
 ## Filtri implementati
+
 ### Filtri logici
+
 * AND : `$and`
 * OR : `$or`
 * NOT : `$not`
 
 ### Filtri condizionali
+
 * MAGGIORE (>) : `$gt`
 * MAGGIORE UGUALE (>=) : `$gte`
 * MINORE (<) : `$lt`
