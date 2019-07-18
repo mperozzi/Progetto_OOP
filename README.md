@@ -1,7 +1,17 @@
 ## Progetto per l'esame di OOP
 
-PER AVERE TUTTE LE INFORMAZIONI E LA DOCUMENTAZIONE RELATIVI AL PROGETTO E PER POTER VISIONARE I VARI DIAGRAMMI
-CONSULTARE LA SEZIONE Wiki DI QUESTA REPOSITORY DI GITHUB
+PER AVERE ULTERIORI INFORMAZIONI CONSULTARE LA SEZIONE wiki
+
+
+## Per accedere alla documentazione del codice:
+1. Aprire la directory javaDOC
+2. Aprire la directory html
+3. Il link alla pagina web che riporta la documentazione del progetto è index.html
+ 
+RIFERIMENTO ALLA DIRECTORY:  https://github.com/mperozzi/Progetto_OOP/blob/master/JavaDOC/html
+
+RIFERIMENTO ALL FILE HTML:  https://github.com/mperozzi/Progetto_OOP/blob/master/JavaDOC/html/index.html
+
 
 ## Tabella dei rooth path per API REST GET
 * `/getalldata` --> Per restituire un JSON con tutti i dati del dataset organizzati
