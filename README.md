@@ -1,6 +1,6 @@
 # Progetto per l'esame di OOP
 
-In questa repository è presente il progetto sviluppato per il corso Programmazione ad Oggetti, relativo all'appello di luglio 2019. Per ulteriori informazioni, cosnultare la sezione "Wiki".
+In questa repository è presente il progetto sviluppato per il corso Programmazione ad Oggetti, relativo all'appello di luglio 2019 da parte degli studenti Perozzi Matteo e Zamponi Ettore. Per ulteriori informazioni, cosnultare la sezione "Wiki".
 
 ***
 
@@ -16,11 +16,11 @@ Lo sviluppo è stato effettuato mediante il linguaggio Java e l'IDE IntelliJ IDE
 
 Abbiamo strutturato il nostro progetto come segue per renderlo più comprensibile possibile e facilitarne la manutenzione:
 
-* com.company.projectoop
-* com.company.projectoop.controller
-* com.company.projectoop.model
-* com.company.projectoop.parsing
-* com.company.projectoop.table
+* com.company.projectoop --> include la classe che contiene il main da cui si avvia l'applicazione
+* com.company.projectoop.controller --> pacchetto che include il controller dell'applicazione
+* com.company.projectoop.model --> pacchetto che include le classi che mappano le strutture dati di base
+* com.company.projectoop.parsing --> pacchetto con i metodi per effettuare il parsing dei dati
+* com.company.projectoop.table --> pacchetto che include la struttura che incapsula i metadati e la classe che definisce la riga della tabella dei dati
 
 ***
 
@@ -862,3 +862,8 @@ Tramite il linguaggio UML di modellazione specifico per la programmazione ad ogg
     }
 
 ***
+
+## Per accedere alla documentazione del codice:
+1. Aprire la directory javaDOC
+2. Aprire la directory html
+@@ -16,12 +19,29 @@ RIFERIMENTO ALL FILE HTML:  https://github.com/mperozzi/Progetto_OOP/blob/master
